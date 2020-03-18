@@ -1,35 +1,21 @@
 import './App.css';
 
-import {FunctionalThemeConsumer} from './Layout/FunctionalThemeConsumer';
-import {ThemeContextType} from './Layout/ThemeContextType';
-import Provider from './lib/Provider';
 import React from 'react';
+
+import ThemeConnect from './Layout/ThemeConnect';
+import FunctionalThemeConsumer from './Layout/FunctionalThemeConsumer';
 import ThemeConsumer from './Layout/ThemeConsumer';
-import {ThemeContext} from './Contexts/ThemeContext';
+import ThemeContext from './Contexts/ThemeContext';
+import ThemeContextType from './Layout/ThemeContextType';
 
 const App = () => (
     <div className="App">
-        <header className="App-header">
-            <p>
-          Edit <code>src/App.js</code> and save to reload.
-            </p>
-
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                rel="noopener noreferrer"
-                target="_blank"
-        >
-          Learn React
-            </a>
-        </header>
-
-
-        <ThemeContext>
+        <ThemeContext.Provider>
             <ThemeConsumer />
             <FunctionalThemeConsumer />
             <ThemeContextType />
-        </ThemeContext>
+            <ThemeConnect />
+        </ThemeContext.Provider>
     </div>
 );
 

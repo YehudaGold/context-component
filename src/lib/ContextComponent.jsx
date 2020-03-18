@@ -1,38 +1,18 @@
-import React, {Component} from 'react';
-import {createContext, getContext} from './ContextStore';
+import React from 'react';
+import {createConnectFunction} from './createConnectFunction';
+import {createProviderComponent} from './createProviderComponent';
+// Import {createContext, getContext} from './ContextStore';
 
-export class ContextComponent extends Component {
-  static connect = (mapStateToProps) => {
-      console.log(mapStateToProps);
-      return connectedComponent => <connectedComponent {...mapStateToProps} />;
-  }
 
-  static Consumer(props) {
-      console.log(this);
-      const context = getContext(ContextComponent);
-      return <context.Consumer {...props} />;
-  }
+export const createContext = (contextClass) => {
+    const context = React.createContext();
 
-  constructor(props) {
-      super(props);
+    const component = {
+        connect: createConnectFunction(context),
+        Consumer: context.Consumer,
+        context,
+        Provider: createProviderComponent(context.Provider, contextClass)
+    };
 
-      const context = createContext(ContextComponent);
-
-      this.Provider = context.Provider;
-      this.Consumer = context.Consumer;
-      console.log(context);
-      ContextComponent.context = context;
-  }
-
-  render() {
-      const {children} = this.props;
-
-      return (
-          <this.Provider value={this.state}>
-              {children}
-          </this.Provider>
-      );
-  }
-}
-console.log({ContextComponent});
-export default ContextComponent;
+    return component;
+};

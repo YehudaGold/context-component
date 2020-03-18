@@ -8,7 +8,7 @@ export const registerComponent = (contextName, component) => {
 };
 
 const createConnectFunction = (Consumer, contextName) => WrappedComponent =>
-// named react component for it to have a name in the components tree
+// Named react component for it to have a name in the components tree
     function ConnectedComponent({context, ...rest}) {
         return (
             <Consumer>
@@ -57,7 +57,6 @@ export const createContext = (contextName, initialState = {}, actions = {}, init
     registerComponent(contextName, component);
 };
 
-export const connect = (WrappedComponent, contextNames, mapStateToProps = () => {}, mapActionsToProps = () => {}) => {
     if (!Array.isArray(contextNames)) {
         contextNames = [contextNames];
     }

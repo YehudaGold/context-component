@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {ThemeContext} from '../Contexts/ThemeContext';
+import ThemeContext from '../Contexts/ThemeContext';
 
-export class ThemeConsumer extends Component {
+class ThemeConsumer extends Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {context => <div className={context.theme}>
-            ThemeConsumer
-                </div>}
+                {context => <div className={context.theme}>ThemeConsumer</div>}
             </ThemeContext.Consumer>
         );
     }
