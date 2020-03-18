@@ -1,24 +1,38 @@
 import React, {Component} from 'react';
+import {createContext, getContext} from './ContextStore';
 
 export class ContextComponent extends Component {
-    constructor(props) {
-        super(props);
+  static connect = (mapStateToProps) => {
+      console.log(mapStateToProps);
+      return connectedComponent => <connectedComponent {...mapStateToProps} />;
+  }
 
-        const context = React.createContext();
-        this.context = context;
-        this.Provider = context.Provider;
-        this.Consumer = context.Consumer;
-    }
+  static Consumer(props) {
+      console.log(this);
+      const context = getContext(ContextComponent);
+      return <context.Consumer {...props} />;
+  }
 
-    render() {
-        const {children} = this.props;
+  constructor(props) {
+      super(props);
 
-        return (
-          <this.Consumer>
-            {children}
-          </this.Consumer>
-        );
-    }
+      const context = createContext(ContextComponent);
+
+      this.Provider = context.Provider;
+      this.Consumer = context.Consumer;
+      console.log(context);
+      ContextComponent.context = context;
+  }
+
+  render() {
+      const {children} = this.props;
+
+      return (
+          <this.Provider value={this.state}>
+              {children}
+          </this.Provider>
+      );
+  }
 }
-
+console.log({ContextComponent});
 export default ContextComponent;
