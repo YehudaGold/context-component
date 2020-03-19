@@ -2,8 +2,6 @@ import React, {useContext} from 'react';
 
 const defaultComponentFunctions = [...Object.keys(new React.Component()), 'state'];
 
-//   WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
-
 const createProviderComponent = (Provider, contextClass) => {
     class ProviderComponent extends contextClass {
         constructor(props) {
@@ -37,7 +35,6 @@ const createConnectFunction = context =>
 
             return ConnectComponent;
         };
-
 
 export const createContextComponent = (contextClass) => {
     const context = React.createContext();
