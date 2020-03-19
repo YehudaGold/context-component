@@ -1,1 +1,1 @@
-export {createContext} from './ContextComponent.jsx';
+export {createContextComponent} from './createContextComponent';

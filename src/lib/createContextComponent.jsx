@@ -39,7 +39,7 @@ const createConnectFunction = context =>
         };
 
 
-export const createContext = (contextClass) => {
+export const createContextComponent = (contextClass) => {
     const context = React.createContext();
     // Name for displaying in the components tree
     context.displayName = contextClass.name;
