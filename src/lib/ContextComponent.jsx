@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 
-const defaultComponentFunctions = ['state', ...Object.keys(new React.Component())];
+const defaultComponentFunctions = [...Object.keys(new React.Component()), 'state'];
 
-const createProviderComponent = (Provider, contextClass) =>
+//   WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+
+const createProviderComponent = (Provider, contextClass) => {
     class ProviderComponent extends contextClass {
         constructor(props) {
             super(props);
-
             Object.keys(this)
                 .filter(componentFunction => !defaultComponentFunctions.includes(componentFunction))
                 .forEach((contextFunction) => {
@@ -15,26 +16,33 @@ const createProviderComponent = (Provider, contextClass) =>
         }
 
         render() {
-            return (
-                <Provider value={this.state}>
-                    {this.props.children}
-                </Provider>
-            );
+            return <Provider value={this.state}>{this.props.children}</Provider>;
         }
-    };
+    }
+    // Name for displaying in the components tree ,https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
+    ProviderComponent.displayName = `provider(${contextClass.name})`;
+
+    return ProviderComponent;
+};
 
 const createConnectFunction = context =>
-    (mapContextToProps = () => {}) =>
-        WrappedComponent =>
-            // Named react component for displaying in the components tree
-            function ConnectComponent(props) {
+    mapContextToProps =>
+        (WrappedComponent) => {
+            const ConnectComponent = (props) => {
                 const contextValue = useContext(context);
                 return <WrappedComponent {...mapContextToProps(contextValue)} {...props} />;
             };
+            // Name for displaying in the components tree ,https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
+            ConnectComponent.displayName = `${context.displayName}.connect(${WrappedComponent.name})`;
+
+            return ConnectComponent;
+        };
 
 
 export const createContext = (contextClass) => {
     const context = React.createContext();
+    // Name for displaying in the components tree
+    context.displayName = contextClass.name;
 
     return {
         context,
