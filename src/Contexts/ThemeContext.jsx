@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {createContext} from '../lib/ContextComponent';
+/* eslint-disable react/no-unused-state */
+import {Component} from 'react';
+import {createContext} from '../lib';
 
 class ThemeContext extends Component {
     state = {theme: 'dark', size: 10}

@@ -1,20 +1,23 @@
 import './App.css';
 
+import FunctionalThemeConsumer from './Components/FunctionalThemeConsumer';
 import React from 'react';
-
-import ThemeConnect from './Layout/ThemeConnect';
-import FunctionalThemeConsumer from './Layout/FunctionalThemeConsumer';
-import ThemeConsumer from './Layout/ThemeConsumer';
+import ThemeConnect from './Components/ThemeConnect';
+import ThemeConsumer from './Components/ThemeConsumer';
 import ThemeContext from './Contexts/ThemeContext';
-import ThemeContextType from './Layout/ThemeContextType';
+import ThemeContextType from './Components/ThemeContextType';
+import ThemeUseContext from './Components/ThemeUseContext';
 
 const App = () => (
     <div className="App">
         <ThemeContext.Provider>
-            <ThemeConsumer />
-            <FunctionalThemeConsumer />
-            <ThemeContextType />
-            <ThemeConnect />
+            <div className="consumers-list">
+                <ThemeConsumer />
+                <FunctionalThemeConsumer />
+                <ThemeContextType />
+                <ThemeConnect />
+                <ThemeUseContext />
+            </div>
         </ThemeContext.Provider>
     </div>
 );

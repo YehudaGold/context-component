@@ -557,7 +557,7 @@ module.exports = {
     } ],
     'no-implicit-globals': 'warn',
     'no-implied-eval': 'error',
-    'no-invalid-this': 'warn',
+    'no-invalid-this': 'off',
     'no-iterator': 'error',
     'no-labels': [ 'error', {
       allowLoop: false,
@@ -719,7 +719,7 @@ module.exports = {
     'react/no-is-mounted': 'error',
     'react/no-multi-comp': 'error',
     'react/no-redundant-should-component-update': 'error',
-    'react/no-set-state': 'error',
+    'react/no-set-state': 'off',
     'react/no-string-refs': 'error',
     'react/no-this-in-sfc': 'error',
     'react/no-typos': 'error',
