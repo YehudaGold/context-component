@@ -12,6 +12,8 @@ class ThemeContext extends Component {
     setSize = (Size) => {
         this.setState({Size});
     }
+
+    actions = {setTheme: this.setTheme, setSize: this.setSize}
 }
 
 export default createContextComponent(ThemeContext);

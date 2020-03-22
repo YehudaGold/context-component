@@ -10,7 +10,7 @@ import ThemeUseContext from './Components/ThemeUseContext';
 
 const App = () => (
     <div className="App">
-        <ThemeContext.Provider>
+        <ThemeContext>
             <div className="consumers-list">
                 <ThemeConsumer />
                 <FunctionalThemeConsumer />
@@ -18,7 +18,7 @@ const App = () => (
                 <ThemeConnect />
                 <ThemeUseContext />
             </div>
-        </ThemeContext.Provider>
+        </ThemeContext>
     </div>
 );
 

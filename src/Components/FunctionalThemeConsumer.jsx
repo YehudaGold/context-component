@@ -3,7 +3,7 @@ import ThemeContext from '../Contexts/ThemeContext';
 
 const FunctionalThemeConsumer = () => (
     <ThemeContext.Consumer>
-        {context => <div className={context.theme}>FunctionalThemeConsumer</div>}
+        {context => <div className={context.state.theme}>FunctionalThemeConsumer</div>}
     </ThemeContext.Consumer>
 );
 

@@ -5,7 +5,7 @@ class ThemeConsumer extends Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {context => <div className={context.theme}>ThemeConsumer</div>}
+                {context => <div className={context.state.theme}>ThemeConsumer</div>}
             </ThemeContext.Consumer>
         );
     }

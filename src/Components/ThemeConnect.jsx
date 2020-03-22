@@ -12,8 +12,8 @@ class ThemeConnect extends PureComponent {
     }
 }
 
-const mapContextToProps = context => ({
-    theme: context.theme
+const mapStateToProps = state => ({
+    theme: state.theme
 });
 
-export default ThemeContext.connect(mapContextToProps)(ThemeConnect);
+export default ThemeContext.connect(mapStateToProps)(ThemeConnect);
