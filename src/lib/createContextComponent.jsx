@@ -3,14 +3,18 @@ import React, {useContext} from 'react';
 
 const defaultComponentFunctions = [...Object.keys(new React.Component()), 'state'];
 
-// TODO: automatic default actions
-function getActions() {
-    Object.keys(this)
+const getActions = (componentInstance) => {
+    const actions = {};
+
+    Object.keys(componentInstance)
+        .filter(componentMembers => typeof componentInstance[componentMembers] === 'function')
         .filter(componentFunction => !defaultComponentFunctions.includes(componentFunction))
         .forEach((contextFunction) => {
-            this.state[contextFunction] = this[contextFunction];
+            actions[contextFunction] = componentInstance[contextFunction];
         });
-}
+
+    return actions;
+};
 
 const createConnectFunction = context =>
     (mapContextToProps = () => {}, mapActionsToProps = () => {}) =>
@@ -32,27 +36,38 @@ const createConnectFunction = context =>
             return ConnectComponent;
         };
 
-export const createContextComponent = (contextClass) => {
+
+const addComponentMembers = (ContextClass, context) => {
+    if (!new ContextClass().actions) {
+        // console.log('ContextClass.prototype', ContextClass.prototype);
+        ContextClass.prototype.actions = getActions(new ContextClass());
+    }
+    if (!ContextClass.prototype.render) {
+        ContextClass.prototype.render = function render() {
+            return (<context.Provider value={{state: this.state, actions: this.actions}}>
+                {this.props.children}
+            </context.Provider>);
+        };
+    }
+    if (!ContextClass.prototype.getContext) ContextClass.prototype.getContext = () => context;
+};
+
+const addStaticsMembers = (ContextClass, context) => {
+    ContextClass.getContext = () => context;
+    ContextClass.Consumer = context.Consumer;
+    ContextClass.connect = createConnectFunction(context);
+};
+
+export const createContextComponent = (ContextClass) => {
     const context = React.createContext();
     // Name for displaying in the components tree
-    context.displayName = contextClass.name;
+    context.displayName = ContextClass.name;
 
     // TODO: clone class prototype
 
-    if (!contextClass.prototype.render) {
-        contextClass.prototype.render = function render() {
-            return (
-                <context.Provider value={{state: this.state, actions: this.actions}}>
-                    {this.props.children}
-                </context.Provider>
-            );
-        };
-    }
-    contextClass.prototype.getContext = () => context;
-    contextClass.getContext = () => context;
+    addComponentMembers(ContextClass, context);
+    addStaticsMembers(ContextClass, context);
+    // console.log(ContextClass.prototype);
 
-    contextClass.Consumer = context.Consumer;
-    contextClass.connect = createConnectFunction(context);
-
-    return contextClass;
+    return ContextClass;
 };

@@ -6,6 +6,7 @@ class ThemeContext extends Component {
     state = {theme: 'dark', size: 10}
 
     setTheme = (theme) => {
+        console.log(this);
         this.setState({theme});
     }
 
@@ -13,7 +14,14 @@ class ThemeContext extends Component {
         this.setState({Size});
     }
 
-    actions = {setTheme: this.setTheme, setSize: this.setSize}
+    dddd() {}
+
+    // actions = {
+    //     setTheme: (Size) => {
+    //         this.setState({Size});
+    //     },
+    //     setSize: this.setSize
+    // }
 }
 
 export default createContextComponent(ThemeContext);
