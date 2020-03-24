@@ -65,25 +65,16 @@ module.exports = {
         // Es6
         'arrow-body-style': ['error', 'as-needed', {requireReturnForObjectLiteral: false}],
         'arrow-parens': ['warn', 'as-needed', {requireForBlockBody: true}],
-        'arrow-spacing': ['error', {
-            before: true,
-            after: true
-        }],
+        'arrow-spacing': ['error', {before: true, after: true}],
         'constructor-super': 'error',
-        'generator-star-spacing': ['error', {
-            before: false,
-            after: true
-        }],
+        'generator-star-spacing': ['error', {before: false, after: true}],
         'no-class-assign': 'error',
         'no-confusing-arrow': ['error', {allowParens: true}],
         'no-const-assign': 'error',
         'no-dupe-class-members': 'error',
         'no-duplicate-imports': 'error',
         'no-new-symbol': 'error',
-        'no-restricted-imports': ['off', {
-            paths: [],
-            patterns: []
-        }],
+        'no-restricted-imports': ['off', {paths: [], patterns: []}],
         'no-this-before-super': 'error',
         'no-useless-computed-key': 'error',
         'no-useless-constructor': 'error',
@@ -334,7 +325,7 @@ module.exports = {
         'object-curly-spacing': ['warn', 'never'],
         'object-curly-newline': ['warn', {consistent: true, multiline: true}],
         'object-property-newline': ['warn', {allowAllPropertiesOnSameLine: true}],
-        'one-var': ['warn', 'never'],
+        'one-var': ['warn', 'consecutive'],
         'one-var-declaration-per-line': ['warn', 'always'],
         'operator-assignment': ['warn', 'always'],
         'operator-linebreak': ['warn', 'before', {
@@ -344,7 +335,7 @@ module.exports = {
         }],
         'padded-blocks': ['warn', {
             blocks: 'never',
-            classes: 'never',
+            classes: 'always',
             switches: 'never'
         }, {
             allowSingleLineBlocks: true
@@ -454,7 +445,7 @@ module.exports = {
         'no-new-wrappers': 'error',
         'no-octal': 'error',
         'no-octal-escape': 'error',
-        'no-param-reassign': ['error', {
+        'no-param-reassign': ['warn', {
             props: true,
             ignorePropertyModificationsFor: [
                 'e', // For e.returnvalue

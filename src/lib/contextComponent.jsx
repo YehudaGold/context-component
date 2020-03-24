@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {createConnectFunction} from './helpers';
+import {getAllMethodNames} from './utility';
 import {getContext} from './contextsStorage';
-import {getInstanceMethodNames} from './utility';
+import {reactLifecycleNames} from './config';
 
-const getActions = (componentInstance, stop) => {
+
+const getActions = (componentInstance, baseClass) => {
     const actions = {};
-    console.log(getInstanceMethodNames(componentInstance, stop));
 
-    getInstanceMethodNames(componentInstance, Component)
+    getAllMethodNames(componentInstance, baseClass)
+        .filter(componentFunction => !reactLifecycleNames.includes(componentFunction))
         .forEach((contextFunction) => {
             actions[contextFunction] = componentInstance[contextFunction];
         });
@@ -15,7 +17,8 @@ const getActions = (componentInstance, stop) => {
     return actions;
 };
 
-export class contextComponent extends Component {
+export class ContextComponent extends Component {
+
     constructor(props) {
         super(props);
 
@@ -24,15 +27,15 @@ export class contextComponent extends Component {
     }
 
     render() {
-        const {componentContext} = this;
-        console.log(this);
-        const actions = this.actions || (this.actions = getActions(this, contextComponent));
+        const {componentContext, children, state} = this,
+              actions = this.actions || (this.actions = getActions(this, ContextComponent));
 
         return (
-            <componentContext.Provider value={{state: this.state, actions}}>
-                {this.props.children}
+            <componentContext.Provider value={{state, actions}}>
+                {children}
             </componentContext.Provider>);
     }
+
 }
 
 

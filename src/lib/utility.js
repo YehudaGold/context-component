@@ -1,25 +1,40 @@
-// Code from http://code.fitness/post/2016/01/javascript-enumerate-methods.html
+// Code idea from http://code.fitness/post/2016/01/javascript-enumerate-methods.html
 
-function hasMethod(obj, name) {
-    const desc = Object.getOwnPropertyDescriptor(obj, name);
+// Check for a method without running get property`s
+export const hasMethod = (object, methodName) => {
+    const descriptor = Object.getOwnPropertyDescriptor(object, methodName);
 
-    return !!desc && typeof desc.value === 'function';
-}
+    return !!descriptor && typeof descriptor.value === 'function';
+};
 
-export function getInstanceMethodNames(obj, stop) {
-    const array = [];
-    let proto = (obj);
+// Collecting all method names from the object prototype, stopping on baseClass prototype if exist
+export const getAllMethodNames = (object, baseClass) => {
+    const uniqMethodNames = new Set(),
+          baseProto = baseClass ? baseClass.prototype : null;
 
-    while (proto && proto !== stop.prototype) {
-        Object.getOwnPropertyNames(proto).forEach((name) => {
-            if (name !== 'constructor') {
-                if (hasMethod(proto, name)) {
-                    array.push(name);
-                }
+    for (let proto = object; proto && proto !== baseProto; proto = Object.getPrototypeOf(proto)) {
+        Object.getOwnPropertyNames(proto).forEach((propertyName) => {
+            if (propertyName !== 'constructor' && hasMethod(proto, propertyName)) {
+                uniqMethodNames.add(propertyName);
             }
         });
-        proto = Object.getPrototypeOf(proto);
     }
 
-    return array;
-}
+    return [...uniqMethodNames];
+};
+
+// Collecting all methods from the object prototype, stopping on baseClass prototype if exist
+export const getAllMethods = (object, baseClass) => {
+    const uniqMethods = {},
+          baseProto = baseClass ? baseClass.prototype : null;
+
+    for (let proto = object; proto && proto !== baseProto; proto = Object.getPrototypeOf(proto)) {
+        Object.getOwnPropertyNames(proto).forEach((propertyName) => {
+            if (propertyName !== 'constructor' && hasMethod(proto, propertyName)) {
+                uniqMethods[propertyName] = object[propertyName];
+            }
+        });
+    }
+
+    return uniqMethods;
+};
