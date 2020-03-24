@@ -25,14 +25,14 @@ export class ContextComponent extends Component {
         this.componentContext = getContext(contextName);
     }
 
-    static connect = createConnectFunction(this.componentContext)
+    static connect() { return createConnectFunction(getContext(this.name)); }
 
-    static Consumer = getContext(this.constructor.name).Consumer
+    static Consumer() { return getContext(this.name).Consumer; }
 
-    static componentContext = getContext(this.constructor.name)
+    static componentContext() { return getContext(this.name); }
 
     render() {
-        const {componentContext, children, state} = this,
+        const {componentContext, props: {children}, state} = this,
               actions = this.actions || (this.actions = getActions(this, ContextComponent));
 
         return (
@@ -42,14 +42,3 @@ export class ContextComponent extends Component {
     }
 
 }
-
-
-export const createHelpers = (componentClass) => {
-    const context = getContext(componentClass.name);
-
-    return {
-        getContext: () => context,
-        Consumer: context.Consumer,
-        connect: ''
-    };
-};

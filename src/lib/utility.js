@@ -8,11 +8,11 @@ export const hasMethod = (object, methodName) => {
 };
 
 // Collecting all method names from the object prototype, stopping on baseClass prototype if exist
-export const getAllMethodNames = (object, baseClass) => {
+export const getAllMethodNames = (object, BaseClass) => {
     const uniqMethodNames = new Set(),
-          baseProto = baseClass ? baseClass.prototype : null;
+          BaseProto = BaseClass ? BaseClass.prototype : null;
 
-    for (let proto = object; proto && proto !== baseProto; proto = Object.getPrototypeOf(proto)) {
+    for (let proto = object; proto && proto !== BaseProto; proto = Object.getPrototypeOf(proto)) {
         Object.getOwnPropertyNames(proto).forEach((propertyName) => {
             if (propertyName !== 'constructor' && hasMethod(proto, propertyName)) {
                 uniqMethodNames.add(propertyName);
@@ -24,11 +24,11 @@ export const getAllMethodNames = (object, baseClass) => {
 };
 
 // Collecting all methods from the object prototype, stopping on baseClass prototype if exist
-export const getAllMethods = (object, baseClass) => {
+export const getAllMethods = (object, BaseClass) => {
     const uniqMethods = {},
-          baseProto = baseClass ? baseClass.prototype : null;
+          BaseProto = BaseClass ? BaseClass.prototype : null;
 
-    for (let proto = object; proto && proto !== baseProto; proto = Object.getPrototypeOf(proto)) {
+    for (let proto = object; proto && proto !== BaseProto; proto = Object.getPrototypeOf(proto)) {
         Object.getOwnPropertyNames(proto).forEach((propertyName) => {
             if (propertyName !== 'constructor' && hasMethod(proto, propertyName)) {
                 uniqMethods[propertyName] = object[propertyName];

@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unused-state */
-import {Component} from 'react';
-import {createContextComponent} from '../lib';
+import {ContextComponent} from '../lib/contextComponent';
 
-class ThemeContext extends Component {
+export default class ThemeContext extends ContextComponent {
+
     state = {theme: 'dark', size: 10}
 
     setTheme = (theme) => {
@@ -16,12 +16,13 @@ class ThemeContext extends Component {
 
     dddd() {}
 
-    // actions = {
-    //     setTheme: (Size) => {
-    //         this.setState({Size});
-    //     },
-    //     setSize: this.setSize
-    // }
-}
+    /*
+     * Actions = {
+     *     setTheme: (Size) => {
+     *         this.setState({Size});
+     *     },
+     *     setSize: this.setSize
+     * }
+     */
 
-export default createContextComponent(ThemeContext);
+}

@@ -11,14 +11,13 @@ class ThemeAContext extends ContextComponent {
 
     fun() { console.log(this); }
 
-    arrowFun =() => { console.log(this); }
+    arrowFun = () => { console.log(this); }
 
     extendsFun() { console.log(this); }
 
 }
 
-
-export default class ThemeBContext extends ThemeAContext {
+export default class ThemeExtendContext extends ThemeAContext {
 
     state = {theme: 'dark', size: 10};
 
@@ -33,6 +32,3 @@ export default class ThemeBContext extends ThemeAContext {
      */
 
 }
-
-export const {connect, Consumer, componentContext} = ThemeBContext;
-console.log(new ThemeBContext());
