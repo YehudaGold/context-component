@@ -4,11 +4,10 @@ import {getAllMethodNames} from './utility';
 import {getContext} from './contextsStorage';
 import {reactLifecycleNames} from './config';
 
-
-const getActions = (componentInstance, baseClass) => {
+const getActions = (componentInstance, BaseClass) => {
     const actions = {};
 
-    getAllMethodNames(componentInstance, baseClass)
+    getAllMethodNames(componentInstance, BaseClass)
         .filter(componentFunction => !reactLifecycleNames.includes(componentFunction))
         .forEach((contextFunction) => {
             actions[contextFunction] = componentInstance[contextFunction];
@@ -25,6 +24,12 @@ export class ContextComponent extends Component {
         const contextName = this.constructor.name;
         this.componentContext = getContext(contextName);
     }
+
+    static connect = createConnectFunction(this.componentContext)
+
+    static Consumer = getContext(this.constructor.name).Consumer
+
+    static componentContext = getContext(this.constructor.name)
 
     render() {
         const {componentContext, children, state} = this,
@@ -45,6 +50,6 @@ export const createHelpers = (componentClass) => {
     return {
         getContext: () => context,
         Consumer: context.Consumer,
-        connect: createConnectFunction(context)
+        connect: ''
     };
 };

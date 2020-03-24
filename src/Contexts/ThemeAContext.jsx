@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
-import {ContextComponent, createHelpers} from '../lib/contextComponent';
+import {ContextComponent} from '../lib/contextComponent';
 
-export class ThemeAContext extends ContextComponent {
+class ThemeAContext extends ContextComponent {
 
     state = {theme: 'dark', size: 10};
 
@@ -18,7 +18,7 @@ export class ThemeAContext extends ContextComponent {
 }
 
 
-export class ThemeBContext extends ThemeAContext {
+export default class ThemeBContext extends ThemeAContext {
 
     state = {theme: 'dark', size: 10};
 
@@ -34,4 +34,5 @@ export class ThemeBContext extends ThemeAContext {
 
 }
 
-export default createHelpers(ThemeAContext);
+export const {connect, Consumer, componentContext} = ThemeBContext;
+console.log(new ThemeBContext());
