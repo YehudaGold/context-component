@@ -1,4 +1,4 @@
-export const reactLifecycleNames = [
+export const reactLifecycleMethodsNames = [
     'componentDidMount',
     'shouldComponentUpdate',
     'render',

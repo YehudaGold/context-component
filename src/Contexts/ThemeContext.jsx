@@ -3,27 +3,10 @@ import {ContextComponent} from '../lib/contextComponent';
 
 export default class ThemeContext extends ContextComponent {
 
-    state = {theme: 'dark', size: 10}
+    state = {theme: 'dark'}
 
     toggleTheme = () => {
         this.setState(state => (state.theme === 'dark' ? {theme: 'light'} : {theme: 'dark'}));
     }
-
-    setSize = (Size) => {
-        this.setState({Size});
-    }
-
-    async func() {
-        this.setState({theme: 'dark'});
-    }
-
-    /*
-     * Actions = {
-     *     toggleTheme: (Size) => {
-     *         this.setState({Size});
-     *     },
-     *     setSize: this.setSize
-     * }
-     */
 
 }

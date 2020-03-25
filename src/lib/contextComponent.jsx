@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 
+import {reactLifecycleMethodsNames} from './config';
+import {getContext} from './contextsStorage';
 import {createConnectFunction} from './helpers';
 import {getAllMethodNames} from './utility';
-import {getContext} from './contextsStorage';
-import {reactLifecycleNames} from './config';
 
 const getActions = (componentInstance, BaseClass) => {
     const actions = {};
 
     getAllMethodNames(componentInstance, BaseClass)
-        .filter(componentFunction => !reactLifecycleNames.includes(componentFunction))
-        .forEach((contextFunction) => {
-            actions[contextFunction] = componentInstance[contextFunction];
+        .filter(componentMethodNames => !reactLifecycleMethodsNames.includes(componentMethodNames))
+        .forEach((contextActionNames) => {
+            actions[contextActionNames] = componentInstance[contextActionNames];
         });
 
     return actions;
@@ -19,13 +19,13 @@ const getActions = (componentInstance, BaseClass) => {
 
 export class ContextComponent extends Component {
 
-    static connect(mapContextToProps, mapActionsToProps) {
-        return createConnectFunction(this.componentContext)(mapContextToProps, mapActionsToProps);
-    }
+    static get componentContext() { return getContext(this.name); }
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static get componentContext() { return getContext(this.name); }
+    static connect(mapContextToProps, mapActionsToProps) {
+        return createConnectFunction(this.componentContext)(mapContextToProps, mapActionsToProps);
+    }
 
     constructor(props) {
         super(props);

@@ -1,4 +1,4 @@
-// Run 'npm i -g eslint eslint-plugin-react eslint-plugin-react-hooks babel-eslint'
+// Run 'npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks babel-eslint
 
 module.exports = {
     env: {
@@ -15,7 +15,17 @@ module.exports = {
         ecmaVersion: 2018,
         sourceType: 'module'
     },
-    plugins: ['react', 'react-hooks'],
+    settings: {
+        "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      }
+    },
+    plugins: ['import', 'react', 'react-hooks'],
     rules: {
         // Common errors
         'for-direction': 'error',
@@ -115,7 +125,7 @@ module.exports = {
         'prefer-template': 'error',
         'require-yield': 'error',
         'rest-spread-spacing': ['error', 'never'],
-        'sort-imports': ['warn', {
+        'sort-imports': ['off', { // Import plugin rules
             ignoreCase: false,
             ignoreDeclarationSort: false,
             ignoreMemberSort: false,
@@ -525,6 +535,90 @@ module.exports = {
         'wrap-iife': ['error', 'outside', {functionPrototypeMethods: false}],
         yoda: 'error',
 
+        // Import
+        'import/default': 'warn',
+        'import/dynamic-import-chunkname': ['off', {importFunctions: [], webpackChunknameFormat: '[0-9a-zA-Z-_/.]+'}],
+        'import/export': 'error',
+        'import/extensions': ['warn', 'never', {
+            js: 'never',
+            jsx: 'never'
+        }],
+        'import/exports-last': 'off',
+        'import/first': 'warn',
+        'import/group-exports': 'off',
+        'import/max-dependencies': ['warn', {max: 10}],
+        'import/named': 'error',
+        'import/namespace': 'error',
+        'import/newline-after-import': 'warn',
+        'import/no-absolute-path': 'warn',
+        'import/no-anonymous-default-export': ['off', {
+            allowArray: false,
+            allowArrowFunction: false,
+            allowAnonymousClass: false,
+            allowAnonymousFunction: false,
+            allowLiteral: false,
+            allowObject: false
+        }],
+        'import/no-amd': 'error',
+        'import/no-commonjs': 'off',
+        'import/no-cycle': ['error', {maxDepth: 3}],
+        'import/no-default-export': 'off',
+        'import/no-deprecated': 'off',
+        'import/no-duplicates': 'error',
+        'import/no-dynamic-require': 'error',
+        'import/no-extraneous-dependencies': ['error', {
+            devDependencies: [
+                'test/**', // Tape, common npm pattern
+                'tests/**', // Also common npm pattern
+                'spec/**', // Mocha, rspec-like pattern
+                '**/__tests__/**', // Jest pattern
+                '**/__mocks__/**', // Jest pattern
+                'test.{js,jsx}', // Repos with a single test file
+                'test-*.{js,jsx}', // Repos with multiple top-level test files
+                '**/*{.,_}{test,spec}.{js,jsx}', // Tests where the extension or filename suffix denotes that it is a test
+                '**/jest.config.js', // Jest config
+                '**/jest.setup.js', // Jest setup
+                '**/vue.config.js', // Vue-cli config
+                '**/webpack.config.js', // Webpack config
+                '**/webpack.config.*.js', // Webpack config
+                '**/rollup.config.js', // Rollup config
+                '**/rollup.config.*.js', // Rollup config
+                '**/gulpfile.js', // Gulp config
+                '**/gulpfile.*.js', // Gulp config
+                '**/Gruntfile{,.js}' // Grunt config
+            ],
+            optionalDependencies: true
+        }],
+        'import/no-internal-modules': ['off', {allow: []}],
+        'import/no-mutable-exports': 'error',
+        'import/no-named-as-default-member': 'error',
+        'import/no-named-as-default': 'error',
+        'import/no-named-default': 'warn',
+        'import/no-named-export': 'off',
+        'import/no-namespace': 'off',
+        'import/no-nodejs-modules': 'off',
+        'import/no-relative-parent-imports': 'off',
+        'import/no-restricted-paths': 'off',
+        'import/no-self-import': 'error',
+        'import/no-unassigned-import': 'off',
+        'import/no-unused-modules': ['warn', {
+            missingExports: false,
+            unusedExports: true
+        }],
+        'import/no-unresolved': ['error', {commonjs: true, caseSensitive: true}],
+        'import/no-useless-path-segments': ['error', {commonjs: true, noUselessIndex: true}],
+        'import/no-webpack-loader-syntax': 'error',
+        'import/order': ['warn', {
+            alphabetize: {
+                order: 'asc',
+                caseInsensitive: true
+            },
+            groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+            'newlines-between': 'ignore'
+        }],
+        'import/prefer-default-export': 'warn',
+        'import/unambiguous': 'warn',
+
         // React
         'jsx-quotes': ['warn', 'prefer-double'],
         'react-hooks/exhaustive-deps': 'warn',
@@ -608,8 +702,8 @@ module.exports = {
                 'instance-variables',
                 'lifecycle',
                 'everything-else',
-                'render',
-            ],
+                'render'
+            ]
         }],
         'react/sort-prop-types': 'warn',
         'react/state-in-constructor': ['error', 'never'],

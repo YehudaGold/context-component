@@ -1,1 +1,1 @@
-export {createContextComponent} from './createContextComponent';
+export {ContextComponent} from './contextComponent';
