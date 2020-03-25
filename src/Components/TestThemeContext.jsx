@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ThemeContext from '../Contexts/ThemeContext';
+import TestThemeContextSubProvider from './TestThemeContextSubProvider';
 import FunctionalThemeConsumer from './Theme/FunctionalThemeConsumer';
 import ThemeConnect from './Theme/ThemeConnect';
 import ThemeConsumer from './Theme/ThemeConsumer';
@@ -16,6 +17,7 @@ const TestThemeContext = () =>
             <ThemeConsumer />
             <ThemeContextType />
             <ThemeUseContext />
+            <TestThemeContextSubProvider />
         </div>
     </ThemeContext>;
 
