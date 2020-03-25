@@ -1,14 +1,11 @@
 import React from 'react';
+
 import ThemeContext from '../Contexts/ThemeContext';
 
-const FunctionalThemeConsumer = () => {
-    const Cco = ThemeContext.Consumer();
-
-    return (
-        <Cco>
-            {context => <div className={context.state.theme}>FunctionalThemeConsumer</div>}
-        </Cco>
-    );
-};
+const FunctionalThemeConsumer = () => (
+    <ThemeContext.Consumer>
+        {context => <div className={context.state.theme}>FunctionalThemeConsumer</div>}
+    </ThemeContext.Consumer>
+);
 
 export default FunctionalThemeConsumer;

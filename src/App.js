@@ -7,11 +7,11 @@ import ThemeConsumer from './Components/ThemeConsumer';
 import ThemeContext from './Contexts/ThemeContext';
 import ThemeContextType from './Components/ThemeContextType';
 import ThemeUseContext from './Components/ThemeUseContext';
-import ThemeInherentContext from './Contexts/ThemeInherentContext';
+import ThemeExtendContext from './Contexts/ThemeExtendContext';
 
 const App = () => (
     <div className="App">
-        {/* <ThemeInherentContext /> */}
+        {/* <ThemeExtendContext /> */}
         <ThemeContext>
             <div className="consumers-list">
                 <ThemeConsumer />

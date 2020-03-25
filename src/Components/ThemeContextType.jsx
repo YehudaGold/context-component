@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+
 import ThemeContext from '../Contexts/ThemeContext';
 
 class ThemeContextType extends Component {
 
-    static contextType = ThemeContext.componentContext();
+    static contextType = ThemeContext.componentContext;
 
     render() {
         return (

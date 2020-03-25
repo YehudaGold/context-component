@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+
 import ThemeContext from '../Contexts/ThemeContext';
 import ToggleTheme from './ToggleTheme';
 
@@ -21,12 +22,7 @@ class ThemeConnect extends PureComponent {
 
 }
 
-const mapStateToProps = state => ({
-    theme: state.theme
-}),
+const mapStateToProps = state => ({theme: state.theme}),
+      mapActionToProps = actions => ({setTheme: actions.setTheme});
 
-      mapActionToProps = actions => ({
-          setTheme: actions.setTheme
-      });
-
-export default ThemeContext.connect()(mapStateToProps, mapActionToProps)(ThemeConnect);
+export default ThemeContext.connect(mapStateToProps, mapActionToProps)(ThemeConnect);

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {createConnectFunction} from './helpers';
 import {getAllMethodNames} from './utility';
 import {getContext} from './contextsStorage';
@@ -18,18 +19,18 @@ const getActions = (componentInstance, BaseClass) => {
 
 export class ContextComponent extends Component {
 
-    constructor(props) {
-        super(props);
-
-        const contextName = this.constructor.name;
-        this.componentContext = getContext(contextName);
+    static connect(mapContextToProps, mapActionsToProps) {
+        return createConnectFunction(this.componentContext)(mapContextToProps, mapActionsToProps);
     }
 
-    static connect() { return createConnectFunction(getContext(this.name)); }
+    static get Consumer() { return this.componentContext.Consumer; }
 
-    static Consumer() { return getContext(this.name).Consumer; }
+    static get componentContext() { return getContext(this.name); }
 
-    static componentContext() { return getContext(this.name); }
+    constructor(props) {
+        super(props);
+        this.componentContext = this.constructor.componentContext;
+    }
 
     render() {
         const {componentContext, props: {children}, state} = this,
