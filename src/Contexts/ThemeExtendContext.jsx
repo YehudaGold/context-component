@@ -5,7 +5,7 @@ class ThemeAContext extends ContextComponent {
 
     state = {theme: 'dark', size: 10};
 
-    setTheme = (Size) => {
+    toggleTheme = (Size) => {
         this.setState({Size});
     }
 
@@ -25,7 +25,7 @@ export default class ThemeExtendContext extends ThemeAContext {
 
     /*
      * Actions = {
-     *     setTheme: (Size) => {
+     *     toggleTheme: (Size) => {
      *         this.setState({Size});
      *     }
      * };

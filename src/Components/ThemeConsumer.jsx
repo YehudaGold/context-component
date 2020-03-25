@@ -1,13 +1,21 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/prefer-stateless-function */
 import React, {Component} from 'react';
 
 import ThemeContext from '../Contexts/ThemeContext';
+import ToggleTheme from './ToggleTheme';
 
 class ThemeConsumer extends Component {
 
     render() {
         return (
             <ThemeContext.Consumer>
-                {context => <div className={context.state.theme}>ThemeConsumer</div>}
+                {({actions, state}) => (
+                    <div className={state.theme}>
+                        ThemeConsumer
+                        <ToggleTheme toggleTheme={actions.toggleTheme} />
+                    </div>
+                )}
             </ThemeContext.Consumer>
         );
     }

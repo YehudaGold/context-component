@@ -1,19 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ToggleTheme = ({theme, setTheme}) => {
-    const handleToggle = React.useCallback(() => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
-    }, [setTheme, theme]);
-
-    return (
-        <div className="toggle" onClick={handleToggle}>toggle</div>
-    );
-};
+const ToggleTheme = ({toggleTheme}) => (
+    <div className="toggle" onClick={toggleTheme}>toggle</div>
+);
 
 ToggleTheme.propTypes = {
-    setTheme: PropTypes.func.isRequired,
-    theme: PropTypes.string.isRequired
+    toggleTheme: PropTypes.func.isRequired
 };
 
-export default ToggleTheme;
+export default React.memo(ToggleTheme);

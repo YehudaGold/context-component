@@ -7,15 +7,17 @@ import ToggleTheme from './ToggleTheme';
 class ThemeConnect extends PureComponent {
 
     static propTypes = {
-        setTheme: PropTypes.func.isRequired,
-        theme: PropTypes.string.isRequired
+        theme: PropTypes.string.isRequired,
+        toggleTheme: PropTypes.func.isRequired
     }
 
     render() {
+        const {toggleTheme, theme} = this.props;
+
         return (
-            <div className={this.props.theme}>
+            <div className={theme}>
                 ThemeConnect
-                <ToggleTheme setTheme={this.props.setTheme} theme={this.props.theme} />
+                <ToggleTheme toggleTheme={toggleTheme} />
             </div>
         );
     }
@@ -23,6 +25,6 @@ class ThemeConnect extends PureComponent {
 }
 
 const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({setTheme: actions.setTheme});
+      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
 
 export default ThemeContext.connect(mapStateToProps, mapActionToProps)(ThemeConnect);

@@ -1,12 +1,16 @@
 import React, {useContext} from 'react';
 
 import ThemeContext from '../Contexts/ThemeContext';
+import ToggleTheme from './ToggleTheme';
 
 const ThemeUseContext = () => {
-    const {theme} = useContext(ThemeContext.componentContext).state;
+    const {actions, state} = useContext(ThemeContext.componentContext);
 
     return (
-        <div className={theme}>ThemeUseContext</div>
+        <div className={state.theme}>
+            ThemeUseContext
+            <ToggleTheme toggleTheme={actions.toggleTheme} />
+        </div>
     );
 };
 

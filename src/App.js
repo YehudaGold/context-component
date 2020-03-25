@@ -11,16 +11,19 @@ import ThemeUseContext from './Components/ThemeUseContext';
 
 const App = () => (
     <div className="App">
-        <ThemeExtendContext />
         <ThemeContext>
+            ThemeContext
             <div className="consumers-list">
-                <ThemeConsumer />
                 <FunctionalThemeConsumer />
-                <ThemeContextType />
                 <ThemeConnect />
+                <ThemeConsumer />
+                <ThemeContextType />
                 <ThemeUseContext />
             </div>
         </ThemeContext>
+        <ThemeExtendContext>
+            ThemeExtendContext
+        </ThemeExtendContext>
     </div>
 );
 
