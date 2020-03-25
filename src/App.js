@@ -6,12 +6,12 @@ import ThemeConnect from './Components/ThemeConnect';
 import ThemeConsumer from './Components/ThemeConsumer';
 import ThemeContext from './Contexts/ThemeContext';
 import ThemeContextType from './Components/ThemeContextType';
-import ThemeUseContext from './Components/ThemeUseContext';
 import ThemeExtendContext from './Contexts/ThemeExtendContext';
+import ThemeUseContext from './Components/ThemeUseContext';
 
 const App = () => (
     <div className="App">
-        {/* <ThemeExtendContext /> */}
+        <ThemeExtendContext />
         <ThemeContext>
             <div className="consumers-list">
                 <ThemeConsumer />
