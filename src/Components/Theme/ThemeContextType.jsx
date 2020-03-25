@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import ThemeContext from '../Contexts/ThemeContext';
-import ToggleTheme from './ToggleTheme';
+import ThemeContext from '../../Contexts/ThemeContext';
+import ToggleTheme from './Actions/ToggleTheme';
 
 class ThemeContextType extends Component {
 

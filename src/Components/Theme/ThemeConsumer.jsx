@@ -2,8 +2,8 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, {Component} from 'react';
 
-import ThemeContext from '../Contexts/ThemeContext';
-import ToggleTheme from './ToggleTheme';
+import ThemeContext from '../../Contexts/ThemeContext';
+import ToggleTheme from './Actions/ToggleTheme';
 
 class ThemeConsumer extends Component {
 

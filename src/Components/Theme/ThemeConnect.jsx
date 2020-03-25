@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-import ThemeContext from '../Contexts/ThemeContext';
-import ToggleTheme from './ToggleTheme';
+import ThemeContext from '../../Contexts/ThemeContext';
+import ToggleTheme from './Actions/ToggleTheme';
 
 class ThemeConnect extends PureComponent {
 

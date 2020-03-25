@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ThemeContext from '../Contexts/ThemeContext';
-import ToggleTheme from './ToggleTheme';
+import ThemeContext from '../../Contexts/ThemeContext';
+import ToggleTheme from './Actions/ToggleTheme';
 
 const FunctionalThemeConsumer = () => (
     <ThemeContext.Consumer>
