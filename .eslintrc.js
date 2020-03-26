@@ -648,7 +648,7 @@ module.exports = {
         'react/jsx-indent': ['warn', 4],
         'react/jsx-key': 'error',
         'react/jsx-max-props-per-line': ['error', {maximum: 3, when: 'multiline'}],
-        'react/jsx-no-bind': ['error', {allowArrowFunctions: false, allowBind: false, ignoreRefs: true}],
+        'react/jsx-no-bind': ['error', {allowArrowFunctions: false, allowBind: false, ignoreRefs: false}],
         'react/jsx-no-comment-textnodes': 'error',
         'react/jsx-no-duplicate-props': 'error',
         'react/jsx-no-literals': 'off',

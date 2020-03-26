@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ThemeContext from '../Contexts/ThemeContext';
-import TestThemeContextSubProvider from './TestThemeContextSubProvider';
+import TestSubThemeContext from './TestSubThemeContext';
 import FunctionalThemeConsumer from './Theme/FunctionalThemeConsumer';
 import ThemeConnect from './Theme/ThemeConnect';
 import ThemeConsumer from './Theme/ThemeConsumer';
@@ -10,14 +10,14 @@ import ThemeUseContext from './Theme/ThemeUseContext';
 
 const TestThemeContext = () =>
     <ThemeContext>
-        ThemeContext
         <div className="consumers-list">
+            TestThemeContext - test all different consumer ways
             <FunctionalThemeConsumer />
             <ThemeConnect />
             <ThemeConsumer />
             <ThemeContextType />
             <ThemeUseContext />
-            <TestThemeContextSubProvider />
+            <TestSubThemeContext />
         </div>
     </ThemeContext>;
 

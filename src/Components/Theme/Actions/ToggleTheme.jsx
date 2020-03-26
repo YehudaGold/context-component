@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const ToggleTheme = ({toggleTheme}) => (
-    <div className="toggle" onClick={toggleTheme}>toggle</div>
+    <div className="button" onClick={toggleTheme}>toggle</div>
 );
 
 ToggleTheme.propTypes = {

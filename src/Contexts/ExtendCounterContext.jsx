@@ -5,38 +5,49 @@ class CounterContext extends ContextComponent {
 
     state = {counter: 0};
 
-    increase = () => {
+    constructor(props) {
+        super(props);
+
+        this.increase = this.increase.bind(this);
+        this.decrease = this.decrease.bind(this);
+    }
+
+    increase() {
         this.setState(state => ({counter: state.counter + 1}));
     }
 
-    decrease = () => {
+    decrease() {
         this.setState(state => ({counter: state.counter - 1}));
     }
 
-    fun() { console.log(this); }
+    // Fun() { console.log(this); }
 
-    arrowFun = () => { console.log(this); }
+    // arrowFun = () => { console.log(this); }
 
-    extendsFun() { console.log(this); }
+    // extendsFun() { console.log(this); }
 
-    async func() {
-        this.setState({theme: 'dark'});
-    }
+    /*
+     * async func() {
+     *     this.setState({theme: 'dark'});
+     * }
+     */
 
 }
 
 export default class ExtendCounterContext extends CounterContext {
 
-    // State = {counter: 0};
+    constructor(props) {
+        super(props);
 
-    extendsFun() { console.log(this); }
+        this.setToZero = this.setToZero.bind(this);
+    }
 
-    /*
-     * Actions = {
-     *     toggleTheme: (Size) => {
-     *         this.setState({Size});
-     *     }
-     * };
-     */
+    decrease() {
+        this.setState(state => ({counter: state.counter - 2}));
+    }
+
+    setToZero() {
+        this.setState({counter: 0});
+    }
 
 }
