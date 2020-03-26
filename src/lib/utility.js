@@ -1,7 +1,7 @@
 // Code idea from http://code.fitness/post/2016/01/javascript-enumerate-methods.html
 
 // Check for a method without running get property`s
-export const hasMethod = (object, methodName) => {
+const hasMethod = (object, methodName) => {
     const descriptor = Object.getOwnPropertyDescriptor(object, methodName);
 
     return !!descriptor && typeof descriptor.value === 'function';
@@ -23,18 +23,7 @@ export const getAllMethodNames = (object, BaseClass) => {
     return [...uniqMethodNames];
 };
 
-// Collecting all methods from the object prototype, stopping on baseClass prototype if exist
-export const getAllMethods = (object, BaseClass) => {
-    const uniqMethods = {},
-          BaseProto = BaseClass ? BaseClass.prototype : null;
 
-    for (let proto = object; proto && proto !== BaseProto; proto = Object.getPrototypeOf(proto)) {
-        Object.getOwnPropertyNames(proto).forEach((propertyName) => {
-            if (propertyName !== 'constructor' && hasMethod(proto, propertyName)) {
-                uniqMethods[propertyName] = object[propertyName];
-            }
-        });
-    }
-
-    return uniqMethods;
-};
+// GetDisplayName from https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
+export const getDisplayName = WrappedComponent =>
+    WrappedComponent.displayName || WrappedComponent.name || 'Component';

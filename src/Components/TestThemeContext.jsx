@@ -11,13 +11,11 @@ const TestThemeContext = props =>
     <ThemeContext>
         <div className="consumers-list">
             TestThemeContext - test all different consumer ways
-
             <FunctionalThemeConsumer />
             <ThemeConnect />
             <ThemeConsumer />
             <ThemeContextType />
             <ThemeUseContext />
-
             {props.children}
         </div>
     </ThemeContext>;

@@ -1,3 +1,2 @@
-import ContextComponent from './contextComponent';
-
-export default ContextComponent;
+export {default} from './contextComponent';
+export {connect} from './connect';

@@ -390,7 +390,7 @@ module.exports = {
         'no-delete-var': 'error',
         'no-label-var': 'error',
         'no-restricted-globals': ['error', 'isFinite', 'isNaN'],
-        'no-shadow': 'error',
+        'no-shadow': 'warn',
         'no-shadow-restricted-names': 'error',
         'no-undef': 'error',
         'no-undef-init': 'error',
@@ -705,7 +705,7 @@ module.exports = {
                 'render'
             ]
         }],
-        'react/sort-prop-types': 'warn',
+        'react/sort-prop-types': ['warn', {ignoreCase: true, requiredFirst: false}],
         'react/state-in-constructor': ['error', 'never'],
         'react/static-property-placement': 'error',
         'react/style-prop-object': 'error',
