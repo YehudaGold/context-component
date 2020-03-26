@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unused-state */
-import {ContextComponent} from '../lib/contextComponent';
+import ContextComponent from '../lib';
 
 export default class ThemeContext extends ContextComponent {
 

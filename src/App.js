@@ -3,11 +3,15 @@ import './App.css';
 import React from 'react';
 
 import TestExtendCounterContext from './Components/TestExtendCounterContext';
+import TestSubThemeContext from './Components/TestSubThemeContext';
 import TestThemeContext from './Components/TestThemeContext';
 
 const App = () => (
     <div className="App">
-        <TestThemeContext />
+        <TestThemeContext>
+            <TestSubThemeContext />
+        </TestThemeContext>
+
         <TestExtendCounterContext />
     </div>
 );

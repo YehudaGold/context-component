@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {reactLifecycleMethodsNames} from './config';
 import {getContext} from './contextsStorage';
-import {createConnectFunction} from './helpers';
+import createConnectFunction from './createConnectFunction';
 import {getAllMethodNames} from './utility';
 
 const getActions = (componentInstance, BaseClass) => {
@@ -17,7 +17,7 @@ const getActions = (componentInstance, BaseClass) => {
     return actions;
 };
 
-export class ContextComponent extends Component {
+export default class ContextComponent extends Component {
 
     static get componentContext() { return getContext(this.name); }
 

@@ -1,1 +1,3 @@
-export {ContextComponent} from './contextComponent';
+import ContextComponent from './contextComponent';
+
+export default ContextComponent;

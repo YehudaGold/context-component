@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
-import {getContext} from './contextsStorage';
 
-export const createConnectFunction = context =>
+const createConnectFunction = context =>
     (mapContextToProps = () => {}, mapActionsToProps = () => {}) =>
         (WrappedComponent) => {
             const ConnectComponent = (props) => {
@@ -21,9 +20,4 @@ export const createConnectFunction = context =>
             return ConnectComponent;
         };
 
-
-// TODO: move to other file
-
-export const context = key => getContext(key);
-export const Consumer = key => getContext(key).Consumer;
-export const connect = key => createConnectFunction(getContext(key));
+export default createConnectFunction;
