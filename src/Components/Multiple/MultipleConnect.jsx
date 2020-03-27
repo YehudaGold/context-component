@@ -44,7 +44,7 @@ const mapStateToProps = ({CounterContext, ThemeContext}) => ({
       });
 
 export default connect(
-    [ThemeContext, CounterContext],
+    [CounterContext, ThemeContext],
     mapStateToProps,
     mapActionToProps
 )(MultipleConnect);

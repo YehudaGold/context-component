@@ -5,6 +5,8 @@ import {getDisplayName} from './utility';
 
 const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
     (WrappedComponent) => {
+        // TODO: add array error
+
         const ConsumeContext = ({ContextComponents, contexts, ...propsRest}) => {
             const [ContextComponent, ...ContextComponentsRest] = ContextComponents,
                   {actions, state} = useContext(ContextComponent.componentContext);
@@ -35,7 +37,7 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
             contexts: {state: {}, actions: {}}
         };
         ConsumeContext.propTypes = {
-            ContextComponents: PropTypes.array,
+            ContextComponents: PropTypes.arrayOf(PropTypes.elementType),
             contexts: PropTypes.object
         };
 

@@ -2,16 +2,15 @@ import React from 'react';
 
 import CounterContext from '../Contexts/CounterContext';
 import ThemeContext from '../Contexts/ThemeContext';
+import {Provider} from '../lib';
 import MultipleConnect from './Multiple/MultipleConnect';
 
 const TestMultipleContexts = () =>
-    <ThemeContext>
-        <CounterContext>
-            <div className="consumers-list">
-                TestMultipleContexts - test connect([ThemeContext, CounterContext]) api
-                <MultipleConnect />
-            </div>
-        </CounterContext>
-    </ThemeContext>;
+    <Provider ContextComponents={[CounterContext, ThemeContext]}>
+        <div className="consumers-list">
+            TestMultipleContexts - test Provider/connect to multiple components api
+            <MultipleConnect />
+        </div>
+    </Provider>;
 
 export default TestMultipleContexts;

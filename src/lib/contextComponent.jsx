@@ -39,7 +39,8 @@ export default class ContextComponent extends Component {
         return (
             <componentContext.Provider value={{state, actions}}>
                 {children}
-            </componentContext.Provider>);
+            </componentContext.Provider>
+        );
     }
 
 }
