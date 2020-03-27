@@ -1,68 +1,157 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# test ContextComponent
 
-In the project directory, you can run:
+this  project uses ContextComponent lib, and show examples to usage for testing
 
-### `npm start`
+## run
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+to open the react app run
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+npm start
+```
 
-### `npm test`
+## ContextComponent basic usage
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### creating ContextComponent
 
-### `npm run build`
+creating ContextComponent, component with state and functions you want to share in you app:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ThemeContext.jsx
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```jsx
+import ContextComponent from 'ContextComponent';
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default class ThemeContext extends ContextComponent {
 
-### `npm run eject`
+    state = {theme: 'dark'}
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    toggleTheme = () => {
+        this.setState(state => (state.theme === 'dark' ? {theme: 'light'} : {theme: 'dark'}));
+    }
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+}
+```
+### providing ContextComponent
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+providing the context to the react tree, by rendering the component:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+App.jsx
 
-## Learn More
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export const App = () => (
+    <ThemeContext>
+        <otherComponent />
+    </ThemeContext>;
+);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+### consuming ContextComponent
 
-### Code Splitting
+consuming the context in component, by rendering the consumer:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+otherComponent.jsx
 
-### Analyzing the Bundle Size
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+export const otherComponent = () => (
+    <ThemeContext.Consumer>
+        {context =>
+            <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+        }
+    </ThemeContext.Consumer>
+);
+```
+or by contextType:
+```jsx
+import React, {Component} from 'react';
+import ThemeContext from './ThemeContext';
 
-### Making a Progressive Web App
+export class otherComponent extends Component {
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+    static contextType = ThemeContext.componentContext;
 
-### Advanced Configuration
+    render() {
+        const {actions, state} = this.context;
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+        return <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+    }
 
-### Deployment
+}
+```
+or by useContext()(:
+```jsx
+import React, {useContext} from 'react';
+import ThemeContext from './ThemeContext';
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+export const otherComponent = () => {
+    const {actions, state} = useContext(ThemeContext.componentContext);
 
-### `npm run build` fails to minify
+    return <div className={context.state.theme} onClick={context.actions.toggleTheme} />;
+};
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+or by the connect api (like react-redux connect):
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
+
+const otherComponent = ({toggleTheme, theme}) =>
+    <div className={theme} onClick={toggleTheme} />;
+
+const mapStateToProps = state => ({theme: state.theme}),
+      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+
+export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
+```
+
+## multiple contexts
+you can use the Provider component to provide multiple contexts together:
+
+App.jsx
+
+```jsx
+import React from 'react';
+import {Provider} from 'ContextComponent';
+import ThemeContext from './ThemeContext';
+import CounterContext from './CounterContext';
+
+export const App = () => (
+    <Provider ContextComponents={[CounterContext, ThemeContext]}>
+        <otherComponent />
+    </Provider>;
+);
+```
+and consume them together with connect HOC:
+
+otherComponent.jsx
+
+```jsx
+import React from 'react';
+import {connect} from 'ContextComponent';
+import ThemeContext from './ThemeContext';
+import CounterContext from './CounterContext';
+
+const otherComponent = ({toggleTheme, increase, counter, theme}) =>
+    <>
+        <div className={theme} onClick={toggleTheme} />
+        <div onClick={increase}>{counter}</div>
+    </>;
+
+const mapStateToProps = ({CounterContext, ThemeContext}) => ({
+    counter: CounterContext.counter,
+    theme: ThemeContext.theme
+});
+
+const mapActionToProps = ({CounterContext, ThemeContext}) => ({
+    increase: CounterContext.increase,
+    toggleTheme: ThemeContext.toggleTheme
+});
+
+export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
+```
