@@ -8,7 +8,7 @@ const TestMultipleContexts = () =>
     <ThemeContext>
         <CounterContext>
             <div className="consumers-list">
-                TestMultipleContexts - test connect([ContextComponent, ContextComponent]) api
+                TestMultipleContexts - test connect([ThemeContext, CounterContext]) api
                 <MultipleConnect />
             </div>
         </CounterContext>

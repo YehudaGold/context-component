@@ -658,7 +658,7 @@ module.exports = {
         'react/jsx-pascal-case': 'error',
         'react/jsx-props-no-multi-spaces': 'error',
         'react/jsx-props-no-spreading': 'off',
-        'react/jsx-sort-default-props': 'warn',
+        'react/jsx-sort-default-props': ['warn', {ignoreCase: true}],
         'react/jsx-sort-props': 'warn',
         'react/jsx-tag-spacing': ['warn', {afterOpening: 'never', beforeClosing: 'never', beforeSelfClosing: 'always', closingSlash: 'never'}],
         'react/jsx-uses-react': 'warn',
