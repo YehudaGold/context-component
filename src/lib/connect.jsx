@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {getDisplayName} from './utility';
+import {getDisplayName} from './utilities/generics';
 
 const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
     (WrappedComponent) => {
-        // TODO: add array error
-
         const ConsumeContext = ({ContextComponents, contexts, ...propsRest}) => {
             const [ContextComponent, ...ContextComponentsRest] = ContextComponents,
                   {actions, state} = useContext(ContextComponent.componentContext);

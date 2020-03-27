@@ -10,7 +10,7 @@ import ThemeUseContext from './Theme/ThemeUseContext';
 const TestThemeContext = props =>
     <ThemeContext>
         <div className="consumers-list">
-            TestThemeContext - test all different consumer ways
+            TestThemeContext - test all different consume context ways
             <FunctionalThemeConsumer />
             <ThemeConnect />
             <ThemeConsumer />

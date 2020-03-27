@@ -1,30 +1,17 @@
 import React, {Component} from 'react';
 
-import {reactLifecycleMethodsNames} from './config';
-import {getContext} from './contextsStorage';
-import createConnectFunction from './createConnectFunction';
-import {getAllMethodNames} from './utility';
+import createComponentConnect from './createComponentConnect';
+import {getContext} from './utilities/contextsStorage';
+import getComponentActions from './utilities/getComponentActions';
 
-const getActions = (componentInstance, BaseClass) => {
-    const actions = {};
-
-    getAllMethodNames(componentInstance, BaseClass)
-        .filter(componentMethodNames => !reactLifecycleMethodsNames.includes(componentMethodNames))
-        .forEach((contextActionNames) => {
-            actions[contextActionNames] = componentInstance[contextActionNames];
-        });
-
-    return actions;
-};
-
-export default class ContextComponent extends Component {
+class ContextComponent extends Component {
 
     static get componentContext() { return getContext(this.name); }
 
     static get Consumer() { return this.componentContext.Consumer; }
 
     static connect(mapContextToProps, mapActionsToProps) {
-        return createConnectFunction(this.componentContext)(mapContextToProps, mapActionsToProps);
+        return createComponentConnect(this.componentContext, mapContextToProps, mapActionsToProps);
     }
 
     constructor(props) {
@@ -34,7 +21,7 @@ export default class ContextComponent extends Component {
 
     render() {
         const {componentContext, props: {children}, state} = this,
-              actions = this.actions || (this.actions = getActions(this, ContextComponent));
+              actions = this.actions || (this.actions = getComponentActions(this, ContextComponent));
 
         return (
             <componentContext.Provider value={{state, actions}}>
@@ -44,3 +31,5 @@ export default class ContextComponent extends Component {
     }
 
 }
+
+export default ContextComponent;

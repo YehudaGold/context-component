@@ -1,5 +1,3 @@
-// Code idea from http://code.fitness/post/2016/01/javascript-enumerate-methods.html
-
 // Check for a method without running get property`s
 const hasMethod = (object, methodName) => {
     const descriptor = Object.getOwnPropertyDescriptor(object, methodName);
