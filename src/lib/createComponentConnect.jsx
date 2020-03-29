@@ -8,8 +8,8 @@ export default (context, mapStateToProps = () => {}, mapActionsToProps = () => {
 
             return (
                 <WrappedComponent
-                    {...mapStateToProps(contextValue.state)}
-                    {...mapActionsToProps(contextValue.actions)}
+                    {...mapStateToProps(contextValue.state, props)}
+                    {...mapActionsToProps(contextValue.actions, props)}
                     {...props}
                 />
             );

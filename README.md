@@ -84,8 +84,8 @@ export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComp
 ```
 The class `connect` HOC takes two optional functions:
 
-* mapStateToProps - transform the context state to object of props, enabling to rename and pick the relevant values to the component.
-* mapActionToProps - transform the context actions to object of props, enabling to rename and pick the relevant method's to the component.
+* mapStateToProps - take two parameters 'state' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - take two parameters 'actions' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 
 ---
 
@@ -189,5 +189,5 @@ export default connect([CounterContext, ThemeContext], mapStateToProps, mapActio
 ```
 The `connect` HOC takes the array of context class, and two optional functions:
 
-* mapStateToProps - transform the context state to object of props, enabling to rename and pick the relevant values to the component.
-* mapActionToProps - transform the context actions to object of props, enabling to rename and pick the relevant method's to the component.
+* mapStateToProps - take two parameters 'state' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - take two parameters 'actions' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant method's from the context.

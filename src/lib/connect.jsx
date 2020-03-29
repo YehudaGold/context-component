@@ -24,8 +24,8 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
 
             return (
                 <WrappedComponent
-                    {...mapStateToProps(contexts.state)}
-                    {...mapActionsToProps(contexts.actions)}
+                    {...mapStateToProps(contexts.state, propsRest)}
+                    {...mapActionsToProps(contexts.actions, propsRest)}
                     {...propsRest}
                 />
             );
