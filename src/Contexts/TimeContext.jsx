@@ -1,10 +1,10 @@
 import ContextComponent from '../lib';
 
-const intervalTime = 1000;
+const intervalTime = 1000; // 1sec
 
 export default class TimeContext extends ContextComponent {
 
-    state = {timeFromMount: null, timeOfRender: null}
+    state = {timeFromMount: null}
 
     componentDidMount() {
         this.mountTime = Date.now();
@@ -19,11 +19,8 @@ export default class TimeContext extends ContextComponent {
     }
 
     tick() {
-        this.setState({
-            timeFromMount: Date.now() - this.mountTime
-        });
+        this.setState({timeFromMount: Date.now() - this.mountTime});
     }
-
 
     // Remove tick from the context actions by setting action manually
     actions={}

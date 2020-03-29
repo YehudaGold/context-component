@@ -14,7 +14,7 @@ class TimeConnect extends PureComponent {
 
         return (
             <div className="dark">
-                {`ThemeConnect -  time from mount ${timeFromMount / 1000}sec`}
+                {`ThemeConnect -  time from mount ${Math.floor(timeFromMount / 1000)}sec`}
             </div>
         );
     }
