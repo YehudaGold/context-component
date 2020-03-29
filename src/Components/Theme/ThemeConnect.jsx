@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import ToggleTheme from './Actions/ToggleTheme';
+import Button from '../Generic/Button';
 
 class ThemeConnect extends PureComponent {
 
@@ -17,7 +17,7 @@ class ThemeConnect extends PureComponent {
         return (
             <div className={theme}>
                 ThemeConnect
-                <ToggleTheme toggleTheme={toggleTheme} />
+                <Button handelClick={toggleTheme} text="toggle theme" />
             </div>
         );
     }

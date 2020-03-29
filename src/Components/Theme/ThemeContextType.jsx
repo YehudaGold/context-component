@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import ToggleTheme from './Actions/ToggleTheme';
+import Button from '../Generic/Button';
 
 class ThemeContextType extends Component {
 
@@ -13,7 +13,7 @@ class ThemeContextType extends Component {
         return (
             <div className={state.theme}>
                 ThemeContextType
-                <ToggleTheme toggleTheme={actions.toggleTheme} />
+                <Button handelClick={actions.toggleTheme} text="toggle theme" />
             </div>
         );
     }

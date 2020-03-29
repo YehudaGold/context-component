@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import ToggleTheme from './Actions/ToggleTheme';
+import Button from '../Generic/Button';
 
 const ThemeUseContext = () => {
     const {actions, state} = useContext(ThemeContext.componentContext);
@@ -9,7 +9,7 @@ const ThemeUseContext = () => {
     return (
         <div className={state.theme}>
             ThemeUseContext
-            <ToggleTheme toggleTheme={actions.toggleTheme} />
+            <Button handelClick={actions.toggleTheme} text="toggle theme" />
         </div>
     );
 };

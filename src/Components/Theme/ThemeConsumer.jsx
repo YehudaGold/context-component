@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import ToggleTheme from './Actions/ToggleTheme';
+import Button from '../Generic/Button';
 
 class ThemeConsumer extends Component {
 
@@ -13,7 +13,7 @@ class ThemeConsumer extends Component {
                 {({actions, state}) => (
                     <div className={state.theme}>
                         ThemeConsumer
-                        <ToggleTheme toggleTheme={actions.toggleTheme} />
+                        <Button handelClick={actions.toggleTheme} text="toggle theme" />
                     </div>
                 )}
             </ThemeContext.Consumer>

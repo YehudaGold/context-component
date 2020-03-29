@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+import TestContextsLifecycle from './Components/TestContextsLifecycle';
 import TestExtendCounterContext from './Components/TestExtendCounterContext';
 import TestMultipleContexts from './Components/TestMultiplyContexts';
 import TestSubThemeContext from './Components/TestSubThemeContext';
@@ -13,6 +14,7 @@ const App = () => (
         </TestThemeContext>
         <TestMultipleContexts />
         <TestExtendCounterContext />
+        <TestContextsLifecycle />
     </div>
 );
 
