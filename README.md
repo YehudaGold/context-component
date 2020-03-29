@@ -1,7 +1,7 @@
 
 # test ContextComponent
 
-this  project uses ContextComponent lib, and show examples to usage for testing
+this project uses ContextComponent package, and show examples of usage for testing
 
 ## run
 
@@ -10,8 +10,13 @@ to open the react app run
 ```
 npm start
 ```
+# ContextComponent
 
-## ContextComponent basic usage
+ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
+
+ContextComponent provide extendable React class that automatically connect it\`s state and methods to a context and provide it to his children's, and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context methodes - Consumer, contextType, useContext.
+
+## basic usage
 
 ### creating ContextComponent
 
@@ -32,9 +37,15 @@ export default class ThemeContext extends ContextComponent {
 
 }
 ```
+
+The ContextComponent implement for you `render` methods that render the `componentContext.Provider` with the component state and instance method's as value.
+
+You can use React lifecycle method's to initialize the state and manipulate it.
+
+Automatically all non React lifecycle method's are provided by the context but you can override this by adding `actions` property to the class with the method's you want to provide.
 ### providing ContextComponent
 
-providing the context to the react tree, by rendering the component:
+To provide the context to the React tree you render the component:
 
 App.jsx
 
@@ -51,9 +62,22 @@ export const App = () => (
 ```
 ### consuming ContextComponent
 
-consuming the context in component, by rendering the consumer:
+To consume the context in component you can connect it to the the context by HOC:
 
 otherComponent.jsx
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
+
+const otherComponent = ({toggleTheme, theme}) =>
+    <div className={theme} onClick={toggleTheme} />;
+
+const mapStateToProps = state => ({theme: state.theme}),
+      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+
+export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
+```
+or by rendering the ContextComponent.Consumer:
 
 ```jsx
 import React from 'react';
@@ -67,7 +91,7 @@ export const otherComponent = () => (
     </ThemeContext.Consumer>
 );
 ```
-or by contextType:
+or by using class contextType property:
 ```jsx
 import React, {Component} from 'react';
 import ThemeContext from './ThemeContext';
@@ -84,7 +108,7 @@ export class otherComponent extends Component {
 
 }
 ```
-or by useContext()(:
+or by useContext() hook:
 ```jsx
 import React, {useContext} from 'react';
 import ThemeContext from './ThemeContext';
@@ -95,19 +119,6 @@ export const otherComponent = () => {
     return <div className={context.state.theme} onClick={context.actions.toggleTheme} />;
 };
 
-```
-or by the connect api (like react-redux connect):
-```jsx
-import React from 'react';
-import ThemeContext from './ThemeContext';
-
-const otherComponent = ({toggleTheme, theme}) =>
-    <div className={theme} onClick={toggleTheme} />;
-
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
-
-export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
 ```
 
 ## multiple contexts
@@ -138,10 +149,10 @@ import ThemeContext from './ThemeContext';
 import CounterContext from './CounterContext';
 
 const otherComponent = ({toggleTheme, increase, counter, theme}) =>
-    <>
+    <div>
         <div className={theme} onClick={toggleTheme} />
-        <div onClick={increase}>{counter}</div>
-    </>;
+        <div onClick={increase} > {counter} </div>
+    </div>;
 
 const mapStateToProps = ({CounterContext, ThemeContext}) => ({
     counter: CounterContext.counter,
