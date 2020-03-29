@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import Button from '../sheared/Button';
+import Button from '../Generic/Button';
 
 class ThemeConsumer extends Component {
 

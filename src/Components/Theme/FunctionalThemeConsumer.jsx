@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import Button from '../sheared/Button';
+import Button from '../Generic/Button';
 
 const FunctionalThemeConsumer = () => (
     <ThemeContext.Consumer>

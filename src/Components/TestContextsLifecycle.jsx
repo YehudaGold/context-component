@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 
 import TimeContext from '../Contexts/TimeContext';
-import Button from './sheared/Button';
+import Button from './Generic/Button';
 import TimeConnect from './Time/TimeConnect';
 
 const TestContextsLifecycle = () => {

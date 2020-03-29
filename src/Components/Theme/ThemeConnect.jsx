@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import Button from '../sheared/Button';
+import Button from '../Generic/Button';
 
 class ThemeConnect extends PureComponent {
 
