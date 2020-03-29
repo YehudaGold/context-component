@@ -10,17 +10,20 @@ to open the react app run
 ```
 npm start
 ```
+
 # ContextComponent
 
 ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-ContextComponent provide extendable React class that automatically connect it\`s state and methods to a context and provide it to his children's, and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context methodes - Consumer, contextType, useContext.
+ContextComponent provide extendable React class that automatically connect it\`s state and method's to a context and provide it to his children's.
 
-## basic usage
+ContextComponent expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context method's - Consumer, contextType, useContext.
 
-### creating ContextComponent
+## Basic usage
 
-creating ContextComponent, component with state and functions you want to share in you app:
+### Creating ContextComponent
+
+To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in you app:
 
 ThemeContext.jsx
 
@@ -38,12 +41,13 @@ export default class ThemeContext extends ContextComponent {
 }
 ```
 
-The ContextComponent implement for you `render` methods that render the `componentContext.Provider` with the component state and instance method's as value.
+The ContextComponent implement for you a `render` methods that render the `componentContext.Provider` with the component state and instance method's as value.
 
 You can use React lifecycle method's to initialize the state and manipulate it.
 
-Automatically all non React lifecycle method's are provided by the context but you can override this by adding `actions` property to the class with the method's you want to provide.
-### providing ContextComponent
+All non React lifecycle method's are provided by the context automatically, but you can override this by adding `actions` property to the class with the method's you want to provide.
+
+### Providing ContextComponent
 
 To provide the context to the React tree you render the component:
 
@@ -60,9 +64,10 @@ export const App = () => (
 );
 
 ```
-### consuming ContextComponent
 
-To consume the context in component you can connect it to the the context by HOC:
+### Consuming ContextComponent
+
+To consume the context you can connect to it with the context class static `connect` HOC method:
 
 otherComponent.jsx
 ```jsx
@@ -77,7 +82,14 @@ const mapStateToProps = state => ({theme: state.theme}),
 
 export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
 ```
-or by rendering the ContextComponent.Consumer:
+The class `connect` HOC takes two optional functions:
+
+* mapStateToProps - transform the context state to object of props, enabling to rename and pick the relevant values to the component.
+* mapActionToProps - transform the context actions to object of props, enabling to rename and pick the relevant method's to the component.
+
+---
+
+Or consuming the context by rendering the ContextComponent.Consumer:
 
 ```jsx
 import React from 'react';
@@ -91,7 +103,9 @@ export const otherComponent = () => (
     </ThemeContext.Consumer>
 );
 ```
-or by using class contextType property:
+---
+
+Or by using the React class component contextType property:
 ```jsx
 import React, {Component} from 'react';
 import ThemeContext from './ThemeContext';
@@ -108,7 +122,9 @@ export class otherComponent extends Component {
 
 }
 ```
-or by useContext() hook:
+---
+
+Or by using the useContext() hook:
 ```jsx
 import React, {useContext} from 'react';
 import ThemeContext from './ThemeContext';
@@ -121,8 +137,9 @@ export const otherComponent = () => {
 
 ```
 
-## multiple contexts
-you can use the Provider component to provide multiple contexts together:
+## Multiple contexts
+
+You can use the `Provider` component to provide multiple contexts together:
 
 App.jsx
 
@@ -138,7 +155,11 @@ export const App = () => (
     </Provider>;
 );
 ```
-and consume them together with connect HOC:
+The `provider` require ContextComponents prop - the ContextComponent classes array.
+
+---
+
+And you can consume them together with `connect` HOC:
 
 otherComponent.jsx
 
@@ -166,3 +187,7 @@ const mapActionToProps = ({CounterContext, ThemeContext}) => ({
 
 export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
 ```
+The `connect` HOC takes the array of context class, and two optional functions:
+
+* mapStateToProps - transform the context state to object of props, enabling to rename and pick the relevant values to the component.
+* mapActionToProps - transform the context actions to object of props, enabling to rename and pick the relevant method's to the component.
