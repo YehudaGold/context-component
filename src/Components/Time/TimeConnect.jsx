@@ -6,7 +6,7 @@ import TimeContext from '../../Contexts/TimeContext';
 class TimeConnect extends PureComponent {
 
     static propTypes = {
-        timeFromMount: PropTypes.string.isRequired
+        timeFromMount: PropTypes.number.isRequired
     }
 
     render() {

@@ -4,7 +4,7 @@ const intervalTime = 1000; // 1sec
 
 export default class TimeContext extends ContextComponent {
 
-    state = {timeFromMount: null}
+    state = {timeFromMount: 0}
 
     componentDidMount() {
         this.mountTime = Date.now();
