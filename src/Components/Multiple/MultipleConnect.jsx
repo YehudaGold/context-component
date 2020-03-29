@@ -5,7 +5,6 @@ import CounterContext from '../../Contexts/CounterContext';
 import ThemeContext from '../../Contexts/ThemeContext';
 import {connect} from '../../lib';
 import Button from '../sheared/Button';
-import ToggleTheme from '../Theme/Actions/ToggleTheme';
 
 class MultipleConnect extends PureComponent {
 
@@ -26,7 +25,7 @@ class MultipleConnect extends PureComponent {
                 <div className="value">{`value: ${counter}`}</div>
                 <Button handelClick={increase} text="increase" />
                 <Button handelClick={decrease} text="decrease" />
-                <ToggleTheme toggleTheme={toggleTheme} />
+                <Button handelClick={toggleTheme} text="toggle theme" />
             </div>
         );
     }

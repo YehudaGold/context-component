@@ -1,14 +1,14 @@
 import React from 'react';
 
 import ThemeContext from '../../Contexts/ThemeContext';
-import ToggleTheme from './Actions/ToggleTheme';
+import Button from '../sheared/Button';
 
 const FunctionalThemeConsumer = () => (
     <ThemeContext.Consumer>
         {context =>
             <div className={context.state.theme}>
                 FunctionalThemeConsumer
-                <ToggleTheme toggleTheme={context.actions.toggleTheme} />
+                <Button handelClick={context.actions.toggleTheme} text="toggle theme" />
             </div>}
     </ThemeContext.Consumer>
 );
