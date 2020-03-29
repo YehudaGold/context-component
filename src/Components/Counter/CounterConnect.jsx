@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 
 import ExtendCounterContext from '../../Contexts/ExtendCounterContext';
-import Button from './Actions/Button';
+import Button from '../sheared/Button';
 
 class CounterConnect extends PureComponent {
 

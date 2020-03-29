@@ -4,7 +4,7 @@ import React, {PureComponent} from 'react';
 import CounterContext from '../../Contexts/CounterContext';
 import ThemeContext from '../../Contexts/ThemeContext';
 import {connect} from '../../lib';
-import Button from '../Counter/Actions/Button';
+import Button from '../sheared/Button';
 import ToggleTheme from '../Theme/Actions/ToggleTheme';
 
 class MultipleConnect extends PureComponent {
