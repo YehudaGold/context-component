@@ -324,7 +324,7 @@ module.exports = {
         'no-trailing-spaces': ['warn', {skipBlankLines: false, ignoreComments: false}],
         'no-underscore-dangle': ['warn', {
             allow: [],
-            allowAfterThis: false,
+            allowAfterThis: true,
             allowAfterSuper: false,
             enforceInMethodNames: true
         }],
