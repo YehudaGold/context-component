@@ -4,6 +4,7 @@ import './App.css';
 import TestContextsLifecycle from './Components/TestContextsLifecycle';
 import TestExtendCounterContext from './Components/TestExtendCounterContext';
 import TestMultipleContexts from './Components/TestMultiplyContexts';
+import TestOwnPropsConnect from './Components/TestOwnPropsConnect';
 import TestSubThemeContext from './Components/TestSubThemeContext';
 import TestThemeContext from './Components/TestThemeContext';
 
@@ -15,6 +16,7 @@ const App = () => (
         <TestMultipleContexts />
         <TestExtendCounterContext />
         <TestContextsLifecycle />
+        <TestOwnPropsConnect />
     </div>
 );
 

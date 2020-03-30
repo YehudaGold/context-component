@@ -15,18 +15,18 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
             if (ContextComponentsRest.length) {
                 return (
                     <ConsumeContext
+                        {...propsRest}
                         ContextComponents={ContextComponentsRest}
                         contexts={contexts}
-                        {...propsRest}
                     />
                 );
             }
 
             return (
                 <WrappedComponent
+                    {...propsRest}
                     {...mapStateToProps(contexts.state, propsRest)}
                     {...mapActionsToProps(contexts.actions, propsRest)}
-                    {...propsRest}
                 />
             );
         };
