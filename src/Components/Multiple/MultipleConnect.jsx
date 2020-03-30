@@ -32,14 +32,14 @@ class MultipleConnect extends PureComponent {
 
 }
 
-const mapStateToProps = ({CounterContext, ThemeContext}) => ({
-    counter: CounterContext.counter,
-    theme: ThemeContext.theme
+const mapStateToProps = ([counterContext, themeContext]) => ({
+    counter: counterContext.counter,
+    theme: themeContext.theme
 }),
-      mapActionToProps = ({CounterContext, ThemeContext}) => ({
-          increase: CounterContext.increase,
-          decrease: CounterContext.decrease,
-          toggleTheme: ThemeContext.toggleTheme
+      mapActionToProps = ([counterContext, themeContext]) => ({
+          increase: counterContext.increase,
+          decrease: counterContext.decrease,
+          toggleTheme: themeContext.toggleTheme
       });
 
 export default connect(

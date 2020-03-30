@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 
 import createComponentConnect from './createComponentConnect';
-import {getContext} from './utilities/contextsStorage';
 import getComponentActions from './utilities/getComponentActions';
 
 class ContextComponent extends Component {
 
-    static get componentContext() { return getContext(this.name); }
+    static get componentContext() {
+        if (Object.getOwnPropertyDescriptor(this, '_componentContext')) return this._componentContext;
+
+        this._componentContext = React.createContext();
+        this._componentContext.displayName = this.name;
+
+        return this._componentContext;
+    }
 
     static get Consumer() { return this.componentContext.Consumer; }
 
