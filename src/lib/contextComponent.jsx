@@ -6,7 +6,7 @@ import getComponentActions from './utilities/getComponentActions';
 
 class ContextComponent extends Component {
 
-    static get componentContext() { return getContext(this.name); }
+    static get componentContext() { return getContext(this); }
 
     static get Consumer() { return this.componentContext.Consumer; }
 
