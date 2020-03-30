@@ -175,19 +175,19 @@ const otherComponent = ({toggleTheme, increase, counter, theme}) =>
         <div onClick={increase} > {counter} </div>
     </div>;
 
-const mapStateToProps = ({CounterContext, ThemeContext}) => ({
-    counter: CounterContext.counter,
-    theme: ThemeContext.theme
+const mapStateToProps = ([counterContext, themeContext]) => ({
+    counter: counterContext.counter,
+    theme: themeContext.theme
 });
 
-const mapActionToProps = ({CounterContext, ThemeContext}) => ({
-    increase: CounterContext.increase,
-    toggleTheme: ThemeContext.toggleTheme
+const mapActionToProps = ([counterContext, themeContext]) => ({
+    increase: counterContext.increase,
+    toggleTheme: themeContext.toggleTheme
 });
 
 export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
 ```
 The `connect` HOC takes the array of context class, and two optional functions:
 
-* mapStateToProps - transform the context state to object of props, enabling to rename and pick the relevant values to the component.
-* mapActionToProps - transform the context actions to object of props, enabling to rename and pick the relevant method's to the component.
+* mapStateToProps - transform the context state array to object of props, enabling to rename and pick the relevant values to the component.
+* mapActionToProps - transform the context actions array to object of props, enabling to rename and pick the relevant method's to the component.
