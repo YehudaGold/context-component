@@ -5,19 +5,20 @@ import {getDisplayName} from './utilities/generics';
 
 const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
     (WrappedComponent) => {
-        const ConsumeContext = ({ContextComponents, contexts, ...propsRest}) => {
-            const [ContextComponent, ...ContextComponentsRest] = ContextComponents,
-                  {actions, state} = useContext(ContextComponent.componentContext);
+        const ConsumeContext = ({remainedContextComponents, contexts, ...propsRest}) => {
+            const [ContextComponent, ...ContextComponentsRest] = remainedContextComponents,
+                  {actions, state} = useContext(ContextComponent.componentContext),
+                  contextPosition = ContextComponents.length - remainedContextComponents.length;
 
-            contexts.state[ContextComponent.name] = state;
-            contexts.actions[ContextComponent.name] = actions;
+            contexts.state[contextPosition] = state;
+            contexts.actions[contextPosition] = actions;
 
             if (ContextComponentsRest.length) {
                 return (
                     <ConsumeContext
                         {...propsRest}
-                        ContextComponents={ContextComponentsRest}
                         contexts={contexts}
+                        remainedContextComponents={ContextComponentsRest}
                     />
                 );
             }
@@ -31,12 +32,12 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
             );
         };
         ConsumeContext.defaultProps = {
-            ContextComponents,
-            contexts: {state: {}, actions: {}}
+            contexts: {state: [], actions: []},
+            remainedContextComponents: ContextComponents
         };
         ConsumeContext.propTypes = {
-            ContextComponents: PropTypes.arrayOf(PropTypes.elementType),
-            contexts: PropTypes.object
+            contexts: PropTypes.object,
+            remainedContextComponents: PropTypes.arrayOf(PropTypes.elementType)
         };
 
         // Name for displaying in the components tree, https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging

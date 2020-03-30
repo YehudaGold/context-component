@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {PureComponent} from 'react';
 
-import ExtendCounterContext from '../../Contexts/ExtendCounterContext';
+import CounterContext from '../../Contexts/CounterContext';
 import Button from '../Generic/Button';
 
 class CounterConnect extends PureComponent {
@@ -9,20 +9,18 @@ class CounterConnect extends PureComponent {
     static propTypes = {
         counter: PropTypes.number.isRequired,
         decrease: PropTypes.func.isRequired,
-        increase: PropTypes.func.isRequired,
-        setToZero: PropTypes.func.isRequired
+        increase: PropTypes.func.isRequired
     }
 
     render() {
-        const {counter, increase, decrease, setToZero} = this.props;
+        const {counter, increase, decrease} = this.props;
 
         return (
             <div className="dark">
                 CounterConnect
                 <div className="value">{`value: ${counter}`}</div>
                 <Button handelClick={increase} text="increase" />
-                <Button handelClick={decrease} text="decrease (override to-2)" />
-                <Button handelClick={setToZero} text="setToZero (extended)" />
+                <Button handelClick={decrease} text="decrease" />
             </div>
         );
     }
@@ -32,8 +30,7 @@ class CounterConnect extends PureComponent {
 const mapStateToProps = state => ({counter: state.counter}),
       mapActionToProps = actions => ({
           increase: actions.increase,
-          decrease: actions.decrease,
-          setToZero: actions.setToZero
+          decrease: actions.decrease
       });
 
-export default ExtendCounterContext.connect(mapStateToProps, mapActionToProps)(CounterConnect);
+export default CounterContext.connect(mapStateToProps, mapActionToProps)(CounterConnect);
