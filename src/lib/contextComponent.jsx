@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import connect from './connect';
+import {getDisplayName} from './utilities/generics';
 import getComponentActions from './utilities/getComponentActions';
 
 class ContextComponent extends Component {
@@ -9,7 +10,7 @@ class ContextComponent extends Component {
         if (Object.getOwnPropertyDescriptor(this, '_componentContext')) return this._componentContext;
 
         this._componentContext = React.createContext();
-        this._componentContext.displayName = this.name;
+        this._componentContext.displayName = getDisplayName(this);
 
         return this._componentContext;
     }
