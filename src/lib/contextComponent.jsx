@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import createComponentConnect from './createComponentConnect';
+import connect from './connect';
+import {getDisplayName} from './utilities/generics';
 import getComponentActions from './utilities/getComponentActions';
 
 class ContextComponent extends Component {
@@ -9,15 +10,19 @@ class ContextComponent extends Component {
         if (Object.getOwnPropertyDescriptor(this, '_componentContext')) return this._componentContext;
 
         this._componentContext = React.createContext();
-        this._componentContext.displayName = this.name;
+        this._componentContext.displayName = getDisplayName(this);
 
         return this._componentContext;
     }
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static connect(mapContextToProps, mapActionsToProps) {
-        return createComponentConnect(this.componentContext, mapContextToProps, mapActionsToProps);
+    static connect(mapStateToProps, mapActionsToProps) {
+        return connect(
+            [this],
+            mapStateToProps && (([state], ownProps) => mapStateToProps(state, ownProps)),
+            mapActionsToProps && (([actions], ownProps) => mapActionsToProps(actions, ownProps))
+        );
     }
 
     constructor(props) {

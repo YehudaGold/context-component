@@ -23,5 +23,5 @@ export const getAllMethodNames = (object, BaseClass) => {
 
 
 // GetDisplayName from https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
-export const getDisplayName = WrappedComponent =>
-    WrappedComponent.displayName || WrappedComponent.name || 'Component';
+export const getDisplayName = Component =>
+    Component.displayName || Component.name || 'Component';
