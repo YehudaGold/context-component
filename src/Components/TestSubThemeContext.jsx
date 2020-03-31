@@ -6,7 +6,7 @@ import ThemeConnect from './Theme/ThemeConnect';
 
 const TestSubThemeContext = () =>
     <ThemeContext>
-        <div className="consumers-list">
+        <div className="list">
             TestSubThemeContext - test provider in provider with same context have different values
             <FunctionalThemeConsumer />
             <ThemeConnect />

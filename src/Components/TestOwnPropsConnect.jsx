@@ -12,16 +12,20 @@ const TestOwnPropsConnect = () => {
           );
 
     return (
-        <div className="consumers-list">
-            TestOwnPropsConnect - test connect with callback (state, ownProp) =&gt; Object, get ownProp
-            <Button
-                handelClick={toggleThemeProp}
-                text={themeProp === 'dark' ? 'set prop theme light' : 'set prop theme dark'}
-            />
-            <ThemeContext>
+        <ThemeContext>
+            <div className="list">
+                TestOwnPropsConnect - test connect with callback (state, ownProp) =&gt; Object:<br />
+                check theme dark only if both context theme and component theme prop dark
+                <div>
+                    {`theme prop: ${themeProp}`}
+                    <Button
+                        handelClick={toggleThemeProp}
+                        text="toggle theme prop"
+                    />
+                </div>
                 <ThemeConnectWithProps theme={themeProp} />
-            </ThemeContext>
-        </div>
+            </div>
+        </ThemeContext>
     );
 };
 

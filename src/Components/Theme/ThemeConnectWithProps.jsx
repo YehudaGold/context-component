@@ -17,8 +17,9 @@ class ThemeConnectWithProps extends PureComponent {
 
         return (
             <div className={theme}>
-                ThemeConnectWithProps - dark only if both context and props dark
-                <Button handelClick={toggleTheme} text={`set context theme ${contextTheme === 'dark' ? 'light' : 'dark'}`} />
+                ThemeConnectWithProps
+                <p>{`context theme: ${contextTheme}`}</p>
+                <Button handelClick={toggleTheme} text="toggle context theme" />
             </div>
         );
     }
