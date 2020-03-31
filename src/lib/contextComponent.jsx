@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import createComponentConnect from './createComponentConnect';
+import connect from './connect';
 import getComponentActions from './utilities/getComponentActions';
 
 class ContextComponent extends Component {
@@ -16,8 +16,12 @@ class ContextComponent extends Component {
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static connect(mapContextToProps, mapActionsToProps) {
-        return createComponentConnect(this.componentContext, mapContextToProps, mapActionsToProps);
+    static connect(mapStateToProps, mapActionsToProps) {
+        return connect(
+            [this],
+            mapStateToProps && (([state], ownProps) => mapStateToProps(state, ownProps)),
+            mapActionsToProps && (([actions], ownProps) => mapActionsToProps(actions, ownProps))
+        );
     }
 
     constructor(props) {
