@@ -15,9 +15,8 @@ npm start
 
 ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-ContextComponent provide extendable React class that automatically connect it\`s state and method's to a context and provide it to his children's.
-
-ContextComponent expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context method's - Consumer, contextType, useContext.
+ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
+and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
 ## Basic usage
 
@@ -41,7 +40,7 @@ export default class ThemeContext extends ContextComponent {
 }
 ```
 
-The ContextComponent implement for you a `render` methods that render the `componentContext.Provider` with the component state and instance method's as value.
+The ContextComponent implement for you a `render` methods that render the `this.componentContext.Provider` with the component state and instance method's as value.
 
 You can use React lifecycle method's to initialize the state and manipulate it.
 
@@ -84,12 +83,12 @@ export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComp
 ```
 The class `connect` HOC takes two optional functions:
 
-* mapStateToProps - take two parameters 'state' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - take two parameters 'actions' and 'ownProps' and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* mapStateToProps - take two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - take two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 
 ---
 
-Or consuming the context by rendering the ContextComponent.Consumer:
+Or consuming the context by rendering the `ContextComponent.Consumer`:
 
 ```jsx
 import React from 'react';
@@ -105,7 +104,7 @@ export const otherComponent = () => (
 ```
 ---
 
-Or by using the React class component contextType property:
+Or by using the React class component `contextType` property:
 ```jsx
 import React, {Component} from 'react';
 import ThemeContext from './ThemeContext';
@@ -124,7 +123,7 @@ export class otherComponent extends Component {
 ```
 ---
 
-Or by using the useContext() hook:
+Or by using the `useContext()` hook:
 ```jsx
 import React, {useContext} from 'react';
 import ThemeContext from './ThemeContext';
@@ -155,7 +154,7 @@ export const App = () => (
     </Provider>;
 );
 ```
-The `provider` require ContextComponents prop - the ContextComponent classes array.
+The `Provider` require ContextComponents prop - the ContextComponent classes array.
 
 ---
 
@@ -189,5 +188,5 @@ export default connect([CounterContext, ThemeContext], mapStateToProps, mapActio
 ```
 The `connect` HOC takes the array of context class, and two optional functions:
 
-* mapStateToProps - take two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapStateToProps - take two parameters `states[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
 * mapActionToProps - take two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
