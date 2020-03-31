@@ -12,7 +12,7 @@ const TestContextsLifecycle = () => {
           );
 
     return (
-        <div className="consumers-list">
+        <div className="list">
             TestContextsLifecycle - test TimerContext with lifecycle methods to initialize state
             <Button
                 handelClick={toggleShowTimeContext}

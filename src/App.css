@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-.consumers-list {
+.list {
     margin: 0.2em;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     border-color: #00000052;
 }
 
-.consumers-list > * {
+.list > * {
     width: -webkit-fill-available;
     margin: 0.1em;
     padding: 01em;

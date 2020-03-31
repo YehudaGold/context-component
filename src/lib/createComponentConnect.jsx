@@ -2,15 +2,15 @@ import React, {useContext} from 'react';
 import {getDisplayName} from './utilities/generics';
 
 export default (context, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
-    (WrappedComponent) => {
+    (WrappedComponent) => { // Pure?
         const ConnectComponent = (props) => {
             const contextValue = useContext(context);
 
             return (
                 <WrappedComponent
-                    {...mapStateToProps(contextValue.state)}
-                    {...mapActionsToProps(contextValue.actions)}
                     {...props}
+                    {...mapStateToProps(contextValue.state, props)}
+                    {...mapActionsToProps(contextValue.actions, props)}
                 />
             );
         };
