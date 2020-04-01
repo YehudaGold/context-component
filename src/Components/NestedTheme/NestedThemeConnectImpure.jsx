@@ -4,20 +4,19 @@ import React from 'react';
 import NestedThemeContext from '../../Contexts/NestedThemeContext';
 import Button from '../Generic/Button';
 
-
-const NestedThemeConnect = (props) => {
+const NestedThemeConnectImpure = (props) => {
     const {toggleTheme, theme, themeProp} = props;
 
     return (
         <div className={theme.background}>
-            NestedThemeConnect
+            NestedThemeConnectImpure
             <div>{`prop theme.background: ${themeProp.background}`}</div>
             <Button handelClick={toggleTheme} text="toggle theme.background" />
         </div>
     );
 };
 
-NestedThemeConnect.propTypes = {
+NestedThemeConnectImpure.propTypes = {
     theme: PropTypes.object.isRequired,
     themeProp: PropTypes.object.isRequired,
     toggleTheme: PropTypes.func.isRequired
@@ -26,4 +25,8 @@ NestedThemeConnect.propTypes = {
 const mapStateToProps = state => ({theme: state.theme}),
       mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
 
-export default NestedThemeContext.connect(mapStateToProps, mapActionToProps)(NestedThemeConnect);
+export default NestedThemeContext.connect(
+    mapStateToProps,
+    mapActionToProps,
+    {pure: false}
+)(NestedThemeConnectImpure);

@@ -17,11 +17,12 @@ class ContextComponent extends Component {
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static connect(mapStateToProps, mapActionsToProps) {
+    static connect(mapStateToProps, mapActionsToProps, options) {
         return connect(
             [this],
             mapStateToProps && (([state], ownProps) => mapStateToProps(state, ownProps)),
-            mapActionsToProps && (([actions], ownProps) => mapActionsToProps(actions, ownProps))
+            mapActionsToProps && (([actions], ownProps) => mapActionsToProps(actions, ownProps)),
+            options
         );
     }
 

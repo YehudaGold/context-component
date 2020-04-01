@@ -3,8 +3,13 @@ import React, {useContext} from 'react';
 
 import {getDisplayName} from './utilities/generics';
 
-const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
+const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}, options) =>
     (WrappedComponent) => {
+        const finalOptions = {pure: true, ...options},
+              WrappedComponentName = getDisplayName(WrappedComponent);
+
+        if (finalOptions.pure) WrappedComponent = React.memo(WrappedComponent);
+
         const ConsumeContext = ({remainedContextComponents, contexts, ...propsRest}) => {
             const [ContextComponent, ...ContextComponentsRest] = remainedContextComponents,
                   {actions, state} = useContext(ContextComponent.componentContext),
@@ -42,7 +47,9 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
 
         // Name for displaying in the components tree, https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
         const contextNames = ContextComponents.map(ContextComponent => getDisplayName(ContextComponent));
-        ConsumeContext.displayName = `connect[${contextNames}](${getDisplayName(WrappedComponent)})`;
+        ConsumeContext.displayName = `connect[${contextNames}](${WrappedComponentName})`;
+
+        if (finalOptions.pure) return React.memo(ConsumeContext);
 
         return ConsumeContext;
     };
