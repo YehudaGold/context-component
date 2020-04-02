@@ -18,6 +18,8 @@ ContextComponent is aimed at reducing the boilerplate of writing flexible centra
 ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
 and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
+To learn more on context - [react context docs](https://reactjs.org/docs/context.html)
+
 ## Basic usage
 
 ### Creating ContextComponent
@@ -81,11 +83,12 @@ const mapStateToProps = state => ({theme: state.theme}),
 
 export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
 ```
-The class `connect` HOC takes two optional functions:
+The class `connect` HOC takes tree optional parameters:
 
-* mapStateToProps - take two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - take two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-
+* mapStateToProps - callback with two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* options - options object with the keys:
+    * pure - set the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
 ---
 
 Or consuming the context by rendering the `ContextComponent.Consumer`:
@@ -186,7 +189,9 @@ const mapActionToProps = ([counterContext, themeContext]) => ({
 
 export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
 ```
-The `connect` HOC takes the array of context class, and two optional functions:
+The `connect` HOC takes the array of context class, and takes tree optional parameters:
 
-* mapStateToProps - take two parameters `states[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - take two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* mapStateToProps - callback with two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* options - options object with the keys:
+    * pure - set the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
