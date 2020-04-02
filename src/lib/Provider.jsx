@@ -1,19 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Provider = ({ContextComponents, children}) => {
-    let collectProviders = children;
-
-    ContextComponents.reverse().forEach((ContextComponent) => {
-        collectProviders = (
+const Provider = ({ContextComponents, children}) =>
+    ContextComponents.reduceRight(
+        (childrenComponents, ContextComponent) =>
             <ContextComponent>
-                {collectProviders}
-            </ContextComponent>
-        );
-    });
-
-    return collectProviders;
-};
+                {childrenComponents}
+            </ContextComponent>,
+        children
+    );
 
 Provider.propTypes = {
     ContextComponents: PropTypes.arrayOf(PropTypes.elementType).isRequired
