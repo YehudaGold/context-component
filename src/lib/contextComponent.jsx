@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {shallowEqualObjects} from 'shallow-equal';
 
 import connect from './connect';
-import {getDisplayName} from './utilities/generics';
-import getComponentActions from './utilities/getComponentActions';
+import {getDisplayName} from './utils/generics';
+import getComponentActions from './utils/getComponentActions';
 
 class ContextComponent extends Component {
 

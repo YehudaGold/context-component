@@ -2,8 +2,7 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {getDisplayName} from './utilities/generics';
-
+import {getDisplayName} from './utils/generics';
 
 const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}, options) =>
     (WrappedComponent) => {
