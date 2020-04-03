@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import React, {Component} from 'react';
 
 import IrrelevantContext from '../Contexts/IrrelevantContext';
@@ -23,40 +22,30 @@ class TestRerenderContext extends Component {
         const {themeProp} = this.state;
 
         return (
-            <div className="list">
-                TestRerenderContext - test context consumers memorization:<br />
-                context.connect is defaulted to pure and will not rerender on irrelevant changes<br />
-                context.connect with options &#123;pure: false&#125; will rerender always<br />
-                react.memo(UseContext) prop change will not rerender, context change  will rerender
-                <div>
-                    <Button
-                        handelClick={this.toggleTheme}
-                        text="toggle theme state"
-                    />
-                    <Button
-                        handelClick={this.toggleIrrelevant}
-                        text="toggle irrelevant state"
-                    />
+            <IrrelevantContext>
+                <div className="list">
+                    TestRerenderContext - test context consumers memorization:<br />
+                    context.connect is defaulted to pure and will not rerender on irrelevant changes<br />
+                    context.connect with options &#123;pure: false&#125; will rerender always<br />
+                    react.memo(UseContext) prop change will not rerender, context change  will rerender
+                    <div>
+                        <Button
+                            handelClick={this.toggleTheme}
+                            text="toggle theme state"
+                        />
+                        <Button
+                            handelClick={this.toggleIrrelevant}
+                            text="toggle irrelevant state"
+                        />
+                    </div>
+                    <IrrelevantConnect themeProp={themeProp} />
+                    <IrrelevantConnectImpure themeProp={themeProp} />
+                    <IrrelevantUseContext themeProp={themeProp} />
                 </div>
-                <IrrelevantConnect themeProp={themeProp} />
-                <IrrelevantConnectImpure themeProp={themeProp} />
-                <IrrelevantUseContext themeProp={themeProp} />
-            </div>
+            </IrrelevantContext>
         );
     }
 
 }
 
-// Separate the provider to not rerender the provider every setState
-const withIrrelevantContextProvider = (WarpComponent) => {
-    const provider = () => (
-        <IrrelevantContext>
-            <WarpComponent />
-        </IrrelevantContext>
-    );
-    provider.displayName = 'TestRerenderContext';
-
-    return provider;
-};
-
-export default withIrrelevantContextProvider(TestRerenderContext);
+export default TestRerenderContext;

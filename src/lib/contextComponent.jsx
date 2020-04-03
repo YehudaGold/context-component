@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {shallowEqualObjects} from 'shallow-equal';
 
 import connect from './connect';
 import {getDisplayName} from './utilities/generics';
@@ -29,16 +30,27 @@ class ContextComponent extends Component {
     constructor(props) {
         super(props);
         this.componentContext = this.constructor.componentContext;
+        this._contextValue = {};
+    }
+
+    get contextValue() {
+        if (!shallowEqualObjects(this._contextValue.state, this.state)) {
+            this._contextValue = {
+                state: this.state,
+                actions: this.actions || (this.actions = getComponentActions(this, ContextComponent))
+            };
+        }
+
+        return this._contextValue;
     }
 
     render() {
-        const {componentContext, props: {children}, state} = this,
-              actions = this.actions || (this.actions = getComponentActions(this, ContextComponent));
+        const {componentContext: {Provider}, props: {children}} = this;
 
         return (
-            <componentContext.Provider value={{state, actions}}>
+            <Provider value={this.contextValue}>
                 {children}
-            </componentContext.Provider>
+            </Provider>
         );
     }
 
