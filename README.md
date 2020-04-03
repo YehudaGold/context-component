@@ -18,6 +18,8 @@ ContextComponent is aimed at reducing the boilerplate of writing flexible centra
 ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
 and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
+To learn more on context - [react context docs](https://reactjs.org/docs/context.html)
+
 ## Basic usage
 
 ### Creating ContextComponent
@@ -25,7 +27,6 @@ and expose api to easily consume the context by `connect` HOC (similar to react-
 To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in you app:
 
 ThemeContext.jsx
-
 ```jsx
 import ContextComponent from 'ContextComponent';
 
@@ -51,7 +52,6 @@ All non React lifecycle method's are provided by the context automatically, but 
 To provide the context to the React tree you render the component:
 
 App.jsx
-
 ```jsx
 import React from 'react';
 import ThemeContext from './ThemeContext';
@@ -81,15 +81,15 @@ const mapStateToProps = state => ({theme: state.theme}),
 
 export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
 ```
-The class `connect` HOC takes two optional functions:
+The class `connect` HOC takes tree optional parameters:
 
-* mapStateToProps - take two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - take two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-
+* mapStateToProps - callback with two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* options - options object with the keys:
+    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
 ---
 
 Or consuming the context by rendering the `ContextComponent.Consumer`:
-
 ```jsx
 import React from 'react';
 import ThemeContext from './ThemeContext';
@@ -141,7 +141,6 @@ export const otherComponent = () => {
 You can use the `Provider` component to provide multiple contexts together:
 
 App.jsx
-
 ```jsx
 import React from 'react';
 import {Provider} from 'ContextComponent';
@@ -160,8 +159,7 @@ The `Provider` require ContextComponents prop - the ContextComponent classes arr
 
 And you can consume them together with `connect` HOC:
 
-otherComponent.jsx
-
+otherComponent.js
 ```jsx
 import React from 'react';
 import {connect} from 'ContextComponent';
@@ -186,7 +184,30 @@ const mapActionToProps = ([counterContext, themeContext]) => ({
 
 export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
 ```
-The `connect` HOC takes the array of context class, and two optional functions:
+The `connect` HOC takes the array of context class, and takes tree optional parameters:
 
-* mapStateToProps - take two parameters `states[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - take two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* mapStateToProps - callback with two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
+* mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
+* options - options object with the keys:
+    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
+
+## Optimization warning
+
+The mapStateToProps and mapActionToProps callbacks shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
+```js
+const mapStateToProps = (state) => ({theme: {color: state.theme}});
+```
+Here the theme reference will be always a new object and the memorization shallow equality check will fail.
+
+For solving this use memorization technique:
+```js
+let lastTheme, value;
+const mapStateToProps = (state) => {
+    if (state.theme === lastTheme) return value;
+    lastTheme = state.theme;
+    value = {theme: {color: state.theme}};
+    return value;
+}
+// For this you can use memorization package like 'memoize-one'.
+```
+Or set the connect options.pure to false.

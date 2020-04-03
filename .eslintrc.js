@@ -692,7 +692,7 @@ module.exports = {
         'react/prefer-stateless-function': ['warn', {ignorePureComponents: true}],
         'react/prop-types': ['error', {ignore: ['children']}],
         'react/react-in-jsx-scope': 'error',
-        'react/require-default-props': 'error',
+        'react/require-default-props': ['error', {ignoreFunctionalComponents: true}],
         'react/require-render-return': 'error',
         'react/self-closing-comp': 'error',
         'react/sort-comp': ['warn', {

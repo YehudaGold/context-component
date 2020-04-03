@@ -1,50 +1,45 @@
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {getDisplayName} from './utilities/generics';
+import {getDisplayName} from './utils/generics';
 
-const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}) =>
+const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}, options) =>
     (WrappedComponent) => {
-        const ConsumeContext = ({remainedContextComponents, contexts, ...propsRest}) => {
-            const [ContextComponent, ...ContextComponentsRest] = remainedContextComponents,
-                  {actions, state} = useContext(ContextComponent.componentContext),
-                  contextPosition = ContextComponents.length - remainedContextComponents.length;
+        const finalOptions = {pure: true, ...options},
+              WrappedComponentName = getDisplayName(WrappedComponent);
 
-            contexts.state[contextPosition] = state;
-            contexts.actions[contextPosition] = actions;
+        if (finalOptions.pure) WrappedComponent = React.memo(WrappedComponent);
 
-            if (ContextComponentsRest.length) {
-                return (
-                    <ConsumeContext
-                        {...propsRest}
-                        contexts={contexts}
-                        remainedContextComponents={ContextComponentsRest}
-                    />
-                );
-            }
+        const Connect = ContextComponents.reduceRight(
+            (ChildConnect, ContextComponent, index) => {
+                const ConsumeContext = ({contexts = {state: [], actions: []}, ...props}) => {
+                    const {actions, state} = useContext(ContextComponent.componentContext);
+                    contexts.state[index] = state;
+                    contexts.actions[index] = actions;
 
-            return (
-                <WrappedComponent
-                    {...propsRest}
-                    {...mapStateToProps(contexts.state, propsRest)}
-                    {...mapActionsToProps(contexts.actions, propsRest)}
-                />
-            );
-        };
-        ConsumeContext.defaultProps = {
-            contexts: {state: [], actions: []},
-            remainedContextComponents: ContextComponents
-        };
-        ConsumeContext.propTypes = {
-            contexts: PropTypes.object,
-            remainedContextComponents: PropTypes.arrayOf(PropTypes.elementType)
-        };
+                    if (ChildConnect) {
+                        return <ChildConnect contexts={contexts} {...props} />;
+                    }
 
-        // Name for displaying in the components tree, https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
-        const contextNames = ContextComponents.map(ContextComponent => getDisplayName(ContextComponent));
-        ConsumeContext.displayName = `connect[${contextNames}](${getDisplayName(WrappedComponent)})`;
+                    return (
+                        <WrappedComponent
+                            {...props}
+                            {...mapStateToProps(contexts.state, props)}
+                            {...mapActionsToProps(contexts.actions, props)}
+                        />
+                    );
+                };
+                ConsumeContext.displayName = `connect[${getDisplayName(ContextComponent)}](${WrappedComponentName})`;
+                ConsumeContext.propTypes = {contexts: PropTypes.object};
 
-        return ConsumeContext;
+                return ConsumeContext;
+            },
+            null
+        );
+
+        if (finalOptions.pure) return React.memo(Connect);
+
+        return Connect;
     };
 
 export default connect;
