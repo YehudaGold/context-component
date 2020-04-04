@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import connect from './connect';
 import {getDisplayName} from './utils/generics';
-import getComponentActions from './utils/getComponentActions';
+import getActions from './utils/getActions';
 
 class ContextComponent extends Component {
 
@@ -36,7 +36,7 @@ class ContextComponent extends Component {
         if (this._contextValue.state !== this.state) {
             this._contextValue = {
                 state: this.state,
-                actions: this.actions || (this.actions = getComponentActions(this, ContextComponent))
+                actions: this.actions || (this.actions = getActions(this, ContextComponent))
             };
         }
 
