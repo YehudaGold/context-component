@@ -24,7 +24,7 @@ To learn more on context - [react context documentation](https://reactjs.org/doc
 
 ### Creating ContextComponent
 
-To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in you app:
+To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in your app:
 
 ThemeContext.jsx
 ```jsx
@@ -40,12 +40,11 @@ export default class ThemeContext extends ContextComponent {
 
 }
 ```
-
 The ContextComponent implement for you a `render` methods that render the `this.componentContext.Provider` with the component state and instance method's as value.
 
-You can use React lifecycle method's to initialize the state and manipulate it.
+Method's defined on the ContextComponent are provided by the context automatically, except for React lifecycle method's and method's starting with '_'. You can override this by adding `actions` property to the class with the method's you want to provide.
 
-All non React lifecycle method's are provided by the context automatically, but you can override this by adding `actions` property to the class with the method's you want to provide.
+You can use React lifecycle method's in ContextComponent to initialize and manage the state.
 
 ### Providing ContextComponent
 
@@ -197,19 +196,17 @@ The `connect` HOC takes array of context class, and takes tree optional paramete
 
 The mapStateToProps and mapActionToProps callbacks shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
 ```js
-const mapStateToProps = (state) => ({theme: {color: state.theme}});
+const mapStateToProps = (state) =>
+    ({theme: {color: state.theme}});
 ```
-the theme object reference will always return a new object and the React.memo shallow equality check will fail, and the component will rerender.
+the theme object reference will always return a new object and the React.memo shallow equality check will fail, which means the component will rerender with the same props.
 
-For solving this use memorization technique:
+For solving this you can use createMemo utility:
 ```js
-let lastTheme, value;
-const mapStateToProps = (state) => {
-    if (state.theme === lastTheme) return value;
-    lastTheme = state.theme;
-    value = {theme: {color: state.theme}};
-    return value;
-}
-// For this you can use memorization package like 'memoize-one'.
+import {createMemo} from 'ContextComponent';
+
+const themeMemo = createMemo();
+const mapStateToProps = (state) =>
+    ({theme: themeMemo(() => ({color: state.theme}), [state.theme])})
 ```
 or set the connect options.memo to false and not memorize the component.

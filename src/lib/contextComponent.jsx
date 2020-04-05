@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 
 import connect from './connect';
+import createMemo from './utils/createMemo';
 import {getDisplayName} from './utils/generics';
 import getActions from './utils/getActions';
 
 class ContextComponent extends Component {
 
     static get componentContext() {
-        if (Object.getOwnPropertyDescriptor(this, '_componentContext')) return this._componentContext;
+        if (Object.prototype.hasOwnProperty.call(this, '_componentContext')) return this._componentContext;
 
         this._componentContext = React.createContext();
         this._componentContext.displayName = getDisplayName(this);
@@ -29,25 +30,19 @@ class ContextComponent extends Component {
     constructor(props) {
         super(props);
         this.componentContext = this.constructor.componentContext;
-        this._contextValue = {};
-    }
-
-    get contextValue() {
-        if (this._contextValue.state !== this.state) {
-            this._contextValue = {
-                state: this.state,
-                actions: this.actions || (this.actions = getActions(this, ContextComponent))
-            };
-        }
-
-        return this._contextValue;
+        this._contextValueMemo = createMemo();
     }
 
     render() {
-        const {componentContext: {Provider}, props: {children}} = this;
+        const {componentContext: {Provider}, props: {children}, state} = this,
+              contextValue = this._contextValueMemo(() => {
+                  this.actions = this.actions || getActions(this, ContextComponent);
+
+                  return {actions: this.actions, state};
+              }, [state]);
 
         return (
-            <Provider value={this.contextValue}>
+            <Provider value={contextValue}>
                 {children}
             </Provider>
         );
