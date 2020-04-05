@@ -6,10 +6,10 @@ import withForwardRef from './utils/withForwardRef';
 
 const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}, options) =>
     (WrappedComponent) => {
-        const finalOptions = {pure: true, forwardRef: false, ...options},
+        const finalOptions = {memo: true, forwardRef: false, ...options},
               WrappedComponentName = getDisplayName(WrappedComponent);
 
-        if (finalOptions.pure) WrappedComponent = memo(WrappedComponent);
+        if (finalOptions.memo) WrappedComponent = memo(WrappedComponent);
 
         let Connect = ContextComponents.reduceRight(
             (ChildConnect, ContextComponent, index) => {
@@ -43,7 +43,7 @@ const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProp
         );
 
         if (finalOptions.forwardRef) Connect = withForwardRef(Connect);
-        if (finalOptions.pure) Connect = memo(Connect);
+        if (finalOptions.memo) Connect = memo(Connect);
 
         return Connect;
     };

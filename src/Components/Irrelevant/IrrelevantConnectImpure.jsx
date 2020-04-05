@@ -36,5 +36,5 @@ const mapStateToProps = state => ({theme: state.theme}),
 export default IrrelevantContext.connect(
     mapStateToProps,
     mapActionToProps,
-    {pure: false}
+    {memo: false}
 )(IrrelevantConnectImpure);

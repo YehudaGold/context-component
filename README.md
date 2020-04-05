@@ -18,7 +18,7 @@ ContextComponent is aimed at reducing the boilerplate of writing flexible centra
 ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
 and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
-To learn more on context - [react context docs](https://reactjs.org/docs/context.html)
+To learn more on context - [react context documentation](https://reactjs.org/docs/context.html)
 
 ## Basic usage
 
@@ -86,7 +86,7 @@ The class `connect` HOC takes tree optional parameters:
 * mapStateToProps - callback with two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
 * mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 * options - options object with the keys:
-    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
+    * memo - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
     * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 ---
 
@@ -185,12 +185,12 @@ const mapActionToProps = ([counterContext, themeContext]) => ({
 
 export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
 ```
-The `connect` HOC takes the array of context class, and takes tree optional parameters:
+The `connect` HOC takes array of context class, and takes tree optional parameters:
 
 * mapStateToProps - callback with two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
 * mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 * options - options object with the keys:
-    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
+    * memo - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
     * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 
 ## Optimization warning
@@ -199,7 +199,7 @@ The mapStateToProps and mapActionToProps callbacks shouldn't return new object r
 ```js
 const mapStateToProps = (state) => ({theme: {color: state.theme}});
 ```
-Here the theme reference will be always a new object and the memorization shallow equality check will fail.
+the theme object reference will always return a new object and the React.memo shallow equality check will fail, and the component will rerender.
 
 For solving this use memorization technique:
 ```js
@@ -212,4 +212,4 @@ const mapStateToProps = (state) => {
 }
 // For this you can use memorization package like 'memoize-one'.
 ```
-Or set the connect options.pure to false.
+or set the connect options.memo to false and not memorize the component.

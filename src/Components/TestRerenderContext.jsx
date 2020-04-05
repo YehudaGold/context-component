@@ -25,8 +25,8 @@ class TestRerenderContext extends Component {
             <IrrelevantContext>
                 <div className="list">
                     TestRerenderContext - test context consumers memorization:<br />
-                    context.connect is defaulted to pure and will not rerender on irrelevant changes<br />
-                    context.connect with options &#123;pure: false&#125; will rerender always<br />
+                    context.connect is defaulted to memo and will not rerender on irrelevant changes<br />
+                    context.connect with options &#123;memo: false&#125; will rerender always<br />
                     react.memo(UseContext) prop change will not rerender, context change  will rerender
                     <div>
                         <Button
