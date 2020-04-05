@@ -656,7 +656,7 @@ module.exports = {
         'react/jsx-no-undef': 'error',
         'react/jsx-one-expression-per-line': 'off',
         'react/jsx-pascal-case': 'error',
-        'react/jsx-props-no-multi-spaces': 'error',
+        'react/jsx-props-no-multi-spaces': 'warn',
         'react/jsx-props-no-spreading': 'off',
         'react/jsx-sort-default-props': ['warn', {ignoreCase: true}],
         'react/jsx-sort-props': 'warn',

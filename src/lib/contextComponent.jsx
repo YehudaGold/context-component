@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {shallowEqualObjects} from 'shallow-equal';
 
 import connect from './connect';
 import {getDisplayName} from './utils/generics';
-import getComponentActions from './utils/getComponentActions';
+import getActions from './utils/getActions';
 
 class ContextComponent extends Component {
 
@@ -34,10 +33,10 @@ class ContextComponent extends Component {
     }
 
     get contextValue() {
-        if (!shallowEqualObjects(this._contextValue.state, this.state)) {
+        if (this._contextValue.state !== this.state) {
             this._contextValue = {
                 state: this.state,
-                actions: this.actions || (this.actions = getComponentActions(this, ContextComponent))
+                actions: this.actions || (this.actions = getActions(this, ContextComponent))
             };
         }
 
