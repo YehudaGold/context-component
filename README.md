@@ -87,6 +87,7 @@ The class `connect` HOC takes tree optional parameters:
 * mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 * options - options object with the keys:
     * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
+    * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 ---
 
 Or consuming the context by rendering the `ContextComponent.Consumer`:
@@ -190,6 +191,7 @@ The `connect` HOC takes the array of context class, and takes tree optional para
 * mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
 * options - options object with the keys:
     * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
+    * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 
 ## Optimization warning
 
