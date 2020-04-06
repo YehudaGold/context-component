@@ -9,7 +9,6 @@ const Provider = ({ContextComponents, children}) =>
             </ContextComponent>,
         children
     );
-
 Provider.propTypes = {
     ContextComponents: PropTypes.arrayOf(PropTypes.elementType).isRequired
 };

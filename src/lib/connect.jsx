@@ -5,7 +5,7 @@ import {getDisplayName} from './utils/generics';
 import withForwardRef from './utils/withForwardRef';
 
 const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options) => {
-    const finalOptions = {memo: true, forwardRef: false, ...options},
+    const finalOptions = {forwardRef: false, memo: true, ...options},
           wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
 
     if (finalOptions.memo) WrappedComponent = memo(WrappedComponent);
