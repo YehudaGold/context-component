@@ -29,4 +29,4 @@ const mapContextToProps = context => ({
     toggleTheme: context.toggleTheme
 });
 
-export default ThemeContext.connect(mapContextToProps)(ThemeConnect);
+export default ThemeContext.connect(ThemeConnect, mapContextToProps);

@@ -33,4 +33,4 @@ const mapContextToProps = context => ({
     toggleIrrelevant: context.toggleIrrelevant
 });
 
-export default IrrelevantContext.connect(mapContextToProps)(IrrelevantConnect);
+export default IrrelevantContext.connect(IrrelevantConnect, mapContextToProps);

@@ -40,4 +40,4 @@ const mapContextsToProps = ([counterContext, themeContext]) => ({
     toggleTheme: themeContext.toggleTheme
 });
 
-export default connect([CounterContext, ThemeContext], mapContextsToProps)(MultipleConnect);
+export default connect(MultipleConnect, [CounterContext, ThemeContext], mapContextsToProps);

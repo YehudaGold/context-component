@@ -18,8 +18,9 @@ class ContextComponent extends Component {
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static connect(mapContextToProps, options) {
+    static connect(WrappedComponent, mapContextToProps, options) {
         return connect(
+            WrappedComponent,
             [this],
             mapContextToProps && (([context], ownProps) => mapContextToProps(context, ownProps)),
             options

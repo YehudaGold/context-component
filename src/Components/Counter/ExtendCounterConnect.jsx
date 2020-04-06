@@ -36,4 +36,4 @@ const mapContextToProps = context => ({
     setToZero: context.setToZero
 });
 
-export default ExtendCounterContext.connect(mapContextToProps)(ExtendCounterConnect);
+export default ExtendCounterContext.connect(ExtendCounterConnect, mapContextToProps);

@@ -32,4 +32,4 @@ const mapContextToProps = (context, ownProps) => ({
     toggleTheme: context.toggleTheme
 });
 
-export default ThemeContext.connect(mapContextToProps)(ThemeConnectWithProps);
+export default ThemeContext.connect(ThemeConnectWithProps, mapContextToProps);

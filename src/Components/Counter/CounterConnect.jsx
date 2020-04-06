@@ -33,4 +33,4 @@ const mapContextToProps = context => ({
     increase: context.increase
 });
 
-export default CounterContext.connect(mapContextToProps)(CounterConnect);
+export default CounterContext.connect(CounterConnect, mapContextToProps);

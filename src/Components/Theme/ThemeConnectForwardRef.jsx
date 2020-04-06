@@ -31,4 +31,4 @@ const mapContextToProps = context => ({
     toggleTheme: context.toggleTheme
 });
 
-export default ThemeContext.connect(mapContextToProps, {forwardRef: true})(ThemeConnectForwardRef);
+export default ThemeContext.connect(ThemeConnectForwardRef, mapContextToProps, {forwardRef: true});

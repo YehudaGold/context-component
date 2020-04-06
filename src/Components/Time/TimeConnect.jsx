@@ -24,4 +24,4 @@ class TimeConnect extends PureComponent {
 const mapContextToProps = context =>
     ({timeFromMount: context.timeFromMount});
 
-export default TimeContext.connect(mapContextToProps)(TimeConnect);
+export default TimeContext.connect(TimeConnect, mapContextToProps);

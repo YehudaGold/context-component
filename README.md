@@ -16,7 +16,7 @@ npm start
 ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
 ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
-and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
+and expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
 To learn more on context - [react context documentation](https://reactjs.org/docs/context.html)
 
@@ -78,10 +78,11 @@ const otherComponent = ({toggleTheme, theme}) =>
 const mapContextToProps = context =>
     ({theme: context.theme, toggleTheme: context.toggleTheme});
 
-export default ThemeContext.connect(mapContextToProps)(otherComponent);
+export default ThemeContext.connect(otherComponent, mapContextToProps);
 ```
-The class `connect` HOC takes two parameters:
+The class `connect` HOC takes three parameters:
 
+* WrappedComponent - the component to connect.
 * mapContextToProps - callback with two parameters `context` and `ownProps`, and return object of props. Enabling you to transform rename and pick the relevant values from the context.
 * options - optional options object with the keys:
     * memo - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
@@ -178,9 +179,10 @@ const mapContextsToProps = ([counterContext, themeContext]) => ({
     toggleTheme: themeContext.toggleTheme
 });
 
-export default connect([CounterContext, ThemeContext], mapContextsToProps)(otherComponent);
+export default connect(otherComponent, [CounterContext, ThemeContext], mapContextsToProps);
 ```
-The `connect` HOC takes three parameters:
+The `connect` HOC takes four parameters:
+* WrappedComponent - the component to connect.
 * ContextComponents - array of contextComponent classes.
 * mapContextsToProps - callback with two parameters `context[]` and `ownProps`, and return object of props. Enabling you to transform rename and pick the relevant values from the context.
 * options - optional options object with the keys:
