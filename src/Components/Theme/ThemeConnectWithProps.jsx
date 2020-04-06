@@ -26,10 +26,10 @@ class ThemeConnectWithProps extends PureComponent {
 
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    contextTheme: state.theme,
-    theme: ownProps.theme === 'dark' ? state.theme : ownProps.theme
-}),
-      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+const mapContextToProps = (context, ownProps) => ({
+    contextTheme: context.theme,
+    theme: ownProps.theme === 'dark' ? context.theme : ownProps.theme,
+    toggleTheme: context.toggleTheme
+});
 
-export default ThemeContext.connect(mapStateToProps, mapActionToProps)(ThemeConnectWithProps);
+export default ThemeContext.connect(mapContextToProps)(ThemeConnectWithProps);

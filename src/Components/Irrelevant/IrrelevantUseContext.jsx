@@ -7,15 +7,15 @@ import Button from '../Generic/Button';
 let renderCount = 1;
 
 const IrrelevantUseContext = ({themeProp}) => {
-    const {actions, state} = useContext(IrrelevantContext.componentContext);
+    const {theme, toggleTheme, toggleIrrelevant} = useContext(IrrelevantContext.componentContext);
 
     return (
-        <div className={state.theme}>
+        <div className={theme}>
             IrrelevantUseContext
             <div>{`renderCount: ${renderCount++}`}</div>
             <div>{`theme prop: ${themeProp}`}</div>
-            <Button handelClick={actions.toggleTheme} text="toggle theme" />
-            <Button handelClick={actions.toggleIrrelevant} text="toggle irrelevant" />
+            <Button handelClick={toggleTheme} text="toggle theme" />
+            <Button handelClick={toggleIrrelevant} text="toggle irrelevant" />
         </div>
     );
 };

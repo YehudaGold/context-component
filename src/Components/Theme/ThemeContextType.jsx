@@ -8,12 +8,12 @@ class ThemeContextType extends Component {
     static contextType = ThemeContext.componentContext;
 
     render() {
-        const {actions, state} = this.context;
+        const {theme, toggleTheme} = this.context;
 
         return (
-            <div className={state.theme}>
+            <div className={theme}>
                 ThemeContextType
-                <Button handelClick={actions.toggleTheme} text="toggle theme" />
+                <Button handelClick={toggleTheme} text="toggle theme" />
             </div>
         );
     }

@@ -18,11 +18,10 @@ class ContextComponent extends Component {
 
     static get Consumer() { return this.componentContext.Consumer; }
 
-    static connect(mapStateToProps, mapActionsToProps, options) {
+    static connect(mapContextToProps, options) {
         return connect(
             [this],
-            mapStateToProps && (([state], ownProps) => mapStateToProps(state, ownProps)),
-            mapActionsToProps && (([actions], ownProps) => mapActionsToProps(actions, ownProps)),
+            mapContextToProps && (([context], ownProps) => mapContextToProps(context, ownProps)),
             options
         );
     }
@@ -38,7 +37,7 @@ class ContextComponent extends Component {
               contextValue = this._contextValueMemo(() => {
                   this.actions = this.actions || getActions(this, ContextComponent);
 
-                  return {actions: this.actions, state};
+                  return {...this.actions, ...state};
               }, [state]);
 
         return (

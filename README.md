@@ -75,16 +75,15 @@ import ThemeContext from './ThemeContext';
 const otherComponent = ({toggleTheme, theme}) =>
     <div className={theme} onClick={toggleTheme} />;
 
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+const mapContextToProps = context =>
+    ({theme: context.theme, toggleTheme: context.toggleTheme});
 
-export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
+export default ThemeContext.connect(mapContextToProps)(otherComponent);
 ```
-The class `connect` HOC takes tree optional parameters:
+The class `connect` HOC takes two parameters:
 
-* mapStateToProps - callback with two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-* options - options object with the keys:
+* mapContextToProps - callback with two parameters `context` and `ownProps`, and return object of props. Enabling you to transform rename and pick the relevant values from the context.
+* options - optional options object with the keys:
     * memo - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
     * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 ---
@@ -96,8 +95,8 @@ import ThemeContext from './ThemeContext';
 
 export const otherComponent = () => (
     <ThemeContext.Consumer>
-        {context =>
-            <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+        {({theme, toggleTheme}) =>
+            <div className={theme} onClick={toggleTheme} />
         }
     </ThemeContext.Consumer>
 );
@@ -114,9 +113,9 @@ export class otherComponent extends Component {
     static contextType = ThemeContext.componentContext;
 
     render() {
-        const {actions, state} = this.context;
+        const {theme, toggleTheme} = this.context;
 
-        return <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+        return <div className={theme} onClick={toggleTheme} />
     }
 
 }
@@ -129,9 +128,9 @@ import React, {useContext} from 'react';
 import ThemeContext from './ThemeContext';
 
 export const otherComponent = () => {
-    const {actions, state} = useContext(ThemeContext.componentContext);
+    const {theme, toggleTheme} = useContext(ThemeContext.componentContext);
 
-    return <div className={context.state.theme} onClick={context.actions.toggleTheme} />;
+    return <div className={theme} onClick={toggleTheme} />;
 };
 
 ```
@@ -166,38 +165,34 @@ import {connect} from 'ContextComponent';
 import ThemeContext from './ThemeContext';
 import CounterContext from './CounterContext';
 
-const otherComponent = ({toggleTheme, increase, counter, theme}) =>
+const otherComponent = ({counter, increase, theme, toggleTheme}) =>
     <div>
         <div className={theme} onClick={toggleTheme} />
-        <div onClick={increase} > {counter} </div>
+        <div onClick={increase}> {counter} </div>
     </div>;
 
-const mapStateToProps = ([counterContext, themeContext]) => ({
+const mapContextsToProps = ([counterContext, themeContext]) => ({
     counter: counterContext.counter,
-    theme: themeContext.theme
-});
-
-const mapActionToProps = ([counterContext, themeContext]) => ({
     increase: counterContext.increase,
+    theme: themeContext.theme,
     toggleTheme: themeContext.toggleTheme
 });
 
-export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
+export default connect([CounterContext, ThemeContext], mapContextsToProps)(otherComponent);
 ```
-The `connect` HOC takes array of context class, and takes tree optional parameters:
-
-* mapStateToProps - callback with two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-* options - options object with the keys:
+The `connect` HOC takes three parameters:
+* ContextComponents - array of contextComponent classes.
+* mapContextsToProps - callback with two parameters `context[]` and `ownProps`, and return object of props. Enabling you to transform rename and pick the relevant values from the context.
+* options - optional options object with the keys:
     * memo - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
     * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
 
 ## Optimization warning
 
-The mapStateToProps and mapActionToProps callbacks shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
+The mapContextToProps callback shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
 ```js
-const mapStateToProps = (state) =>
-    ({theme: {color: state.theme}});
+const mapContextToProps = (context) =>
+    ({theme: {color: context.theme}});
 ```
 the theme object reference will always return a new object and the React.memo shallow equality check will fail, which means the component will rerender with the same props.
 
@@ -206,7 +201,7 @@ For solving this you can use createMemo utility:
 import {createMemo} from 'ContextComponent';
 
 const themeMemo = createMemo();
-const mapStateToProps = (state) =>
-    ({theme: themeMemo(() => ({color: state.theme}), [state.theme])})
+const mapContextToProps = (context) =>
+    ({theme: themeMemo(() => ({color: context.theme}), [context.theme])})
 ```
 or set the connect options.memo to false and not memorize the component.

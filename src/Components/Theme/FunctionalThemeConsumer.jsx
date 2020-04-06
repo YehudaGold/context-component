@@ -5,10 +5,10 @@ import Button from '../Generic/Button';
 
 const FunctionalThemeConsumer = () => (
     <ThemeContext.Consumer>
-        {context =>
-            <div className={context.state.theme}>
+        {({theme, toggleTheme}) =>
+            <div className={theme}>
                 FunctionalThemeConsumer
-                <Button handelClick={context.actions.toggleTheme} text="toggle theme" />
+                <Button handelClick={toggleTheme} text="toggle theme" />
             </div>}
     </ThemeContext.Consumer>
 );

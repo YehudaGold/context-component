@@ -14,7 +14,7 @@ class ExtendCounterConnect extends PureComponent {
     }
 
     render() {
-        const {counter, increase, decrease, setToZero} = this.props;
+        const {counter, decrease, increase, setToZero} = this.props;
 
         return (
             <div className="dark">
@@ -29,11 +29,11 @@ class ExtendCounterConnect extends PureComponent {
 
 }
 
-const mapStateToProps = state => ({counter: state.counter}),
-      mapActionToProps = actions => ({
-          increase: actions.increase,
-          decrease: actions.decrease,
-          setToZero: actions.setToZero
-      });
+const mapContextToProps = context => ({
+    counter: context.counter,
+    decrease: context.decrease,
+    increase: context.increase,
+    setToZero: context.setToZero
+});
 
-export default ExtendCounterContext.connect(mapStateToProps, mapActionToProps)(ExtendCounterConnect);
+export default ExtendCounterContext.connect(mapContextToProps)(ExtendCounterConnect);

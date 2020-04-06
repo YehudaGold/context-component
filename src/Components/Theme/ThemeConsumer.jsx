@@ -10,10 +10,10 @@ class ThemeConsumer extends Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {({actions, state}) => (
-                    <div className={state.theme}>
+                {({theme, toggleTheme}) => (
+                    <div className={theme}>
                         ThemeConsumer
-                        <Button handelClick={actions.toggleTheme} text="toggle theme" />
+                        <Button handelClick={toggleTheme} text="toggle theme" />
                     </div>
                 )}
             </ThemeContext.Consumer>

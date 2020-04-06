@@ -27,14 +27,10 @@ IrrelevantConnectImpure.propTypes = {
     toggleTheme: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({
-          toggleTheme: actions.toggleTheme,
-          toggleIrrelevant: actions.toggleIrrelevant
-      });
+const mapContextToProps = context => ({
+    theme: context.theme,
+    toggleTheme: context.toggleTheme,
+    toggleIrrelevant: context.toggleIrrelevant
+});
 
-export default IrrelevantContext.connect(
-    mapStateToProps,
-    mapActionToProps,
-    {memo: false}
-)(IrrelevantConnectImpure);
+export default IrrelevantContext.connect(mapContextToProps, {memo: false})(IrrelevantConnectImpure);
