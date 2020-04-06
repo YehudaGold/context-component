@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import connect from './connect';
-import createMemo from './utils/createMemo';
 import {getDisplayName} from './utils/generics';
 import getActions from './utils/getActions';
 
@@ -30,19 +29,19 @@ class ContextComponent extends Component {
     constructor(props) {
         super(props);
         this.componentContext = this.constructor.componentContext;
-        this._contextValueMemo = createMemo();
     }
 
     render() {
-        const {componentContext: {Provider}, props: {children}, state} = this,
-              contextValue = this._contextValueMemo(() => {
-                  this.actions = this.actions || getActions(this, ContextComponent);
+        const {componentContext: {Provider}, props: {children}} = this;
 
-                  return {...this.actions, ...state};
-              }, [state]);
+        if (this.state !== this.lastState) {
+            this.actions = this.actions || getActions(this, ContextComponent);
+            this.contextValue = {...this.actions, ...this.state};
+            this.lastState = this.state;
+        }
 
         return (
-            <Provider value={contextValue}>
+            <Provider value={this.contextValue}>
                 {children}
             </Provider>
         );

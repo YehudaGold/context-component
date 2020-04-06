@@ -8,7 +8,13 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
     const finalOptions = {forwardRef: false, memo: true, ...options},
           wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
 
-    if (finalOptions.memo) WrappedComponent = memo(WrappedComponent);
+    if (finalOptions.memo) {
+        if (typeof finalOptions.memo === 'function') {
+            WrappedComponent = memo(WrappedComponent, finalOptions.memo);
+        } else {
+            WrappedComponent = memo(WrappedComponent);
+        }
+    }
 
     let Connect = ContextComponents.reduceRight(
         (ChildConsume, ContextComponent, index) => {
