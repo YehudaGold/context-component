@@ -12,17 +12,15 @@ import TestThemeContext from './Components/TestThemeContext';
 
 const App = () => (
     <div className="App">
-        <React.StrictMode>
-            <TestThemeContext>
-                <TestSubThemeContext />
-            </TestThemeContext>
-            <TestMultipleContexts />
-            <TestExtendCounterContext />
-            <TestContextsLifecycle />
-            <TestOwnPropsConnect />
-            <TestRerenderContext />
-            <TestForwardRef />
-        </React.StrictMode>
+        <TestThemeContext>
+            <TestSubThemeContext />
+        </TestThemeContext>
+        <TestMultipleContexts />
+        <TestExtendCounterContext />
+        <TestContextsLifecycle />
+        <TestOwnPropsConnect />
+        <TestRerenderContext />
+        <TestForwardRef />
     </div>
 );
 

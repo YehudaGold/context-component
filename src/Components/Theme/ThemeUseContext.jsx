@@ -4,12 +4,12 @@ import ThemeContext from '../../Contexts/ThemeContext';
 import Button from '../Generic/Button';
 
 const ThemeUseContext = () => {
-    const {actions, state} = useContext(ThemeContext.componentContext);
+    const {theme, toggleTheme} = useContext(ThemeContext.componentContext);
 
     return (
-        <div className={state.theme}>
+        <div className={theme}>
             ThemeUseContext
-            <Button handelClick={actions.toggleTheme} text="toggle theme" />
+            <Button handelClick={toggleTheme} text="toggle theme" />
         </div>
     );
 };

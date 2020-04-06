@@ -1,39 +1,30 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React from 'react';
 
 import ExtendCounterContext from '../../Contexts/ExtendCounterContext';
 import Button from '../Generic/Button';
 
-class ExtendCounterConnect extends PureComponent {
+const ExtendCounterConnect = ({counter, decrease, increase, setToZero}) => (
+    <div className="dark">
+        ExtendCounterConnect
+        <div className="value">{`value: ${counter}`}</div>
+        <Button handelClick={increase} text="increase" />
+        <Button handelClick={decrease} text="decrease (override to-2)" />
+        <Button handelClick={setToZero} text="setToZero (extended)" />
+    </div>
+);
+ExtendCounterConnect.propTypes = {
+    counter: PropTypes.number.isRequired,
+    decrease: PropTypes.func.isRequired,
+    increase: PropTypes.func.isRequired,
+    setToZero: PropTypes.func.isRequired
+};
 
-    static propTypes = {
-        counter: PropTypes.number.isRequired,
-        decrease: PropTypes.func.isRequired,
-        increase: PropTypes.func.isRequired,
-        setToZero: PropTypes.func.isRequired
-    }
+const mapContextToProps = context => ({
+    counter: context.counter,
+    decrease: context.decrease,
+    increase: context.increase,
+    setToZero: context.setToZero
+});
 
-    render() {
-        const {counter, increase, decrease, setToZero} = this.props;
-
-        return (
-            <div className="dark">
-                ExtendCounterConnect
-                <div className="value">{`value: ${counter}`}</div>
-                <Button handelClick={increase} text="increase" />
-                <Button handelClick={decrease} text="decrease (override to-2)" />
-                <Button handelClick={setToZero} text="setToZero (extended)" />
-            </div>
-        );
-    }
-
-}
-
-const mapStateToProps = state => ({counter: state.counter}),
-      mapActionToProps = actions => ({
-          increase: actions.increase,
-          decrease: actions.decrease,
-          setToZero: actions.setToZero
-      });
-
-export default ExtendCounterContext.connect(mapStateToProps, mapActionToProps)(ExtendCounterConnect);
+export default ExtendCounterContext.connect(ExtendCounterConnect, mapContextToProps);

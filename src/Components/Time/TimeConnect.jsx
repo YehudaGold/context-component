@@ -1,26 +1,19 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React from 'react';
 
 import TimeContext from '../../Contexts/TimeContext';
 
-class TimeConnect extends PureComponent {
+const second = 1000,
+      TimeConnect = ({timeFromMount}) => (
+          <div className="dark">
+              {`TimeConnect -  time from mount ${Math.floor(timeFromMount / second)}sec`}
+          </div>
+      );
+TimeConnect.propTypes = {
+    timeFromMount: PropTypes.number.isRequired
+};
 
-    static propTypes = {
-        timeFromMount: PropTypes.number.isRequired
-    }
+const mapContextToProps = context =>
+    ({timeFromMount: context.timeFromMount});
 
-    render() {
-        const {timeFromMount} = this.props;
-
-        return (
-            <div className="dark">
-                {`ThemeConnect -  time from mount ${Math.floor(timeFromMount / 1000)}sec`}
-            </div>
-        );
-    }
-
-}
-
-const mapStateToProps = state => ({timeFromMount: state.timeFromMount});
-
-export default TimeContext.connect(mapStateToProps)(TimeConnect);
+export default TimeContext.connect(TimeConnect, mapContextToProps);

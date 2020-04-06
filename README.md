@@ -15,16 +15,15 @@ npm start
 
 ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-ContextComponent provide extendable React class that automatically connect it's state and method's to a context and provide it to his children's.
-and expose api to easily consume the context by `connect` HOC (similar to react-redux) or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
+ContextComponent provide extendable React class that automatically assign it's state and method's to context and provide it to his children's, and expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
-To learn more on context - [react context docs](https://reactjs.org/docs/context.html)
+To learn more on context - [react context documentation](https://reactjs.org/docs/context.html)
 
 ## Basic usage
 
 ### Creating ContextComponent
 
-To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in you app:
+To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in your app:
 
 ThemeContext.jsx
 ```jsx
@@ -40,12 +39,11 @@ export default class ThemeContext extends ContextComponent {
 
 }
 ```
-
 The ContextComponent implement for you a `render` methods that render the `this.componentContext.Provider` with the component state and instance method's as value.
 
-You can use React lifecycle method's to initialize the state and manipulate it.
+Method's defined on the ContextComponent are provided by the context automatically, except for React lifecycle method's and method's starting with '_'. You can override this by adding `actions` property to the class with the method's you want to provide.
 
-All non React lifecycle method's are provided by the context automatically, but you can override this by adding `actions` property to the class with the method's you want to provide.
+You can use React lifecycle method's in ContextComponent to initialize and manage the state.
 
 ### Providing ContextComponent
 
@@ -59,7 +57,7 @@ import ThemeContext from './ThemeContext';
 export const App = () => (
     <ThemeContext>
         <otherComponent />
-    </ThemeContext>;
+    </ThemeContext>
 );
 
 ```
@@ -76,18 +74,19 @@ import ThemeContext from './ThemeContext';
 const otherComponent = ({toggleTheme, theme}) =>
     <div className={theme} onClick={toggleTheme} />;
 
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+const mapContextToProps = context =>
+    ({theme: context.theme, toggleTheme: context.toggleTheme});
 
-export default ThemeContext.connect(mapStateToProps, mapActionToProps)(otherComponent);
+export default ThemeContext.connect(otherComponent, mapContextToProps);
 ```
-The class `connect` HOC takes tree optional parameters:
-
-* mapStateToProps - callback with two parameters `state` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - callback with two parameters `actions` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-* options - options object with the keys:
-    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
-    * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
+The class `connect` HOC takes three parameters:
+* WrappedComponent - The component to connect.
+* mapContextsToProps - Callback with two parameters `context[]` and `ownProps`, and return object of props.
+Enabling you to transform rename and pick the relevant values from the context.
+* options - Optional object with the keys:
+    * memo - Memorize the component to not rerender if there aren't changes to props or context.
+    Boolean or function value, defaulted to true (shallow equally check), can be set to a custom equally check.
+    * forwardRef - Forward the ref prop to the WrappedComponent ref. Boolean value defaulted to 'false'.
 ---
 
 Or consuming the context by rendering the `ContextComponent.Consumer`:
@@ -97,8 +96,8 @@ import ThemeContext from './ThemeContext';
 
 export const otherComponent = () => (
     <ThemeContext.Consumer>
-        {context =>
-            <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+        {({theme, toggleTheme}) =>
+            <div className={theme} onClick={toggleTheme} />
         }
     </ThemeContext.Consumer>
 );
@@ -115,12 +114,12 @@ export class otherComponent extends Component {
     static contextType = ThemeContext.componentContext;
 
     render() {
-        const {actions, state} = this.context;
+        const {theme, toggleTheme} = this.context;
 
-        return <div className={context.state.theme} onClick={context.actions.toggleTheme} />
+        return <div className={theme} onClick={toggleTheme} />;
     }
 
-}
+};
 ```
 ---
 
@@ -130,9 +129,9 @@ import React, {useContext} from 'react';
 import ThemeContext from './ThemeContext';
 
 export const otherComponent = () => {
-    const {actions, state} = useContext(ThemeContext.componentContext);
+    const {theme, toggleTheme} = useContext(ThemeContext.componentContext);
 
-    return <div className={context.state.theme} onClick={context.actions.toggleTheme} />;
+    return <div className={theme} onClick={toggleTheme} />;
 };
 
 ```
@@ -151,7 +150,7 @@ import CounterContext from './CounterContext';
 export const App = () => (
     <Provider ContextComponents={[CounterContext, ThemeContext]}>
         <otherComponent />
-    </Provider>;
+    </Provider>
 );
 ```
 The `Provider` require ContextComponents prop - the ContextComponent classes array.
@@ -167,49 +166,45 @@ import {connect} from 'ContextComponent';
 import ThemeContext from './ThemeContext';
 import CounterContext from './CounterContext';
 
-const otherComponent = ({toggleTheme, increase, counter, theme}) =>
+const otherComponent = ({counter, increase, theme, toggleTheme}) =>
     <div>
         <div className={theme} onClick={toggleTheme} />
-        <div onClick={increase} > {counter} </div>
+        <div onClick={increase}> {counter} </div>
     </div>;
 
-const mapStateToProps = ([counterContext, themeContext]) => ({
+const mapContextsToProps = ([counterContext, themeContext]) => ({
     counter: counterContext.counter,
-    theme: themeContext.theme
-});
-
-const mapActionToProps = ([counterContext, themeContext]) => ({
     increase: counterContext.increase,
+    theme: themeContext.theme,
     toggleTheme: themeContext.toggleTheme
 });
 
-export default connect([CounterContext, ThemeContext], mapStateToProps, mapActionToProps)(otherComponent);
+export default connect(otherComponent, [CounterContext, ThemeContext], mapContextsToProps);
 ```
-The `connect` HOC takes the array of context class, and takes tree optional parameters:
-
-* mapStateToProps - callback with two parameters `state[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant values from the context.
-* mapActionToProps - callback with two parameters `actions[]` and `ownProps` and return object of props, enabling you to transform rename and pick the relevant method's from the context.
-* options - options object with the keys:
-    * pure - memorize the component to not rerender if there aren't changes to props or context (shallow compare), defaulted to true.
-    * forwardRef - forward the ref prop to the WrappedComponent ref, defaulted to false.
+The `connect` HOC takes four parameters:
+* WrappedComponent - The component to connect.
+* ContextComponents - Array of contextComponent classes.
+* mapContextsToProps - Callback with two parameters `context[]` and `ownProps`, and return object of props.
+Enabling you to transform rename and pick the relevant values from the context.
+* options - Optional object with the keys:
+    * memo - Memorize the component to not rerender if there aren't changes to props or context.
+    Boolean or function value, defaulted to true (shallow equally check), can be set to a custom equally check.
+    * forwardRef - Forward the ref prop to the WrappedComponent ref. Boolean value defaulted to 'false'.
 
 ## Optimization warning
 
-The mapStateToProps and mapActionToProps callbacks shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
+The connect mapContextToProps callback shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
 ```js
-const mapStateToProps = (state) => ({theme: {color: state.theme}});
+const mapContextToProps = (context) =>
+    ({theme: {color: context.theme}});
 ```
-Here the theme reference will be always a new object and the memorization shallow equality check will fail.
+the theme object reference will always return a new object and the React.memo default shallow equality check will fail, which means the component will rerender with the same props.
 
-For solving this use memorization technique:
+For solving this you can set custom equality function to the memo option:
 ```js
-let lastTheme, value;
-const mapStateToProps = (state) => {
-    if (state.theme === lastTheme) return value;
-    lastTheme = state.theme;
-    value = {theme: {color: state.theme}};
-    return value;
-}
-// For this you can use memorization package like 'memoize-one'.
+const areEqual = (prevProps, nextProps) =>
+    prevProps.theme.color === nextProps.theme.color;
+
+export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: areEqual});
 ```
-Or set the connect options.pure to false.
+or set the connect options.memo to 'false' and not memorize the component.

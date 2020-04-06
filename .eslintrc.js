@@ -441,7 +441,7 @@ module.exports = {
         'no-labels': ['error', {allowLoop: false, allowSwitch: false}],
         'no-lone-blocks': 'error',
         'no-loop-func': 'error',
-        'no-magic-numbers': ['error', {
+        'no-magic-numbers': ['warn', {
             ignore: [-1, 0, 1],
             ignoreArrayIndexes: true,
             enforceConst: true,

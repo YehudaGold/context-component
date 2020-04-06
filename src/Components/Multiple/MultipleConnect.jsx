@@ -1,49 +1,34 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React from 'react';
 
 import CounterContext from '../../Contexts/CounterContext';
 import ThemeContext from '../../Contexts/ThemeContext';
 import {connect} from '../../lib';
 import Button from '../Generic/Button';
 
-class MultipleConnect extends PureComponent {
+const MultipleConnect = ({counter, decrease, increase, theme, toggleTheme}) => (
+    <div className={theme}>
+        MultipleConnect
+        <div className="value">{`value: ${counter}`}</div>
+        <Button handelClick={increase} text="increase" />
+        <Button handelClick={decrease} text="decrease" />
+        <Button handelClick={toggleTheme} text="toggle theme" />
+    </div>
+);
+MultipleConnect.propTypes = {
+    counter: PropTypes.number.isRequired,
+    decrease: PropTypes.func.isRequired,
+    increase: PropTypes.func.isRequired,
+    theme: PropTypes.string.isRequired,
+    toggleTheme: PropTypes.func.isRequired
+};
 
-    static propTypes = {
-        counter: PropTypes.number.isRequired,
-        decrease: PropTypes.func.isRequired,
-        increase: PropTypes.func.isRequired,
-        theme: PropTypes.string.isRequired,
-        toggleTheme: PropTypes.func.isRequired
-    }
-
-    render() {
-        const {counter, increase, decrease, toggleTheme, theme} = this.props;
-
-        return (
-            <div className={theme}>
-                MultipleConnect
-                <div className="value">{`value: ${counter}`}</div>
-                <Button handelClick={increase} text="increase" />
-                <Button handelClick={decrease} text="decrease" />
-                <Button handelClick={toggleTheme} text="toggle theme" />
-            </div>
-        );
-    }
-
-}
-
-const mapStateToProps = ([counterContext, themeContext]) => ({
+const mapContextsToProps = ([counterContext, themeContext]) => ({
     counter: counterContext.counter,
-    theme: themeContext.theme
-}),
-      mapActionToProps = ([counterContext, themeContext]) => ({
-          increase: counterContext.increase,
-          decrease: counterContext.decrease,
-          toggleTheme: themeContext.toggleTheme
-      });
+    decrease: counterContext.decrease,
+    increase: counterContext.increase,
+    theme: themeContext.theme,
+    toggleTheme: themeContext.toggleTheme
+});
 
-export default connect(
-    [CounterContext, ThemeContext],
-    mapStateToProps,
-    mapActionToProps
-)(MultipleConnect);
+export default connect(MultipleConnect, [CounterContext, ThemeContext], mapContextsToProps);

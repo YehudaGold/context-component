@@ -4,21 +4,17 @@ import React from 'react';
 import IrrelevantContext from '../../Contexts/IrrelevantContext';
 import Button from '../Generic/Button';
 
-let renderCount = 1;
+let renderCount = 0;
 
-const IrrelevantConnect = (props) => {
-    const {toggleIrrelevant, toggleTheme, theme, themeProp} = props;
-
-    return (
-        <div className={theme}>
-            IrrelevantConnect
-            <div>{`renderCount: ${renderCount++}`}</div>
-            <div>{`theme prop: ${themeProp}`}</div>
-            <Button handelClick={toggleTheme} text="toggle theme" />
-            <Button handelClick={toggleIrrelevant} text="toggle irrelevant" />
-        </div>
-    );
-};
+const IrrelevantConnect = ({toggleIrrelevant, toggleTheme, theme, themeProp}) => (
+    <div className={theme}>
+        IrrelevantConnect
+        <div>{`renderCount: ${++renderCount}`}</div>
+        <div>{`theme prop: ${themeProp}`}</div>
+        <Button handelClick={toggleTheme} text="toggle theme" />
+        <Button handelClick={toggleIrrelevant} text="toggle irrelevant" />
+    </div>
+);
 
 IrrelevantConnect.propTypes = {
     theme: PropTypes.string.isRequired,
@@ -27,10 +23,10 @@ IrrelevantConnect.propTypes = {
     toggleTheme: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({
-          toggleTheme: actions.toggleTheme,
-          toggleIrrelevant: actions.toggleIrrelevant
-      });
+const mapContextToProps = context => ({
+    theme: context.theme,
+    toggleTheme: context.toggleTheme,
+    toggleIrrelevant: context.toggleIrrelevant
+});
 
-export default IrrelevantContext.connect(mapStateToProps, mapActionToProps)(IrrelevantConnect);
+export default IrrelevantContext.connect(IrrelevantConnect, mapContextToProps);

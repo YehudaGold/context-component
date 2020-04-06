@@ -4,48 +4,50 @@ import React, {useContext, memo} from 'react';
 import {getDisplayName} from './utils/generics';
 import withForwardRef from './utils/withForwardRef';
 
-const connect = (ContextComponents, mapStateToProps = () => {}, mapActionsToProps = () => {}, options) =>
-    (WrappedComponent) => {
-        const finalOptions = {pure: true, forwardRef: false, ...options},
-              WrappedComponentName = getDisplayName(WrappedComponent);
+const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options) => {
+    const finalOptions = {forwardRef: false, memo: true, ...options},
+          wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
 
-        if (finalOptions.pure) WrappedComponent = memo(WrappedComponent);
+    if (finalOptions.memo) {
+        if (typeof finalOptions.memo === 'function') {
+            WrappedComponent = memo(WrappedComponent, finalOptions.memo);
+        } else {
+            WrappedComponent = memo(WrappedComponent);
+        }
+    }
 
-        let Connect = ContextComponents.reduceRight(
-            (ChildConnect, ContextComponent, index) => {
-                const ConsumeContext = ({contexts = {state: [], actions: []}, forwardedRef, ...props}) => {
-                    const {actions, state} = useContext(ContextComponent.componentContext);
-                    contexts.state[index] = state;
-                    contexts.actions[index] = actions;
+    let Connect = ContextComponents.reduceRight(
+        (ChildConsume, ContextComponent, index) => {
+            const ConsumeContext = ({contexts = [], forwardedRef, ...props}) => {
+                contexts[index] = useContext(ContextComponent.componentContext);
 
-                    if (ChildConnect) {
-                        return <ChildConnect {...props} contexts={contexts} forwardedRef={forwardedRef} />;
-                    }
+                if (ChildConsume) {
+                    return <ChildConsume {...props} contexts={contexts} forwardedRef={forwardedRef} />;
+                }
 
-                    return (
-                        <WrappedComponent
-                            {...props}
-                            {...mapStateToProps(contexts.state, props)}
-                            {...mapActionsToProps(contexts.actions, props)}
-                            ref={forwardedRef}
-                        />
-                    );
-                };
-                ConsumeContext.displayName = `connect[${getDisplayName(ContextComponent)}](${WrappedComponentName})`;
-                ConsumeContext.propTypes = {
-                    contexts: PropTypes.object,
-                    forwardedRef: PropTypes.object
-                };
+                return (
+                    <WrappedComponent
+                        {...props}
+                        {...mapContextsToProps(contexts, props)}
+                        ref={forwardedRef}
+                    />
+                );
+            };
+            ConsumeContext.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
+            ConsumeContext.propTypes = {
+                contexts: PropTypes.array,
+                forwardedRef: PropTypes.object
+            };
 
-                return ConsumeContext;
-            },
-            null
-        );
+            return ConsumeContext;
+        },
+        null
+    );
 
-        if (finalOptions.forwardRef) Connect = withForwardRef(Connect);
-        if (finalOptions.pure) Connect = memo(Connect);
+    if (finalOptions.forwardRef) Connect = withForwardRef(Connect);
+    if (finalOptions.memo) Connect = memo(Connect);
 
-        return Connect;
-    };
+    return Connect;
+};
 
 export default connect;

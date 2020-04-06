@@ -26,11 +26,9 @@ class ThemeConnectForwardRef extends Component {
 
 }
 
-const mapStateToProps = state => ({theme: state.theme}),
-      mapActionToProps = actions => ({toggleTheme: actions.toggleTheme});
+const mapContextToProps = context => ({
+    theme: context.theme,
+    toggleTheme: context.toggleTheme
+});
 
-export default ThemeContext.connect(
-    mapStateToProps,
-    mapActionToProps,
-    {forwardRef: true}
-)(ThemeConnectForwardRef);
+export default ThemeContext.connect(ThemeConnectForwardRef, mapContextToProps, {forwardRef: true});
