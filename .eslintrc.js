@@ -617,7 +617,7 @@ module.exports = {
             'newlines-between': 'ignore'
         }],
         'import/prefer-default-export': 'warn',
-        'import/unambiguous': 'warn',
+        'import/unambiguous': 'off',
 
         // React
         'jsx-quotes': ['warn', 'prefer-double'],
