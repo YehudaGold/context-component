@@ -1,25 +1,18 @@
+# context-component
 
-# test ContextComponent
+context-component is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-this project uses ContextComponent package, and show examples of usage for testing
+context-component provide extendable React class that automatically assign it's state and method's to context and provide it to his children's, and it expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
-## run
+To learn more about context - [react context documentation](https://reactjs.org/docs/context.html)
 
-to open the react app run
+## install
 
 ```
-npm start
+npm install context-component -S
 ```
 
-# ContextComponent
-
-ContextComponent is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
-
-ContextComponent provide extendable React class that automatically assign it's state and method's to context and provide it to his children's, and expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
-
-To learn more on context - [react context documentation](https://reactjs.org/docs/context.html)
-
-## Basic usage
+## Usage
 
 ### Creating ContextComponent
 
