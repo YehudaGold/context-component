@@ -568,6 +568,7 @@ module.exports = {
         'import/no-dynamic-require': 'error',
         'import/no-extraneous-dependencies': ['error', {
             devDependencies: [
+                'example/**', // Example
                 'test/**', // Tape, common npm pattern
                 'tests/**', // Also common npm pattern
                 'spec/**', // Mocha, rspec-like pattern
@@ -617,7 +618,7 @@ module.exports = {
             'newlines-between': 'ignore'
         }],
         'import/prefer-default-export': 'warn',
-        'import/unambiguous': 'warn',
+        'import/unambiguous': 'off',
 
         // React
         'jsx-quotes': ['warn', 'prefer-double'],

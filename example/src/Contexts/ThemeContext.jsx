@@ -1,4 +1,4 @@
-import ContextComponent from '../lib';
+import ContextComponent from '../../../src';
 
 export default class ThemeContext extends ContextComponent {
 

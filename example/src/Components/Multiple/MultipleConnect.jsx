@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {connect} from '../../../../src';
 import CounterContext from '../../Contexts/CounterContext';
 import ThemeContext from '../../Contexts/ThemeContext';
-import {connect} from '../../lib';
 import Button from '../Generic/Button';
 
 const MultipleConnect = ({counter, decrease, increase, theme, toggleTheme}) => (

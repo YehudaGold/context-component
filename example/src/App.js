@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import './App.css';
 import TestContextsLifecycle from './Components/TestContextsLifecycle';
@@ -24,4 +25,4 @@ const App = () => (
     </div>
 );
 
-export default App;
+ReactDOM.render(<App />, document.getElementById('root'));
