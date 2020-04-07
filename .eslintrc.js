@@ -1,5 +1,4 @@
 // Run 'npm i -g eslint eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks babel-eslint
-
 module.exports = {
     env: {
         node: true,
@@ -16,14 +15,14 @@ module.exports = {
         sourceType: 'module'
     },
     settings: {
-        "import/resolver": {
-        "node": {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx']
+            }
+        },
+        react: {
+            version: 'detect'
         }
-      }
     },
     plugins: ['import', 'react', 'react-hooks'],
     rules: {
@@ -568,7 +567,7 @@ module.exports = {
         'import/no-dynamic-require': 'error',
         'import/no-extraneous-dependencies': ['error', {
             devDependencies: [
-                'example/**', // Example
+                'example/**', // Example folder
                 'test/**', // Tape, common npm pattern
                 'tests/**', // Also common npm pattern
                 'spec/**', // Mocha, rspec-like pattern
@@ -604,6 +603,7 @@ module.exports = {
         'import/no-unassigned-import': 'off',
         'import/no-unused-modules': ['warn', {
             missingExports: false,
+            ignoreExports: ['src'],
             unusedExports: true
         }],
         'import/no-unresolved': ['error', {commonjs: true, caseSensitive: true}],
