@@ -1,0 +1,11 @@
+# IDE config
+/.ide
+/.vscode
+
+# development
+/src
+/example
+.babelrc
+.eslintrc.js
+.gitignore
+webpack.config.js
