@@ -568,6 +568,7 @@ module.exports = {
         'import/no-dynamic-require': 'error',
         'import/no-extraneous-dependencies': ['error', {
             devDependencies: [
+                'example/**', // Example
                 'test/**', // Tape, common npm pattern
                 'tests/**', // Also common npm pattern
                 'spec/**', // Mocha, rspec-like pattern

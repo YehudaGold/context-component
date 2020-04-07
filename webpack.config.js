@@ -2,14 +2,14 @@ const path = require('path'),
       HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: path.join(__dirname, 'public/index.html'),
+    template: path.join(__dirname, 'example/src/index.html'),
+    favicon: path.join(__dirname, 'example/src/favicon.ico'),
     filename: './index.html',
-    favicon: path.join(__dirname, 'public/favicon.ico'),
     inject: true
 });
 
 module.exports = {
-    entry: path.join(__dirname, 'src/App.js'),
+    entry: path.join(__dirname, 'example/src/App.js'),
     output: {
         path: path.join(__dirname, 'example/dist'),
         filename: 'bundle.js'
@@ -37,7 +37,6 @@ module.exports = {
     },
     devtool: 'eval-source-map',
     devServer: {
-        hot: true,
         open: true,
         port: 3000
     }

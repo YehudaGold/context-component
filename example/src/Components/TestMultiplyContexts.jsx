@@ -1,8 +1,8 @@
 import React from 'react';
 
+import {Provider} from '../../../src';
 import CounterContext from '../Contexts/CounterContext';
 import ThemeContext from '../Contexts/ThemeContext';
-import {Provider} from '../lib';
 import MultipleConnect from './Multiple/MultipleConnect';
 
 const TestMultipleContexts = () => (

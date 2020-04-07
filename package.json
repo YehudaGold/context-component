@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/YehudaGold/context-component.git"
   },
+  "main": "dist/index.js",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1"
