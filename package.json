@@ -1,5 +1,5 @@
 {
-  "name": "react-test",
+  "name": "context-component",
   "version": "0.1.0",
   "description": "Flexible centralized state management with React context",
   "author": "yehuda goldberg",
