@@ -4,7 +4,9 @@ context-component is aimed at reducing the boilerplate of writing flexible centr
 
 context-component provide extendable React class that automatically assign it's state and method's to context and provide it to his children's, and it expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
 
-To learn more about context - [react context documentation](https://reactjs.org/docs/context.html)
+To learn more about context - [react context documentation](https://reactjs.org/docs/context.html).
+
+for example of context-component - [context-component/example](https://github.com/YehudaGold/context-component/tree/master/example/src).
 
 ## install
 
