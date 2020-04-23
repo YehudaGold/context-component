@@ -76,7 +76,7 @@ export default ThemeContext.connect(otherComponent, mapContextToProps);
 ```
 The class `connect` HOC takes three parameters:
 * WrappedComponent - The component to connect.
-* mapContextsToProps - Callback with two parameters `context[]` and `ownProps`, and return object of props.
+* mapContextsToProps - Callback with two parameters `context` and `ownProps`, and return object of props.
 Enabling you to transform rename and pick the relevant values from the context.
 * options - Optional object with the keys:
     * memo - Memorize the component to not rerender if there aren't changes to props or context.
@@ -179,7 +179,7 @@ export default connect(otherComponent, [CounterContext, ThemeContext], mapContex
 The `connect` HOC takes four parameters:
 * WrappedComponent - The component to connect.
 * ContextComponents - Array of contextComponent classes.
-* mapContextsToProps - Callback with two parameters `context[]` and `ownProps`, and return object of props.
+* mapContextsToProps - Callback with two parameters `contexts[]` and `ownProps`, and return object of props.
 Enabling you to transform rename and pick the relevant values from the context.
 * options - Optional object with the keys:
     * memo - Memorize the component to not rerender if there aren't changes to props or context.
