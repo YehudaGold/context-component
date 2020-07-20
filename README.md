@@ -2,7 +2,7 @@
 
 context-component is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-context-component provide extendable React class that automatically assign it's state and method's to context and provide it to his children's, and it expose api to easily consume the context by `connect` HOC or by React regular context api method's - `Consumer`, `contextType`, `useContext`.
+context-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children. It also exposes api to easily consume the context by `connect` HOC or by React regular context api methods - `Consumer`, `contextType` and `useContext`.
 
 To learn more about context - [react context documentation](https://reactjs.org/docs/context.html).
 
@@ -18,7 +18,7 @@ npm install context-component -S
 
 ### Creating ContextComponent
 
-To creating ContextComponent create component that extends `ContextComponent` with state and method's you want to share in your app:
+In order to create a shared state create a component that extends `ContextComponent` with state and methods you want to share in your app:
 
 ThemeContext.jsx
 ```jsx
@@ -34,11 +34,11 @@ export default class ThemeContext extends ContextComponent {
 
 }
 ```
-The ContextComponent implement for you a `render` methods that render the `this.componentContext.Provider` with the component state and instance method's as value.
+The `ContextComponent` implements for you a `render` method that renders the `this.componentContext.Provider` with the component state and instance methods as value.
 
-Method's defined on the ContextComponent are provided by the context automatically, except for React lifecycle method's and method's starting with '_'. You can override this by adding `actions` property to the class with the method's you want to provide.
+Methods defined on the `ContextComponent` are provided by the context automatically, except for React lifecycle methods and methods starting with '_'. You can override this behavior by adding `actions` property to the class with the methods you want to expose.
 
-You can use React lifecycle method's in ContextComponent to initialize and manage the state.
+You can use React lifecycle methods in ContextComponent to initialize and manage the state.
 
 ### Providing ContextComponent
 
@@ -54,12 +54,11 @@ export const App = () => (
         <otherComponent />
     </ThemeContext>
 );
-
 ```
 
 ### Consuming ContextComponent
 
-To consume the context you can connect to it with the context class static `connect` HOC method:
+To consume the context you can use the static `connect` HOC method:
 
 otherComponent.jsx
 ```jsx
@@ -75,16 +74,15 @@ const mapContextToProps = context =>
 export default ThemeContext.connect(otherComponent, mapContextToProps);
 ```
 The class `connect` HOC takes three parameters:
-* WrappedComponent - The component to connect.
-* mapContextsToProps - Callback with two parameters `context` and `ownProps`, and return object of props.
-Enabling you to transform rename and pick the relevant values from the context.
-* options - Optional object with the keys:
-    * memo - Memorize the component to not rerender if there aren't changes to props or context.
-    Boolean or function value, defaulted to true (shallow equally check), can be set to a custom equally check.
-    * forwardRef - Forward the ref prop to the WrappedComponent ref. Boolean value defaulted to 'false'.
+* `WrappedComponent` - The component to connect.
+* `mapContextsToProps` - Callback with two parameters `context` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
+* `options` - Optional object with the keys:
+    * `memo` - Memorizes the component to not re-render if there aren't changes to ownProps or context state.
+    Boolean value for whether or not to shallow check (defaults to true) or functional value for a custom equality check
+    * `forwardRef` - Forwards the ref prop to the WrappedComponent's ref. Boolean value defaulted to 'false'.
 ---
 
-Or consuming the context by rendering the `ContextComponent.Consumer`:
+Or consume the context by rendering the `ContextComponent.Consumer`:
 ```jsx
 import React from 'react';
 import ThemeContext from './ThemeContext';
@@ -148,11 +146,11 @@ export const App = () => (
     </Provider>
 );
 ```
-The `Provider` require ContextComponents prop - the ContextComponent classes array.
+The `Provider` requires `ContextComponents` prop - the ContextComponent classes array.
 
 ---
 
-And you can consume them together with `connect` HOC:
+You can consume them together with `connect` HOC:
 
 otherComponent.js
 ```jsx
@@ -177,29 +175,29 @@ const mapContextsToProps = ([counterContext, themeContext]) => ({
 export default connect(otherComponent, [CounterContext, ThemeContext], mapContextsToProps);
 ```
 The `connect` HOC takes four parameters:
-* WrappedComponent - The component to connect.
-* ContextComponents - Array of contextComponent classes.
-* mapContextsToProps - Callback with two parameters `contexts[]` and `ownProps`, and return object of props.
-Enabling you to transform rename and pick the relevant values from the context.
-* options - Optional object with the keys:
-    * memo - Memorize the component to not rerender if there aren't changes to props or context.
-    Boolean or function value, defaulted to true (shallow equally check), can be set to a custom equally check.
-    * forwardRef - Forward the ref prop to the WrappedComponent ref. Boolean value defaulted to 'false'.
+
+* `WrappedComponent` - The component to connect.
+* `ContextComponents` - Array of contextComponent classes.
+* `mapContextsToProps` - Callback with two parameters `contexts[]` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
+* `options` - Optional object with the keys:
+    * `memo` - Memorizes the component to not re-render if there aren't changes to ownProps or context state.
+    Boolean value for whether or not to shallow check (defaults to true) or functional value for a custom equality check
+    * `forwardRef` - Forwards the ref prop to the WrappedComponent's ref. Boolean value defaulted to 'false'.
 
 ## Optimization warning
 
-The connect mapContextToProps callback shouldn't return new object reference on recurring equal input's for component memorization to work, if you computing new value like:
+The connect mapContextToProps callback shouldn't return new object reference for the same input (context and ownProps). If you compute a new value like this:
 ```js
 const mapContextToProps = (context) =>
     ({theme: {color: context.theme}});
 ```
-the theme object reference will always return a new object and the React.memo default shallow equality check will fail, which means the component will rerender with the same props.
+The 'theme' value will always return a new object reference and the `React.memo` shallow equality check will fail, which means the component will re-render for the same props.
 
-For solving this you can set custom equality function to the memo option:
+In order to solve this you can set a custom equality function on the memo option:
 ```js
 const areEqual = (prevProps, nextProps) =>
     prevProps.theme.color === nextProps.theme.color;
 
 export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: areEqual});
 ```
-or set the connect options.memo to 'false' and not memorize the component.
+or set the connect `options.memo` to 'false' and not memorize the component.
