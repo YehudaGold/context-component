@@ -22,7 +22,7 @@ In order to create a shared state create a component that extends `ContextCompon
 
 ThemeContext.jsx
 ```jsx
-import ContextComponent from 'ContextComponent';
+import ContextComponent from 'context-component';
 
 export default class ThemeContext extends ContextComponent {
 
@@ -38,7 +38,7 @@ The `ContextComponent` implements for you a `render` method that renders the `th
 
 Methods defined on the `ContextComponent` are provided by the context automatically, except for React lifecycle methods and methods starting with '_'. You can override this behavior by adding `actions` property to the class with the methods you want to expose.
 
-You can use React lifecycle methods in ContextComponent to initialize and manage the state.
+You can use React lifecycle methods in `ContextComponent` to initialize and manage the state.
 
 ### Providing ContextComponent
 
@@ -136,7 +136,7 @@ You can use the `Provider` component to provide multiple contexts together:
 App.jsx
 ```jsx
 import React from 'react';
-import {Provider} from 'ContextComponent';
+import {Provider} from 'context-component';
 import ThemeContext from './ThemeContext';
 import CounterContext from './CounterContext';
 
@@ -155,7 +155,7 @@ You can consume them together with `connect` HOC:
 otherComponent.js
 ```jsx
 import React from 'react';
-import {connect} from 'ContextComponent';
+import {connect} from 'context-component';
 import ThemeContext from './ThemeContext';
 import CounterContext from './CounterContext';
 
@@ -186,7 +186,7 @@ The `connect` HOC takes four parameters:
 
 ## Optimization warning
 
-The connect mapContextToProps callback shouldn't return new object reference for the same input (context and ownProps). If you compute a new value like this:
+The connect `mapContextToProps` callback shouldn't return new object reference for the same input (context and ownProps). If you compute a new value like this:
 ```js
 const mapContextToProps = (context) =>
     ({theme: {color: context.theme}});
