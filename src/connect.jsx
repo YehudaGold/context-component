@@ -21,23 +21,14 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
             const ConsumeContext = ({contexts = [], forwardedRef, ...props}) => {
                 contexts[index] = useContext(ContextComponent.componentContext);
 
-                if (ChildConsume) {
-                    return <ChildConsume {...props} contexts={contexts} forwardedRef={forwardedRef} />;
-                }
+                if (ChildConsume) return <ChildConsume {...props} contexts={contexts} forwardedRef={forwardedRef} />;
 
                 return (
-                    <WrappedComponent
-                        {...props}
-                        {...mapContextsToProps(contexts, props)}
-                        ref={forwardedRef}
-                    />
+                    <WrappedComponent {...props} {...mapContextsToProps(contexts, props)} ref={forwardedRef} />
                 );
             };
             ConsumeContext.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
-            ConsumeContext.propTypes = {
-                contexts: PropTypes.array,
-                forwardedRef: PropTypes.object
-            };
+            ConsumeContext.propTypes = {contexts: PropTypes.array, forwardedRef: PropTypes.object};
 
             return ConsumeContext;
         },

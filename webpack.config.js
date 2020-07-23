@@ -1,19 +1,19 @@
 const path = require('path'),
-      HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-    template: path.join(__dirname, 'example/src/index.html'),
-    favicon: path.join(__dirname, 'example/src/favicon.ico'),
-    filename: './index.html',
-    inject: true
-});
+      HtmlWebpackPlugin = require('html-webpack-plugin'),
+      htmlWebpackPlugin = new HtmlWebpackPlugin({
+          favicon: path.join(__dirname, 'example/src/favicon.ico'),
+          filename: './index.html',
+          inject: true,
+          template: path.join(__dirname, 'example/src/index.html')
+      });
 
 module.exports = {
-    entry: path.join(__dirname, 'example/src/App.jsx'),
-    output: {
-        path: path.join(__dirname, 'example/dist'),
-        filename: 'bundle.js'
+    devtool: 'eval-source-map',
+    devServer: {
+        open: true,
+        port: 3000
     },
+    entry: path.join(__dirname, 'example/src/App.jsx'),
     module: {
         rules: [
             {
@@ -31,13 +31,10 @@ module.exports = {
             }
         ]
     },
-    plugins: [htmlWebpackPlugin],
-    resolve: {
-        extensions: ['.js', '.jsx']
+    output: {
+        path: path.join(__dirname, 'example/dist'),
+        filename: 'bundle.js'
     },
-    devtool: 'eval-source-map',
-    devServer: {
-        open: true,
-        port: 3000
-    }
+    plugins: [htmlWebpackPlugin],
+    resolve: {extensions: ['.js', '.jsx']}
 };
