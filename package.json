@@ -21,7 +21,7 @@
     "example:build": "npm run example:clean && webpack --mode production",
     "example:clean": "rm -rf ./example/dist",
     "example:start": "webpack-dev-server --mode development",
-    "lint": "eslint ./example/ ./src/ --ext .jsx,.js --fix",
+    "lint": "eslint ./example/src/ ./src/ --ext .jsx,.js --fix",
     "prepack": "npm run clean && npm run transpile",
     "transpile": "babel src -d dist --copy-files"
   },

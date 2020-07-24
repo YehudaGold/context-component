@@ -1,11 +1,5 @@
 const path = require('path'),
-      HtmlWebpackPlugin = require('html-webpack-plugin'),
-      htmlWebpackPlugin = new HtmlWebpackPlugin({
-          favicon: path.join(__dirname, 'example/src/favicon.ico'),
-          filename: './index.html',
-          inject: true,
-          template: path.join(__dirname, 'example/src/index.html')
-      });
+      HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'eval-source-map',
@@ -13,28 +7,35 @@ module.exports = {
         open: true,
         port: 3000
     },
-    entry: path.join(__dirname, 'example/src/App.jsx'),
+    entry: './example/src/App.jsx',
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx)$/u,
                 use: 'babel-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/u
             },
             {
-                test: /\.css$/,
+                test: /\.css$/u,
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(png|jpg|gif|ico|eot|svg|ttf|woff|woff2)$/,
+                test: /\.(png|jpg|gif|ico|eot|svg|ttf|woff|woff2)$/u,
                 use: [{loader: 'url-loader'}]
             }
         ]
     },
     output: {
-        path: path.join(__dirname, 'example/dist'),
-        filename: 'bundle.js'
+        path: path.resolve('example/dist'),
+        filename: '[name].bundle.js'
     },
-    plugins: [htmlWebpackPlugin],
+    plugins: [
+        new HtmlWebpackPlugin({
+            favicon: './example/src/favicon.ico',
+            filename: './index.html',
+            inject: true,
+            template: './example/src/index.html'
+        })
+    ],
     resolve: {extensions: ['.js', '.jsx']}
 };
