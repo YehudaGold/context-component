@@ -151,7 +151,7 @@ module.exports = {
         'array-element-newline': ['warn', 'consistent'],
         'array-bracket-spacing': ['warn', 'never'],
         'block-spacing': ['warn', 'always'],
-        'brace-style': ['warn', '1tbs', {allowSingleLine: true}],
+        'brace-style': ['warn', '1tbs', {allowSingleLine: false}],
         camelcase: ['off', { // Babel rule fix
             properties: 'never',
             ignoreDestructuring: false

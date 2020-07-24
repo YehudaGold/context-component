@@ -6,7 +6,9 @@ import Button from '../Generic/Button';
 
 class ThemeConnectForwardRef extends Component {
 
-    toggleTheme = () => { this.props.toggleTheme(); };
+    toggleTheme = () => {
+        this.props.toggleTheme();
+    };
 
     render() {
         const {toggleTheme, theme} = this.props;

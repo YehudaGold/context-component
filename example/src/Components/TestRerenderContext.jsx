@@ -8,7 +8,7 @@ import IrrelevantUseContext from './Irrelevant/IrrelevantUseContext';
 
 class TestRerenderContext extends Component {
 
-    state ={themeProp: 'dark', irrelevant: 'a'};
+    state = {themeProp: 'dark', irrelevant: 'a'};
 
     toggleTheme = () => {
         this.setState(state => (state.themeProp === 'dark' ? {themeProp: 'light'} : {themeProp: 'dark'}));
