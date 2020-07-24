@@ -6,6 +6,7 @@ module.exports = {
         es6: true
     },
     extends: ['eslint:recommended', 'plugin:react/recommended'],
+    ignorePatterns: ['dist/'],
     parser: 'babel-eslint',
     parserOptions: {
         ecmaFeatures: {
