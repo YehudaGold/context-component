@@ -16,38 +16,35 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
         }
     }
 
-    let Connect = ContextComponents.reduceRight(
-        (ChildConsume, ContextComponent, index) => {
-            const ConsumeContext = ({contexts = [], forwardedRef, ...props}) => {
+    let ConnectComponent = ContextComponents.reduceRight(
+        (PreviousComponent, ContextComponent, index) => {
+            const ConsumeComponent = ({contexts = [], forwardedRef, ...props}) => {
                 contexts[index] = useContext(ContextComponent.componentContext);
 
-                if (ChildConsume) {
-                    return <ChildConsume {...props} contexts={contexts} forwardedRef={forwardedRef} />;
+                if (PreviousComponent) {
+                    return <PreviousComponent {...props} contexts={contexts} forwardedRef={forwardedRef} />;
                 }
 
-                return (
-                    <WrappedComponent
-                        {...props}
-                        {...mapContextsToProps(contexts, props)}
-                        ref={forwardedRef}
-                    />
-                );
+                return <WrappedComponent {...props} {...mapContextsToProps(contexts, props)} ref={forwardedRef} />;
             };
-            ConsumeContext.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
-            ConsumeContext.propTypes = {
-                contexts: PropTypes.array,
-                forwardedRef: PropTypes.object
-            };
+            ConsumeComponent.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
+            ConsumeComponent.propTypes = {contexts: PropTypes.array, forwardedRef: PropTypes.object};
 
-            return ConsumeContext;
+            return ConsumeComponent;
         },
         null
     );
 
-    if (finalOptions.forwardRef) Connect = withForwardRef(Connect);
-    if (finalOptions.memo) Connect = memo(Connect);
+    if (finalOptions.forwardRef) ConnectComponent = withForwardRef(ConnectComponent);
+    if (finalOptions.memo) {
+        if (typeof finalOptions.memo === 'function') {
+            ConnectComponent = memo(ConnectComponent, finalOptions.memo);
+        } else {
+            ConnectComponent = memo(ConnectComponent);
+        }
+    }
 
-    return Connect;
+    return ConnectComponent;
 };
 
 export default connect;
