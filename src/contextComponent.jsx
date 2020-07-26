@@ -15,7 +15,9 @@ class ContextComponent extends Component {
         return this._componentContext;
     }
 
-    static get Consumer() { return this.componentContext.Consumer; }
+    static get Consumer() {
+        return this.componentContext.Consumer;
+    }
 
     static connect(WrappedComponent, mapContextToProps, options) {
         return connect(
