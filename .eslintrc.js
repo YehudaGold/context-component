@@ -159,12 +159,12 @@ module.exports = {
         }],
         'capitalized-comments': ['warn', 'always', {
             line: {
-                ignorePattern: '',
+                ignorePattern: 'todo',
                 ignoreInlineComments: true,
                 ignoreConsecutiveComments: true
             },
             block: {
-                ignorePattern: '',
+                ignorePattern: 'todo',
                 ignoreInlineComments: true,
                 ignoreConsecutiveComments: true
             }
@@ -517,7 +517,7 @@ module.exports = {
         'no-with': 'error',
         'prefer-promise-reject-errors': ['error', {allowEmptyReject: true}],
         'prefer-named-capture-group': 'off',
-        radix: 'error',
+        radix: ['error', 'as-needed'],
         'require-await': 'error',
         'require-unicode-regexp': 'warn',
         'vars-on-top': 'error',
@@ -528,10 +528,7 @@ module.exports = {
         'import/default': 'warn',
         'import/dynamic-import-chunkname': ['off', {importFunctions: [], webpackChunknameFormat: '[0-9a-zA-Z-_/.]+'}],
         'import/export': 'error',
-        'import/extensions': ['warn', 'never', {
-            js: 'never',
-            jsx: 'never'
-        }],
+        'import/extensions': ['warn', 'never', {js: 'never', jsx: 'never'}],
         'import/exports-last': 'off',
         'import/first': 'warn',
         'import/group-exports': 'off',
@@ -600,12 +597,9 @@ module.exports = {
         'import/no-useless-path-segments': ['error', {commonjs: true, noUselessIndex: true}],
         'import/no-webpack-loader-syntax': 'error',
         'import/order': ['warn', {
-            alphabetize: {
-                order: 'asc',
-                caseInsensitive: true
-            },
-            groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
-            'newlines-between': 'ignore'
+            alphabetize: {order: 'asc', caseInsensitive: true},
+            groups: ['builtin', 'external', ['internal', 'parent', 'sibling', 'index'], 'object'],
+            'newlines-between': 'always-and-inside-groups'
         }],
         'import/prefer-default-export': 'warn',
         'import/unambiguous': 'off',
@@ -638,22 +632,22 @@ module.exports = {
         'react/default-props-match-prop-types': 'error',
         'react/destructuring-assignment': 'off',
         'react/display-name': 'warn',
-        'react/forbid-component-props': 'error',
+        'react/forbid-component-props': ['error', {forbid: ['style']}],
         'react/forbid-dom-props': 'off',
         'react/forbid-elements': 'off',
         'react/forbid-foreign-prop-types': 'error',
         'react/forbid-prop-types': 'off',
         'react/jsx-boolean-value': ['error', 'never'],
         'react/jsx-child-element-spacing': 'off',
-        'react/jsx-closing-bracket-location': ['warn', 'tag-aligned'],
-        'react/jsx-closing-tag-location': 'warn',
+        'react/jsx-closing-bracket-location': ['warn', 'line-aligned'],
+        'react/jsx-closing-tag-location': 'off',
         'react/jsx-curly-brace-presence': ['warn', 'never'],
         'react/jsx-curly-newline': 'warn',
         'react/jsx-curly-spacing': ['warn', 'never', {allowMultiline: true}],
         'react/jsx-equals-spacing': ['warn', 'never'],
         'react/jsx-first-prop-new-line': ['warn', 'multiline-multiprop'],
         'react/jsx-fragments': ['error', 'syntax'],
-        'react/jsx-handler-names': ['error', {eventHandlerPrefix: 'handle', eventHandlerPropPrefix: 'on'}],
+        'react/jsx-handler-names': ['error', {eventHandlerPrefix: false, eventHandlerPropPrefix: 'on'}],
         'react/jsx-indent-props': ['warn', 4],
         'react/jsx-indent': ['warn', 4],
         'react/jsx-key': 'error',
