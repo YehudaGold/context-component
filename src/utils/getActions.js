@@ -1,13 +1,13 @@
 import {getAllMethodNames} from './generics';
 
 const reactLifecycleMethods = [
+    'componentDidCatch',
     'componentDidMount',
-    'shouldComponentUpdate',
-    'render',
-    'getSnapshotBeforeUpdate',
     'componentDidUpdate',
     'componentWillUnmount',
-    'componentDidCatch'
+    'getSnapshotBeforeUpdate',
+    'render',
+    'shouldComponentUpdate'
 ];
 
 export default (componentInstance, BaseClass) => {
