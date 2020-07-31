@@ -1,10 +1,16 @@
+import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
 
-const withForwardRef = (WrappedComponent) => {
-    const ForwardRef = (props, ref) => <WrappedComponent {...props} forwardedRef={ref} />;
-    ForwardRef.displayName = WrappedComponent.displayName;
+export const forwardedRefPropType = PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({current: PropTypes.elementType})
+]);
 
-    return forwardRef(ForwardRef);
+const withForwardRef = (WrappedComponent) => {
+    const ForwardRefComponent = (props, ref) => <WrappedComponent {...props} forwardedRef={ref} />;
+    ForwardRefComponent.displayName = WrappedComponent.displayName;
+
+    return forwardRef(ForwardRefComponent);
 };
 
 export default withForwardRef;
