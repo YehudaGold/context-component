@@ -183,7 +183,6 @@ The `connect` HOC function takes four parameters:
     Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
     * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
     Boolean value, defaulted to false.
----
 
 ## Optimization warning
 In `connect` HOC the `mapContextToProps` callback shouldn't return new references for the same input (context and ownProps). If you compute a new value like this:

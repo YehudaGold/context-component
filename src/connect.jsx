@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {useContext, memo} from 'react';
 
-import withForwardRef, {forwardedRefPropType} from './connect/withForwardRef';
 import {getDisplayName} from './utils/generics';
+import withForwardRef, {forwardedRefPropType} from './utils/withForwardRef';
 
 const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options = {}) => {
     const wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
