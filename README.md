@@ -58,7 +58,7 @@ export const App = () => (
 
 ### Consuming ContextComponent
 
-To consume the context you can use the static `connect` HOC method:
+To consume the context you can use the component static `connect` HOC method:
 
 otherComponent.jsx
 ```jsx
@@ -73,13 +73,14 @@ const mapContextToProps = context =>
 
 export default ThemeContext.connect(otherComponent, mapContextToProps);
 ```
-The class `connect` HOC takes three parameters:
+The component `connect` HOC method takes three parameters:
 * `WrappedComponent` - The component to connect.
 * `mapContextsToProps` - Callback with two parameters `context` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
 * `options` - Optional object with the keys:
-    * `memo` - Memorizes the component to not re-render if there aren't changes to ownProps or context state.
-    Boolean value for whether or not to shallow check (defaults to true) or functional value for a custom equality check
-    * `forwardRef` - Forwards the ref prop to the WrappedComponent's ref. Boolean value defaulted to 'false'.
+    * `memo` - Memorizes the `WrappedComponent` to not re-render if there aren't changes to the value returned from `mapContextsToProps`.
+    Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
+    * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
+    Boolean value,  .
 ---
 
 Or consume the context by rendering the `ContextComponent.Consumer`:
@@ -90,8 +91,7 @@ import ThemeContext from './ThemeContext';
 export const otherComponent = () => (
     <ThemeContext.Consumer>
         {({theme, toggleTheme}) =>
-            <div className={theme} onClick={toggleTheme} />
-        }
+            <div className={theme} onClick={toggleTheme} />}
     </ThemeContext.Consumer>
 );
 ```
@@ -126,7 +126,6 @@ export const otherComponent = () => {
 
     return <div className={theme} onClick={toggleTheme} />;
 };
-
 ```
 
 ## Multiple contexts
@@ -150,7 +149,7 @@ The `Provider` requires `ContextComponents` prop - the ContextComponent classes 
 
 ---
 
-You can consume them together with `connect` HOC:
+You can consume multiple contexts together with the `connect` HOC function:
 
 otherComponent.js
 ```jsx
@@ -162,7 +161,7 @@ import CounterContext from './CounterContext';
 const otherComponent = ({counter, increase, theme, toggleTheme}) =>
     <div>
         <div className={theme} onClick={toggleTheme} />
-        <div onClick={increase}> {counter} </div>
+        <div onClick={increase}>{counter}</div>
     </div>;
 
 const mapContextsToProps = ([counterContext, themeContext]) => ({
@@ -174,24 +173,25 @@ const mapContextsToProps = ([counterContext, themeContext]) => ({
 
 export default connect(otherComponent, [CounterContext, ThemeContext], mapContextsToProps);
 ```
-The `connect` HOC takes four parameters:
+The `connect` HOC function takes four parameters:
 
 * `WrappedComponent` - The component to connect.
 * `ContextComponents` - Array of contextComponent classes.
 * `mapContextsToProps` - Callback with two parameters `contexts[]` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
 * `options` - Optional object with the keys:
-    * `memo` - Memorizes the component to not re-render if there aren't changes to ownProps or context state.
-    Boolean value for whether or not to shallow check (defaults to true) or functional value for a custom equality check
-    * `forwardRef` - Forwards the ref prop to the WrappedComponent's ref. Boolean value defaulted to 'false'.
+     * `memo` - Memorizes the `WrappedComponent` to not re-render if there aren't changes to the value returned from `mapContextsToProps`.
+    Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
+    * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
+    Boolean value, defaulted to false.
+---
 
 ## Optimization warning
-
-The connect `mapContextToProps` callback shouldn't return new object reference for the same input (context and ownProps). If you compute a new value like this:
+In `connect` HOC the `mapContextToProps` callback shouldn't return new references for the same input (context and ownProps). If you compute a new value like this:
 ```js
-const mapContextToProps = (context) =>
+const mapContextToProps = context =>
     ({theme: {color: context.theme}});
 ```
-The 'theme' value will always return a new object reference and the `React.memo` shallow equality check will fail, which means the component will re-render for the same props.
+The `theme` value will always return a new object reference for every function call and the `React.memo` shallow equality check will fail, which means the component will re-render for the same props.
 
 In order to solve this you can set a custom equality function on the memo option:
 ```js
@@ -201,3 +201,6 @@ const areEqual = (prevProps, nextProps) =>
 export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: areEqual});
 ```
 or set the connect `options.memo` to 'false' and not memorize the component.
+```js
+export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: false});
+```

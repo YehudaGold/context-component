@@ -4,16 +4,13 @@ import React, {useContext, memo} from 'react';
 import withForwardRef, {forwardedRefPropType} from './connect/withForwardRef';
 import {getDisplayName} from './utils/generics';
 
-const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options) => {
-    const finalOptions = {forwardRef: false, memo: true, ...options},
-          wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
+const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options = {}) => {
+    const wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
 
-    if (finalOptions.memo) {
-        if (typeof finalOptions.memo === 'function') {
-            WrappedComponent = memo(WrappedComponent, finalOptions.memo);
-        } else {
+    if (typeof options.memo === 'function') {
+        WrappedComponent = memo(WrappedComponent, options.memo);
+    } else if (options.memo !== false) {
         WrappedComponent = memo(WrappedComponent);
-    }
     }
 
     let ConnectComponent = ContextComponents.reduceRight(
@@ -35,14 +32,7 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
         null
     );
 
-    if (finalOptions.forwardRef) ConnectComponent = withForwardRef(ConnectComponent);
-    if (finalOptions.memo) {
-        if (typeof finalOptions.memo === 'function') {
-            ConnectComponent = memo(ConnectComponent, finalOptions.memo);
-        } else {
-        ConnectComponent = memo(ConnectComponent);
-    }
-    }
+    if (options.forwardRef) ConnectComponent = withForwardRef(ConnectComponent);
 
     return ConnectComponent;
 };
