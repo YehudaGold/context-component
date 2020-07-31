@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {useContext, memo} from 'react';
 
+import withForwardRef, {forwardedRefPropType} from './connect/withForwardRef';
 import {getDisplayName} from './utils/generics';
-import withForwardRef from './utils/withForwardRef';
 
 const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options) => {
     const finalOptions = {forwardRef: false, memo: true, ...options},
@@ -12,8 +12,8 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
         if (typeof finalOptions.memo === 'function') {
             WrappedComponent = memo(WrappedComponent, finalOptions.memo);
         } else {
-            WrappedComponent = memo(WrappedComponent);
-        }
+        WrappedComponent = memo(WrappedComponent);
+    }
     }
 
     let ConnectComponent = ContextComponents.reduceRight(
@@ -28,7 +28,7 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
                 return <WrappedComponent {...props} {...mapContextsToProps(contexts, props)} ref={forwardedRef} />;
             };
             ConsumeComponent.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
-            ConsumeComponent.propTypes = {contexts: PropTypes.array, forwardedRef: PropTypes.object};
+            ConsumeComponent.propTypes = {contexts: PropTypes.array, forwardedRef: forwardedRefPropType};
 
             return ConsumeComponent;
         },
@@ -40,8 +40,8 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
         if (typeof finalOptions.memo === 'function') {
             ConnectComponent = memo(ConnectComponent, finalOptions.memo);
         } else {
-            ConnectComponent = memo(ConnectComponent);
-        }
+        ConnectComponent = memo(ConnectComponent);
+    }
     }
 
     return ConnectComponent;
