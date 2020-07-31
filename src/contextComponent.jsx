@@ -4,8 +4,15 @@ import connect from './connect';
 import {getDisplayName} from './utils/generics';
 import getActions from './utils/getActions';
 
+/**
+ * Extend `ContextComponent` with state and methods you want to share in your app.
+ * `ContextComponent` implements for you a render method that renders the `this.componentContext.Provider`
+ * with the component state and instance methods as value.
+ * Render the extended component to provide the context to the React tree.
+ */
 class ContextComponent extends Component {
 
+    /** Returns the `componentContext` context. */
     static get componentContext() {
         if (Object.prototype.hasOwnProperty.call(this, '_componentContext')) return this._componentContext;
 
@@ -15,10 +22,12 @@ class ContextComponent extends Component {
         return this._componentContext;
     }
 
+    /** Returns the context Consumer. */
     static get Consumer() {
         return this.componentContext.Consumer;
     }
 
+    /** HOC to consume and transform `ContextComponent` context to component props. */
     static connect(WrappedComponent, mapContextToProps, options) {
         return connect(
             WrappedComponent,

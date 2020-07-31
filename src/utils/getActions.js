@@ -10,6 +10,11 @@ const reactLifecycleMethods = [
     'shouldComponentUpdate'
 ];
 
+/**
+ * Collecting all method from the `componentInstance` prototype,
+ * except for React lifecycle methods and methods starting with '_',
+ * stopping on `baseClass` prototype if exist.
+ */
 export default (componentInstance, BaseClass) => {
     const actions = {};
 

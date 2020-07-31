@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/** Component for providing together multiple `ContextComponents` contexts to the React tree. */
 const Provider = ({ContextComponents, children}) =>
     ContextComponents.reduceRight(
         (childrenComponents, ContextComponent) =>

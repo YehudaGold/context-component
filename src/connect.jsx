@@ -4,6 +4,7 @@ import React, {useContext, memo} from 'react';
 import {getDisplayName} from './utils/generics';
 import withForwardRef, {forwardedRefPropType} from './utils/withForwardRef';
 
+/** HOC to consume and transform `ContextComponents[]` contexts to component props. */
 const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options = {}) => {
     const wrappedComponentName = getDisplayName(WrappedComponent); // Cached before memo
 
