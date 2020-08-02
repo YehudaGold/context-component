@@ -6,7 +6,7 @@ import getActions from './utils/getActions';
 
 /**
  * Extend `ContextComponent` with state and methods you want to share in your app.
- * `ContextComponent` implements for you a render method that renders the `this.componentContext.Provider`
+ * `ContextComponent` implements for you a `render` method that renders the `this.componentContext.Provider`
  * with the component state and instance methods as value.
  * Render the extended component to provide the context to the React tree.
  */

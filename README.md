@@ -2,7 +2,7 @@
 
 context-component is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-documentationcontext-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children.
+context-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children.
 It also exposes api to easily consume contexts by `connect` HOC (high order component) or by React regular context api methods - `Consumer`, `contextType` and `useContext`.
 
 To learn more about context visit - [react context documentation](https://reactjs.org/docs/context.html).
