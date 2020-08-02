@@ -2,11 +2,12 @@
 
 context-component is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-context-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children. It also exposes api to easily consume the context by `connect` HOC or by React regular context api methods - `Consumer`, `contextType` and `useContext`.
+context-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children.
+It also exposes api to easily consume contexts by `connect` HOC (high order component) or by React regular context api methods - `Consumer`, `contextType` and `useContext`.
 
-To learn more about context - [react context documentation](https://reactjs.org/docs/context.html).
+To learn more about context visit - [react context documentation](https://reactjs.org/docs/context.html).
 
-for example of context-component - [context-component/example](https://github.com/YehudaGold/context-component/tree/master/example/src).
+For example of context-component visit - [context-component/example](https://github.com/YehudaGold/context-component/tree/master/example/src).
 
 ## install
 
@@ -80,7 +81,7 @@ The component `connect` HOC method takes three parameters:
     * `memo` - Memorizes the `WrappedComponent` to not re-render if there aren't changes to the value returned from `mapContextsToProps`.
     Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
     * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
-    Boolean value,  .
+    Boolean value, defaulted to false.
 ---
 
 Or consume the context by rendering the `ContextComponent.Consumer`:
