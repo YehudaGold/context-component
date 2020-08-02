@@ -15,7 +15,7 @@ const reactLifecycleMethods = [
  * except for React lifecycle methods and methods starting with '_',
  * stopping on `baseClass` prototype if exist.
  */
-export default (componentInstance, BaseClass) => {
+const getActions = (componentInstance, BaseClass) => {
     const actions = {};
 
     getAllMethodNames(componentInstance, BaseClass)
@@ -27,3 +27,5 @@ export default (componentInstance, BaseClass) => {
 
     return actions;
 };
+
+export default getActions;

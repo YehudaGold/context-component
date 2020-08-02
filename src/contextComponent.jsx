@@ -22,12 +22,12 @@ class ContextComponent extends Component {
         return this._componentContext;
     }
 
-    /** Returns the context Consumer. */
+    /** Returns the `componentContext` context Consumer. */
     static get Consumer() {
         return this.componentContext.Consumer;
     }
 
-    /** HOC to consume and transform `ContextComponent` context to component props. */
+    /** HOC to consume and transform the `ContextComponent` context to props. */
     static connect(WrappedComponent, mapContextToProps, options) {
         return connect(
             WrappedComponent,

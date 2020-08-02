@@ -7,7 +7,7 @@ export const RefPropType = PropTypes.oneOfType([
     PropTypes.shape({current: PropTypes.elementType})
 ]);
 
-/** Wraps the `WrappedComponent` with `React.forwardRef`. */
+/** Wraps the `WrappedComponent` with `React.forwardRef` and provide `forwardedRef` prop. */
 const withForwardRef = (WrappedComponent) => {
     const ForwardRefComponent = (props, ref) => <WrappedComponent {...props} forwardedRef={ref} />;
     ForwardRefComponent.displayName = WrappedComponent.displayName;

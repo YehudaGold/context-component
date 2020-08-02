@@ -23,7 +23,7 @@ export const getAllMethodNames = (object, BaseClass) => {
 
 /**
  * Get component displayName.
- * @see https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging
+ * [react-docs:higher-order-components](https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging)
  */
 export const getDisplayName = Component =>
     Component.displayName || Component.name || 'Component';
