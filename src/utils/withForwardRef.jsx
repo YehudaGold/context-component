@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {forwardRef} from 'react';
 
 /** React ref propType */
-export const forwardedRefPropType = PropTypes.oneOfType([
+export const RefPropType = PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({current: PropTypes.elementType})
 ]);

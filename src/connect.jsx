@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, memo} from 'react';
 
 import {getDisplayName} from './utils/generics';
-import withForwardRef, {forwardedRefPropType} from './utils/withForwardRef';
+import withForwardRef, {RefPropType} from './utils/withForwardRef';
 
 /** HOC to consume and transform `ContextComponents[]` contexts to component props. */
 const connect = (WrappedComponent, ContextComponents, mapContextsToProps, options = {}) => {
@@ -26,7 +26,7 @@ const connect = (WrappedComponent, ContextComponents, mapContextsToProps, option
                 return <WrappedComponent {...props} {...mapContextsToProps(contexts, props)} ref={forwardedRef} />;
             };
             ConsumeComponent.displayName = `connect[${getDisplayName(ContextComponent)}](${wrappedComponentName})`;
-            ConsumeComponent.propTypes = {contexts: PropTypes.array, forwardedRef: forwardedRefPropType};
+            ConsumeComponent.propTypes = {contexts: PropTypes.array, forwardedRef: RefPropType};
 
             return ConsumeComponent;
         },
