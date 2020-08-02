@@ -1,4 +1,4 @@
-// Run 'npm i -g  babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks
+// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks
 module.exports = {
     env: {
         node: true,
@@ -102,11 +102,11 @@ module.exports = {
             allowNamedFunctions: false,
             allowUnboundThis: true
         }],
-        'prefer-const': ['error', {
+        'prefer-const': ['warn', {
             destructuring: 'any',
             ignoreReadBeforeAssign: true
         }],
-        'prefer-destructuring': ['error', {
+        'prefer-destructuring': ['warn', {
             VariableDeclarator: {
                 array: true,
                 object: true
@@ -253,7 +253,7 @@ module.exports = {
         'lines-between-class-members': ['warn', 'always', {exceptAfterSingleLine: false}],
         'lines-around-comment': 'off',
         'lines-around-directive': ['warn', {before: 'always', after: 'always'}],
-        'max-depth': ['off', 4],
+        'max-depth': ['warn', 6],
         'max-len': ['warn', 120, 2, {
             ignoreComments: false,
             ignoreRegExpLiterals: true,
@@ -272,8 +272,8 @@ module.exports = {
             skipBlankLines: true,
             skipComments: true
         }],
-        'max-nested-callbacks': 'off',
-        'max-params': ['off', 3],
+        'max-nested-callbacks': ['warn', 10],
+        'max-params': ['warn', 7],
         'max-statements': ['warn', 20],
         'max-statements-per-line': ['warn', {max: 1}],
         'multiline-comment-style': ['warn', 'starred-block'],
@@ -625,8 +625,6 @@ module.exports = {
 
         // React
         'jsx-quotes': ['warn', 'prefer-double'],
-        'react-hooks/exhaustive-deps': 'warn',
-        'react-hooks/rules-of-hooks': 'error',
         'react/boolean-prop-naming': 'warn',
         'react/button-has-type': 'error',
         'react/default-props-match-prop-types': 'error',
@@ -664,7 +662,12 @@ module.exports = {
         'react/jsx-props-no-spreading': 'off',
         'react/jsx-sort-default-props': ['warn', {ignoreCase: true}],
         'react/jsx-sort-props': 'warn',
-        'react/jsx-tag-spacing': ['warn', {afterOpening: 'never', beforeClosing: 'never', beforeSelfClosing: 'always', closingSlash: 'never'}],
+        'react/jsx-tag-spacing': ['warn', {
+            afterOpening: 'never',
+            beforeClosing: 'never',
+            beforeSelfClosing: 'always',
+            closingSlash: 'never'
+        }],
         'react/jsx-uses-react': 'warn',
         'react/jsx-uses-vars': 'warn',
         'react/jsx-wrap-multilines': ['warn', {
@@ -708,14 +711,7 @@ module.exports = {
         'react/require-render-return': 'error',
         'react/self-closing-comp': 'error',
         'react/sort-comp': ['warn', {
-            order: [
-                'static-variables',
-                'static-methods',
-                'instance-variables',
-                'lifecycle',
-                'everything-else',
-                'render'
-            ]
+            order: ['static-variables', 'static-methods', 'instance-variables', 'lifecycle', 'everything-else', 'render']
         }],
         'react/sort-prop-types': ['warn', {ignoreCase: true, requiredFirst: false}],
         'react/state-in-constructor': ['error', 'never'],
@@ -724,6 +720,10 @@ module.exports = {
             propTypes: 'property assignment'
         }],
         'react/style-prop-object': 'error',
-        'react/void-dom-elements-no-children': 'error'
+        'react/void-dom-elements-no-children': 'error',
+
+        // React-hooks
+        'react-hooks/exhaustive-deps': 'warn',
+        'react-hooks/rules-of-hooks': 'error'
     }
 };
