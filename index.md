@@ -1,37 +1,206 @@
-## Welcome to GitHub Pages
+# context-component
 
-You can use the [editor on GitHub](https://github.com/YehudaGold/context-component/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+context-component is aimed at reducing the boilerplate of writing flexible centralized state management with React context.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+context-component provides extendable React class that automatically assigns its state and methods to context and provides it to its children.
+It also exposes api to easily consume contexts by `connect` HOC (high order component) or by React regular context api methods - `Consumer`, `contextType` and `useContext`.
 
-### Markdown
+To learn more about context visit - [react context documentation](https://reactjs.org/docs/context.html).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+For example of context-component visit - [context-component/example](https://github.com/YehudaGold/context-component/tree/master/example/src).
 
-```markdown
-Syntax highlighted code block
+## install
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+npm install context-component -S
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Usage
 
-### Jekyll Themes
+### Creating ContextComponent
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/YehudaGold/context-component/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+In order to create a shared state create a component that extends `ContextComponent` with state and methods you want to share in your app:
 
-### Support or Contact
+ThemeContext.jsx
+```jsx
+import ContextComponent from 'context-component';
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+export default class ThemeContext extends ContextComponent {
+
+    state = {theme: 'dark'}
+
+    toggleTheme = () => {
+        this.setState(state => (state.theme === 'dark' ? {theme: 'light'} : {theme: 'dark'}));
+    }
+
+}
+```
+The `ContextComponent` implements for you a `render` method that renders the `this.componentContext.Provider` with the component state and instance methods as value.
+
+Methods defined on the `ContextComponent` are provided by the context automatically, except for React lifecycle methods and methods starting with '_'. You can override this behavior by adding `actions` property to the class with the methods you want to expose.
+
+You can use React lifecycle methods in `ContextComponent` to initialize and manage the state.
+
+### Providing ContextComponent
+
+To provide the context to the React tree you render the component:
+
+App.jsx
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
+
+export const App = () => (
+    <ThemeContext>
+        <otherComponent />
+    </ThemeContext>
+);
+```
+
+### Consuming ContextComponent
+
+To consume the context you can use the component static `connect` HOC method:
+
+otherComponent.jsx
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
+
+const otherComponent = ({toggleTheme, theme}) =>
+    <div className={theme} onClick={toggleTheme} />;
+
+const mapContextToProps = context =>
+    ({theme: context.theme, toggleTheme: context.toggleTheme});
+
+export default ThemeContext.connect(otherComponent, mapContextToProps);
+```
+The component `connect` HOC method takes three parameters:
+* `WrappedComponent` - The component to connect.
+* `mapContextsToProps` - Callback with two parameters `context` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
+* `options` - Optional object with the keys:
+    * `memo` - Memorizes the `WrappedComponent` to not re-render if there aren't changes to the value returned from `mapContextsToProps`.
+    Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
+    * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
+    Boolean value, defaulted to false.
+---
+
+Or consume the context by rendering the `ContextComponent.Consumer`:
+```jsx
+import React from 'react';
+import ThemeContext from './ThemeContext';
+
+export const otherComponent = () => (
+    <ThemeContext.Consumer>
+        {({theme, toggleTheme}) =>
+            <div className={theme} onClick={toggleTheme} />}
+    </ThemeContext.Consumer>
+);
+```
+---
+
+Or by using the React class component `contextType` property:
+```jsx
+import React, {Component} from 'react';
+import ThemeContext from './ThemeContext';
+
+export class otherComponent extends Component {
+
+    static contextType = ThemeContext.componentContext;
+
+    render() {
+        const {theme, toggleTheme} = this.context;
+
+        return <div className={theme} onClick={toggleTheme} />;
+    }
+
+};
+```
+---
+
+Or by using the `useContext()` hook:
+```jsx
+import React, {useContext} from 'react';
+import ThemeContext from './ThemeContext';
+
+export const otherComponent = () => {
+    const {theme, toggleTheme} = useContext(ThemeContext.componentContext);
+
+    return <div className={theme} onClick={toggleTheme} />;
+};
+```
+
+## Multiple contexts
+
+You can use the `Provider` component to provide multiple contexts together:
+
+App.jsx
+```jsx
+import React from 'react';
+import {Provider} from 'context-component';
+import ThemeContext from './ThemeContext';
+import CounterContext from './CounterContext';
+
+export const App = () => (
+    <Provider ContextComponents={[CounterContext, ThemeContext]}>
+        <otherComponent />
+    </Provider>
+);
+```
+The `Provider` requires `ContextComponents` prop - the ContextComponent classes array.
+
+---
+
+You can consume multiple contexts together with the `connect` HOC function:
+
+otherComponent.js
+```jsx
+import React from 'react';
+import {connect} from 'context-component';
+import ThemeContext from './ThemeContext';
+import CounterContext from './CounterContext';
+
+const otherComponent = ({counter, increase, theme, toggleTheme}) =>
+    <div>
+        <div className={theme} onClick={toggleTheme} />
+        <div onClick={increase}>{counter}</div>
+    </div>;
+
+const mapContextsToProps = ([counterContext, themeContext]) => ({
+    counter: counterContext.counter,
+    increase: counterContext.increase,
+    theme: themeContext.theme,
+    toggleTheme: themeContext.toggleTheme
+});
+
+export default connect(otherComponent, [CounterContext, ThemeContext], mapContextsToProps);
+```
+The `connect` HOC function takes four parameters:
+
+* `WrappedComponent` - The component to connect.
+* `ContextComponents` - Array of contextComponent classes.
+* `mapContextsToProps` - Callback with two parameters `contexts[]` and `ownProps` (props assigned by the parent component), and returns new object of props, enabling you to transform, rename and pick the relevant values from the context.
+* `options` - Optional object with the keys:
+     * `memo` - Memorizes the `WrappedComponent` to not re-render if there aren't changes to the value returned from `mapContextsToProps`.
+    Boolean type for whether or not to memorizes with shallow check, or function type for memorizes with a custom equality check, **defaulted to true.**
+    * `forwardRef` - Forwards the ref prop to the `WrappedComponent` ref.
+    Boolean value, defaulted to false.
+
+## Optimization warning
+In `connect` HOC the `mapContextToProps` callback shouldn't return new references for the same input (context and ownProps). If you compute a new value like this:
+```js
+const mapContextToProps = context =>
+    ({theme: {color: context.theme}});
+```
+The `theme` value will always return a new object reference for every function call and the `React.memo` shallow equality check will fail, which means the component will re-render for the same props.
+
+In order to solve this you can set a custom equality function on the memo option:
+```js
+const areEqual = (prevProps, nextProps) =>
+    prevProps.theme.color === nextProps.theme.color;
+
+export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: areEqual});
+```
+or set the connect `options.memo` to 'false' and not memorize the component.
+```js
+export default ThemeContext.connect(otherComponent, mapContextToProps, {memo: false});
+```
