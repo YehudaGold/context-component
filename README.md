@@ -39,7 +39,7 @@ The `ContextComponent` implements for you a `render` method that renders the `th
 
 Methods defined on the `ContextComponent` are provided by the context automatically, except for React lifecycle methods and methods starting with '_'. You can override this behavior by adding `actions` property to the class with the methods you want to expose.
 
-You can use React lifecycle methods in `ContextComponent` to initialize and manage the state.
+You can use React lifecycle methods in `ContextComponent` to initialize and manage the state, they will run as the lifecycle of the context provider.
 
 ### Providing ContextComponent
 
