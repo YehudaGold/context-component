@@ -1,4 +1,4 @@
-// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks
+// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-import-resolver-webpack eslint-plugin-react eslint-plugin-react-hooks
 module.exports = {
     env: {
         node: true,
@@ -16,11 +16,7 @@ module.exports = {
         sourceType: 'module'
     },
     settings: {
-        'import/resolver': {
-            node: {
-                extensions: ['.js', '.jsx']
-            }
-        },
+        'import/resolver': 'webpack',
         react: {
             version: 'detect'
         }
@@ -649,7 +645,7 @@ module.exports = {
         'react/jsx-indent-props': ['warn', 4],
         'react/jsx-indent': ['warn', 4],
         'react/jsx-key': 'error',
-        'react/jsx-max-props-per-line': ['error', {maximum: 3, when: 'multiline'}],
+        'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'multiline'}],
         'react/jsx-no-bind': ['error', {allowArrowFunctions: false, allowBind: false, ignoreRefs: false}],
         'react/jsx-no-comment-textnodes': 'error',
         'react/jsx-no-duplicate-props': 'error',
