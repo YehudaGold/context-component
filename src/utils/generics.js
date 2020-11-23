@@ -18,7 +18,7 @@ export const getAllMethodNames = (object, BaseClass) => {
         });
     }
 
-    return [...uniqMethodNames];
+    return Array.from(uniqMethodNames);
 };
 
 /**
