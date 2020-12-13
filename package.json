@@ -1,6 +1,6 @@
 {
   "name": "context-component",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Flexible centralized state management with React context",
   "keywords": [
     "react",
