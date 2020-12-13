@@ -586,7 +586,7 @@ module.exports = {
         'import/no-unassigned-import': 'off',
         'import/no-unused-modules': ['warn', {
             missingExports: false,
-            ignoreExports: ['src'],
+            ignoreExports: ['src', 'rollup.config.js'],
             unusedExports: true
         }],
         'import/no-unresolved': ['error', {commonjs: true, caseSensitive: true}],
