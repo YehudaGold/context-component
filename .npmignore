@@ -9,4 +9,5 @@ example/
 .babelrc
 .eslintrc.js
 .gitignore
+rollup.config.js
 webpack.config.js
