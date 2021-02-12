@@ -1,7 +1,7 @@
+import {connect} from 'context-component';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {connect} from '../../../../src';
 import CounterContext from '../../Contexts/CounterContext';
 import ThemeContext from '../../Contexts/ThemeContext';
 import Button from '../Generic/Button';

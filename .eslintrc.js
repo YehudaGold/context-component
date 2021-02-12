@@ -1,4 +1,4 @@
-// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-import-resolver-webpack eslint-plugin-react eslint-plugin-react-hooks
+// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-import-resolver-node eslint-plugin-react eslint-plugin-react-hooks
 module.exports = {
     env: {
         node: true,
@@ -16,7 +16,12 @@ module.exports = {
         sourceType: 'module'
     },
     settings: {
-        'import/resolver': 'webpack',
+        'import/resolver': {
+            node: {
+                extensions: ['.js', '.jsx' ],
+                moduleDirectory: ['node_modules', './src']
+            }
+        },
         react: {
             version: 'detect'
         }
@@ -570,7 +575,8 @@ module.exports = {
                 '**/gulpfile.*.js', // Gulp config
                 '**/Gruntfile{,.js}' // Grunt config
             ],
-            optionalDependencies: true
+            optionalDependencies: true,
+            peerDependencies: true
         }],
         'import/no-internal-modules': ['off', {allow: []}],
         'import/no-mutable-exports': 'error',
@@ -589,7 +595,7 @@ module.exports = {
             ignoreExports: ['src', 'rollup.config.js'],
             unusedExports: true
         }],
-        'import/no-unresolved': ['error', {commonjs: true, caseSensitive: true}],
+        'import/no-unresolved': ['warn', {commonjs: true, caseSensitive: true}],
         'import/no-useless-path-segments': ['error', {commonjs: true, noUselessIndex: true}],
         'import/no-webpack-loader-syntax': 'error',
         'import/order': ['warn', {

@@ -1,4 +1,4 @@
-import {ContextComponent} from '../../../src';
+import ContextComponent from 'context-component';
 
 export default class IrrelevantContext extends ContextComponent {
 
