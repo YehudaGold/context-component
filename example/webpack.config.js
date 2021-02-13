@@ -11,11 +11,11 @@ module.exports = (env, options = {}) => ({
         hot: true,
         compress: true,
         open: true,
+        public: 'localhost:8080',
         port: 8080,
         overlay: true
     },
     entry: './src/App.jsx',
-    resolve: ['node_modules'],
     module: {
         rules: [
             {
@@ -48,5 +48,8 @@ module.exports = (env, options = {}) => ({
             template: './src/index.html'
         })
     ],
-    resolve: {extensions: ['.js', '.jsx']}
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        symlinks: false
+    }
 });
