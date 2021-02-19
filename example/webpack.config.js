@@ -27,6 +27,11 @@ module.exports = (env, options = {}) => ({
                 }
             },
             {
+                test: /\.js$/u,
+                enforce: 'pre',
+                use: 'source-map-loader'
+            },
+            {
                 test: /\.css$/u,
                 use: ['style-loader', 'css-loader']
             },
