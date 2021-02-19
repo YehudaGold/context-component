@@ -1,4 +1,4 @@
-// Run npm i -g babel-eslint eslint eslint-plugin-babel eslint-plugin-import eslint-import-resolver-node eslint-plugin-react eslint-plugin-react-hooks
+// Run npm i -g eslint eslint-plugin-node eslint-plugin-babel babel-eslint eslint-plugin-import eslint-import-resolver-node eslint-plugin-react eslint-plugin-react-hooks
 module.exports = {
     env: {
         node: true,
@@ -7,18 +7,21 @@ module.exports = {
     },
     extends: ['eslint:recommended', 'plugin:react/recommended'],
     ignorePatterns: ['dist/'],
+    overrides: [{
+        files: ['*.js', '*.jsx', '*.ts', '*.tsx', '*.vue']
+    }],
     parser: 'babel-eslint',
     parserOptions: {
         ecmaFeatures: {
             jsx: true
         },
-        ecmaVersion: 2018,
+        ecmaVersion: 2020,
         sourceType: 'module'
     },
     settings: {
         'import/resolver': {
             node: {
-                extensions: ['.js', '.jsx' ],
+                extensions: ['.js', '.jsx'],
                 moduleDirectory: ['node_modules', './src']
             }
         },
@@ -26,7 +29,7 @@ module.exports = {
             version: 'detect'
         }
     },
-    plugins: ['eslint-plugin-babel', 'import', 'react', 'react-hooks'],
+    plugins: ['eslint-plugin-node', 'eslint-plugin-babel', 'import', 'react', 'react-hooks'],
     rules: {
         // Common errors
         'for-direction': 'error',
@@ -136,17 +139,44 @@ module.exports = {
         'yield-star-spacing': ['error', 'after'],
 
         // Node
-        'callback-return': 'warn',
-        'global-require': 'error',
-        'handle-callback-err': 'off',
-        'no-buffer-constructor': 'error',
-        'no-mixed-requires': ['off', false],
-        'no-new-require': 'error',
-        'no-path-concat': 'error',
-        'no-process-env': 'off',
-        'no-process-exit': 'error',
-        'no-restricted-modules': 'off',
-        'no-sync': 'error',
+        'node/callback-return': 'warn',
+        'node/global-require': 'error',
+        'node/handle-callback-err': 'off',
+        'node/no-callback-literal': 'off',
+        'node/no-exports-assign': 'warn',
+        'node/no-extraneous-import': 'off',
+        'node/no-extraneous-require': 'off',
+        'node/no-missing-import': 'off',
+        'node/no-missing-require': 'off',
+        'node/no-mixed-requires': ['off', false],
+        'node/no-new-require': 'error',
+        'node/no-path-concat': 'error',
+        'node/no-process-env': 'off',
+        'node/no-process-exit': 'error',
+        'node/no-restricted-import': 'off',
+        'node/no-restricted-modules': 'off',
+        'node/no-restricted-require': 'off',
+        'node/no-sync': 'error',
+        'node/exports-style': 'error',
+        'node/file-extension-in-import': 'off',
+        'node/no-deprecated-api': 'warn',
+        'node/no-unpublished-bin': 'error',
+        'node/no-unpublished-import': 'error',
+        'node/no-unpublished-require': 'error',
+        'node/no-unsupported-features/es-builtins': 'warn',
+        'node/no-unsupported-features/es-syntax': 'off',
+        'node/no-unsupported-features/node-builtins': 'warn',
+        'node/prefer-global/buffer': ['error', 'always'],
+        'node/prefer-global/console': ['error', 'always'],
+        'node/prefer-global/process': ['error', 'always'],
+        'node/prefer-global/text-decoder': ['error', 'always'],
+        'node/prefer-global/text-encoder': ['error', 'always'],
+        'node/prefer-global/url-search-params': ['error', 'always'],
+        'node/prefer-global/url': ['error', 'always'],
+        'node/prefer-promises/dns': 'warn',
+        'node/prefer-promises/fs': 'warn',
+        'node/process-exit-as-throw': 'warn',
+        'node/shebang': 'error',
 
         // Style
         'array-bracket-newline': ['warn', 'consistent'],
@@ -590,9 +620,9 @@ module.exports = {
         'import/no-restricted-paths': 'off',
         'import/no-self-import': 'error',
         'import/no-unassigned-import': 'off',
-        'import/no-unused-modules': ['warn', {
+        'import/no-unused-modules': ['off', {
             missingExports: false,
-            ignoreExports: ['src', 'rollup.config.js'],
+            ignoreExports: ['src'],
             unusedExports: true
         }],
         'import/no-unresolved': ['warn', {commonjs: true, caseSensitive: true}],
