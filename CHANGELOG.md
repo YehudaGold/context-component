@@ -1,8 +1,13 @@
+1.2.0:
+- update packages.
+- added CommonJS bundle with rollup.
+- added sourcemap files.
+
 1.1.0:
 - added named export for context-component.
 - added JSDocs comments.
-- update babel config and polyfills
-- move to bundled code with rollup
+- update babel config and polyfills.
+- move to bundled code with rollup.
 
 1.0.2:
 - update packages.
