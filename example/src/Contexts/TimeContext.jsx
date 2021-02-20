@@ -1,4 +1,4 @@
-import {ContextComponent} from '../../../src';
+import ContextComponent from 'context-component';
 
 const second = 1000;
 

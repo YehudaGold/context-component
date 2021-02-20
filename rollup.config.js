@@ -8,17 +8,21 @@ const externals = [].concat(Object.keys(pkg.dependencies)).concat(Object.keys(pk
 export default {
     external: path => externals.some(external => path.startsWith(external)),
     input: 'src',
-    output: {
-        file: 'dist/bundle.js',
-        format: 'esm'
+    output: [{
+        file: 'dist/bundle.esm.js',
+        format: 'esm',
+        sourcemap: true
     },
+    {
+        file: 'dist/bundle.cjs.js',
+        format: 'cjs',
+        sourcemap: true
+    }],
     plugins: [
         babelPlugin({
-            babelHelpers: 'runtime',
-            skipPreflightCheck: true
+            babelHelpers: 'runtime'
         }),
         nodeResolverPlugin({
-            browser: true,
             extensions: ['.js', '.jsx']
         })
     ]
