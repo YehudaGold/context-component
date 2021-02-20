@@ -37,7 +37,12 @@ module.exports = (env, options = {}) => ({
             },
             {
                 test: /\.(png|jpg|gif|ico|eot|svg|ttf|woff|woff2)$/u,
-                use: [{loader: 'url-loader'}]
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192
+                    }
+                }]
             }
         ]
     },
