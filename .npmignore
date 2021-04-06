@@ -6,6 +6,9 @@
 src/
 example/
 
+# Ignore package artifacts
+*.tgz
+
 .babelrc
 .eslintrc.js
 .gitignore
