@@ -1,3 +1,6 @@
+1.2.1:
+- fix babel runtime cjs helpers
+
 1.2.0:
 - update packages.
 - added CommonJS bundle with rollup.
