@@ -22,8 +22,7 @@ module.exports = (env, options = {}) => ({
                 test: /\.(js|jsx)$/u,
                 exclude: /node_modules/u,
                 use: {
-                    loader: 'babel-loader',
-                    options: {configFile: '../.babelrc'}
+                    loader: 'babel-loader'
                 }
             },
             {
