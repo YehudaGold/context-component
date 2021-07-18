@@ -1,5 +1,4 @@
 /* eslint-disable max-lines-per-function */
-
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -36,12 +35,7 @@ module.exports = (env, options = {}) => ({
             },
             {
                 test: /\.(png|jpg|gif|ico|eot|svg|ttf|woff|woff2)$/u,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192
-                    }
-                }]
+                type: 'asset'
             }
         ]
     },
