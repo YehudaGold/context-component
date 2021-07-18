@@ -1,6 +1,5 @@
 {
     "plugins": [
-        "@babel/plugin-proposal-class-properties",
          ["@babel/plugin-transform-runtime", {
             "corejs": {"version": 3},
             "useESModules": true
@@ -9,7 +8,8 @@
     "presets": [
         ["@babel/preset-env", {
             "loose": true,
-            "modules": false
+            "modules": false,
+            "shippedProposals": true
         }],
         "@babel/preset-react"
     ]
