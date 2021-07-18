@@ -17,11 +17,10 @@ const generateConfig = format => ({
         babelPlugin({
             babelHelpers: 'runtime',
             plugins: [
-                '@babel/plugin-proposal-class-properties',
                 ['@babel/plugin-transform-runtime', {corejs: {version: 3}, useESModules: format === 'esm'}]
             ],
             presets: [
-                ['@babel/preset-env', {loose: true, modules: false}],
+                ['@babel/preset-env', {loose: true, modules: false, shippedProposals: true}],
                 '@babel/preset-react'
             ]
         }),
