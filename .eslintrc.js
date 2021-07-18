@@ -1,27 +1,28 @@
-// Run npm i -g eslint eslint-plugin-node eslint-plugin-babel babel-eslint eslint-plugin-import eslint-import-resolver-node eslint-plugin-react eslint-plugin-react-hooks
+// Run npm i -g eslint eslint-plugin-node eslint-plugin-import eslint-import-resolver-node eslint-plugin-react eslint-plugin-react-hooks @typescript-eslint/eslint-plugin @typescript-eslint/parser
 module.exports = {
     env: {
         node: true,
         browser: true,
         es6: true
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended'],
+    extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', "plugin:@typescript-eslint/recommended-requiring-type-checking"],
     ignorePatterns: ['dist/'],
     overrides: [{
         files: ['*.js', '*.jsx', '*.ts', '*.tsx', '*.vue']
     }],
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaFeatures: {
             jsx: true
         },
         ecmaVersion: 2020,
+        project: './tsconfig.json',
         sourceType: 'module'
     },
     settings: {
         'import/resolver': {
             node: {
-                extensions: ['.js', '.jsx'],
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
                 moduleDirectory: ['node_modules', './src']
             }
         },
@@ -29,7 +30,7 @@ module.exports = {
             version: 'detect'
         }
     },
-    plugins: ['eslint-plugin-node', 'eslint-plugin-babel', 'import', 'react', 'react-hooks'],
+    plugins: ['eslint-plugin-node', 'import', 'react', 'react-hooks', '@typescript-eslint'],
     rules: {
         // Common errors
         'for-direction': 'error',
@@ -74,7 +75,7 @@ module.exports = {
         'require-atomic-updates': 'error',
         'use-isnan': 'error',
         'valid-jsdoc': 'off',
-        'valid-typeof': ['off', {requireStringLiterals: true}], // Babel rule fix
+        'valid-typeof': ['error', {requireStringLiterals: true}],
 
         // Es6
         'arrow-body-style': ['error', 'as-needed', {requireReturnForObjectLiteral: false}],
@@ -184,7 +185,7 @@ module.exports = {
         'array-bracket-spacing': ['warn', 'never'],
         'block-spacing': ['warn', 'always'],
         'brace-style': ['warn', '1tbs', {allowSingleLine: false}],
-        camelcase: ['off', { // Babel rule fix
+        camelcase: ['warn', {
             properties: 'never',
             ignoreDestructuring: false
         }],
@@ -309,7 +310,7 @@ module.exports = {
         'max-statements-per-line': ['warn', {max: 1}],
         'multiline-comment-style': ['warn', 'starred-block'],
         'multiline-ternary': ['warn', 'always-multiline'],
-        'new-cap': ['off', { // Babel rule fix
+        'new-cap': ['warn', {
             capIsNew: false,
             capIsNewExceptions: [],
             newIsCap: true,
@@ -361,7 +362,7 @@ module.exports = {
         'no-unneeded-ternary': ['warn', {defaultAssignment: false}],
         'no-whitespace-before-property': 'warn',
         'nonblock-statement-body-position': ['warn', 'beside', {overrides: {}}],
-        'object-curly-spacing': ['off', 'never'], // Babel rule fix
+        'object-curly-spacing': ['warn', 'never'],
         'object-curly-newline': ['warn', {consistent: true, multiline: true}],
         'object-property-newline': ['warn', {allowAllPropertiesOnSameLine: true}],
         'one-var': ['warn', {let: 'consecutive'}],
@@ -374,7 +375,7 @@ module.exports = {
         'quote-props': ['warn', 'as-needed', {keywords: false, unnecessary: true, numbers: false}],
         quotes: ['off', 'single', {avoidEscape: true}],
         'require-jsdoc': 'off',
-        semi: ['off', 'always'], // Babel rule fix
+        semi: ['error', 'always'],
         'semi-spacing': ['warn', {before: false, after: true}],
         'semi-style': ['warn', 'last'],
         'sort-keys': ['off', 'asc', {caseSensitive: false, natural: true}],
@@ -452,7 +453,7 @@ module.exports = {
         }],
         'no-implicit-globals': 'warn',
         'no-implied-eval': 'error',
-        'no-invalid-this': 'off', // Babel rule fix
+        'no-invalid-this': 'error',
         'no-iterator': 'error',
         'no-labels': ['error', {allowLoop: false, allowSwitch: false}],
         'no-lone-blocks': 'error',
@@ -532,7 +533,7 @@ module.exports = {
         'no-sequences': 'error',
         'no-throw-literal': 'error',
         'no-unmodified-loop-condition': 'off',
-        'no-unused-expressions': ['off', { // Babel rule fix
+        'no-unused-expressions': ['warn', {
             allowShortCircuit: false,
             allowTernary: false,
             allowTaggedTemplates: false
@@ -636,25 +637,6 @@ module.exports = {
         'import/prefer-default-export': 'warn',
         'import/unambiguous': 'off',
 
-        // Babel rules fix
-        'babel/new-cap': ['error', {
-            capIsNew: false,
-            capIsNewExceptions: [],
-            newIsCap: true,
-            newIsCapExceptions: []
-        }],
-        'babel/camelcase': ['warn', {properties: 'never', ignoreDestructuring: false}],
-        'babel/no-invalid-this': 'error',
-        'babel/object-curly-spacing': ['warn', 'never'],
-        'babel/quotes': ['warn', 'single', {avoidEscape: true}],
-        'babel/semi': ['error', 'always'],
-        'babel/no-unused-expressions': ['error', {
-            allowShortCircuit: false,
-            allowTernary: false,
-            allowTaggedTemplates: false
-        }],
-        'babel/valid-typeof': ['error', {requireStringLiterals: true}],
-
         // React
         'jsx-quotes': ['warn', 'prefer-double'],
         'react/boolean-prop-naming': 'warn',
@@ -756,6 +738,18 @@ module.exports = {
 
         // React-hooks
         'react-hooks/exhaustive-deps': 'warn',
-        'react-hooks/rules-of-hooks': 'error'
+        'react-hooks/rules-of-hooks': 'error',
+
+         // Type script
+        "@typescript-eslint/no-extra-parens": ['warn', 'all', {
+            conditionalAssign: true,
+            nestedBinaryExpressions: false,
+            ignoreJSX: 'all',
+            enforceForArrowConditionals: false
+        }],
+        "@typescript-eslint/ban-types": ["error", {
+            extendDefaults: true,
+            types: {object: false }
+        }]
     }
 };

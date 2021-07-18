@@ -1,5 +1,6 @@
 import babelPlugin from '@rollup/plugin-babel';
 import nodeResolverPlugin from '@rollup/plugin-node-resolve';
+import typescript from 'rollup-plugin-typescript2';
 
 import pkg from './package.json';
 
@@ -14,6 +15,11 @@ const generateConfig = format => ({
         sourcemap: true
     },
     plugins: [
+        nodeResolverPlugin({extensions: ['.js', '.jsx']}),
+        typescript({
+            rollupCommonJSResolveHack: false,
+            clean: true
+        }),
         babelPlugin({
             babelHelpers: 'runtime',
             plugins: [
@@ -23,8 +29,7 @@ const generateConfig = format => ({
                 ['@babel/preset-env', {loose: true, modules: false, shippedProposals: true}],
                 '@babel/preset-react'
             ]
-        }),
-        nodeResolverPlugin({extensions: ['.js', '.jsx']})
+        })
     ]
 });
 
