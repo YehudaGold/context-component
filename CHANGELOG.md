@@ -1,4 +1,7 @@
 1.2.1:
+- update packages.
+
+1.2.1:
 - fix babel runtime cjs helpers
 
 1.2.0:
