@@ -8,7 +8,7 @@ module.exports = {
     extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', "plugin:@typescript-eslint/recommended-requiring-type-checking"],
     ignorePatterns: ['dist/'],
     overrides: [{
-        files: ['*.js', '*.jsx', '*.ts', '*.tsx', '*.vue']
+        files: ['*.js', '*.cjs', '*.jsx', '*.ts', '*.tsx', '*.vue']
     }],
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -22,7 +22,7 @@ module.exports = {
     settings: {
         'import/resolver': {
             node: {
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                extensions: ['.js', '.jsx', '.ts', '.tsx', '.cjs'],
                 moduleDirectory: ['node_modules', './src']
             }
         },
