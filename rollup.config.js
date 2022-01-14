@@ -1,6 +1,5 @@
 import babelPlugin from '@rollup/plugin-babel';
-import nodeResolverPlugin from '@rollup/plugin-node-resolve';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 
 import pkg from './package.json';
 
@@ -15,11 +14,7 @@ const generateConfig = format => ({
         sourcemap: true
     },
     plugins: [
-        nodeResolverPlugin({extensions: ['.js', '.jsx']}),
-        typescript({
-            rollupCommonJSResolveHack: false,
-            clean: true
-        }),
+        typescript({ tsconfig: './tsconfig.json' }),
         babelPlugin({
             babelHelpers: 'runtime',
             plugins: [
