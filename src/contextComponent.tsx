@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import {Component, createContext} from 'react';
 
 import connect from './connect';
 import {getDisplayName} from './utils/generics';
@@ -6,17 +6,17 @@ import getActions from './utils/getActions';
 
 /**
  * Extend `ContextComponent` with state and methods you want to share in your app.
- * `ContextComponent` implements for you a `render` method that renders the `this.componentContext.Provider`
+ * `ContextComponent` implements for you a `r   ender` method that renders the `this.componentContext.Provider`
  * with the component state and instance methods as value.
  * Render the extended component to provide the context to the React tree.
  */
-class ContextComponent extends Component {
+class ContextComponent<CCProps, CCState> extends Component<CCProps, CCState> {
 
     /** Returns the `componentContext` context. */
     static get componentContext() {
         if (Object.prototype.hasOwnProperty.call(this, '_componentContext')) return this._componentContext;
 
-        this._componentContext = React.createContext();
+        this._componentContext = createContext(null);
         this._componentContext.displayName = getDisplayName(this);
 
         return this._componentContext;
@@ -37,9 +37,9 @@ class ContextComponent extends Component {
         );
     }
 
-    constructor(props) {
+    constructor(props: Readonly<CCProps>) {
         super(props);
-        this.componentContext = this.constructor.componentContext;
+        this.componentContext = this.constructor as typeof ContextComponent.componentContext;
     }
 
     render() {

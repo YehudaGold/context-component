@@ -23,7 +23,7 @@ module.exports = {
         'import/resolver': {
             node: {
                 extensions: ['.js', '.jsx', '.ts', '.tsx', '.cjs'],
-                moduleDirectory: ['node_modules', './src']
+                moduleDirectory: ['./node_modules', './example/node_modules', './src']
             }
         },
         react: {
